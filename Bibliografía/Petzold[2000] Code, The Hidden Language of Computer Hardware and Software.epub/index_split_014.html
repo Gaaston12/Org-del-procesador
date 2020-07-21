@@ -1,0 +1,555 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Code: The Hidden Language of Computer Hardware and Software</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+<div id="filepos501329" style="height:0pt"></div><div id="filepos501329" class="calibre_">
+<div class="calibre_">
+<div class="calibre_">
+<div class="calibre_">
+<h1 class="calibre1" id="calibre_pb_40"><span class="calibre2"><a shape="rect" class="calibre4"></a>Chapter 11. Gates (Not Bill) </span></h1>
+</div>
+</div>
+</div>
+<p class="calibre_1">In some far-off distant time, when the twentieth century history of primitive computing is just a murky memory, someone is likely to suppose that devices known as <span><em class="italic">logic gates</em></span> were named after the famous co-founder of <a shape="rect"></a>Microsoft Corporation. Not quite. As we'll soon see, logic gates bear a much greater resemblance to those ordinary gates through which pass water or people. Logic gates perform simple tasks in logic by blocking or letting through the flow of electrical current.<a shape="rect"></a></p>
+<p class="calibre_1">You'll recall how in the last chapter you went into a pet shop and announced, "I want a male cat, neutered, either white or tan; or a female cat, neutered, any color but white; or I'll take any cat you have as long as it's black." This is summarized by the following <a shape="rect"></a>Boolean expression: </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">(M x N x (W + T)) + (F x N x (1 – W)) + B</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">and also by this circuit made up of switches and a lightbulb:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00120.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Such a circuit is sometimes called a <span><em class="italic">network</em></span>, except that nowadays that word is <a shape="rect"></a>used much more often to refer to connected computers rather than an assemblage of mere switches. </p>
+<p class="calibre_1">Although this circuit contains nothing that wasn't invented in the nineteenth century, nobody in that century ever realized that Boolean expressions could be directly realized in electrical circuits. This equivalence wasn't discovered until the 1930s, most notably by Claude Elwood <a shape="rect"></a>Shannon (born 1916), whose famous 1938 M.I.T. master's thesis was entitled "A <a shape="rect"></a>Symbolic Analysis of Relay and Switching Circuits." (Ten years later, Shannon's article "The Mathematical Theory of Communication" was the first publication that used the word <span><em class="italic">bit</em></span> to mean <span><em class="italic">binary digit</em></span>.) </p>
+<p class="calibre_1">Prior to 1938, people knew that when you wired two switches in series, both switches had to be closed for current to flow, and when you wired two switches in parallel, one or the other had to be closed. But nobody had shown with Shannon's clarity and rigor that electrical engineers could use all the tools of <a shape="rect"></a>Boolean algebra to design circuits with switches. In particular, if you can simplify a Boolean expression that describes a network, you can simplify the network accordingly. </p>
+<p class="calibre_1">For example, the expression that indicates the characteristics you want in a cat looks like this:</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">(M x N x (W + T)) + (F x N x (1 – W)) + B</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">Using the <a shape="rect"></a>associative law, we can reorder the variables that are combined with the AND (x) signs and rewrite the expression this way: </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">(N x M x (W + T)) + (N x F x (1 – W)) + B</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">In an attempt to clarify what I'm going to do here, I'll define two new symbols named X and Y:</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">X = M x (W + T)</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">Y = F x (1 – W)</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">Now the expression for the cat you want can be written like this:</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">(N x X) + (N x Y) + B</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">After we're finished, we can put the X and Y expressions back in.</p>
+<p class="calibre_1">Notice that the N variable appears twice in the expression. Using the distributive law, the expression can be rewritten like this, with only one N: </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">(N x (X + Y)) + B</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">Now let's put the X and Y expressions back in:</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">(N x ((M x (W + T)) + (F x (1 – W)))) + B</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">Due to the plethora of parentheses, this expression hardly looks simplified. But there's one less variable in this expression, which means there's one less switch in the network. Here's the revised version: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00121.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Indeed, it's probably easier to see that this network is equivalent to the earlier one than to verify that the expressions are the same. </p>
+<p class="calibre_1">Actually, there are still three too many switches in this network. In theory, you need only four switches to define your perfect cat. Why four? Each switch is a bit. You should be able to get by with one switch for the sex (off for male, on for female), another switch that's on for neutered, off for unneutered, and two more switches for the color. There are four possible colors (white, black, tan, and "other"), and we know that four choices can be defined with 2 bits, so all you need are two color switches. For example, both switches can be off for white, one switch on for black, the other switch on for tan, and both switches on for other colors. </p>
+<p class="calibre_1">Let's make a control panel right now for choosing a cat. The control panel is simply four switches (much like the on/off switches you have on your walls for controlling your lights) and a lightbulb mounted in a panel: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00122.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The switches are on (closed) when they're up, and off (open) when they're down. The two switches for the cat's color are labeled somewhat obscurely, I'm afraid, but that's a drawback of reducing this panel to the bare minimum: The left switch of the pair is labeled B; that means that the left switch on by itself (as shown) indicates the color black. The right switch of the pair is labeled T; that switch on by itself means the color tan. Both switches up means other colors; this choice is labeled O. Both switches down means the color white, indicated by W, the letter at the bottom. </p>
+<p class="calibre_1">In computer terminology, the switches are an <span><em class="italic">input device</em></span>. Input is information that controls how a circuit behaves. In this case, the input switches correspond to 4 bits of information that describe a cat. The <span><em class="italic">output device</em></span> is the lightbulb. This bulb lights up if the switches describe a satisfactory cat. The switches shown in the control panel on page 104 are set for a female unneutered black cat. This satisfies your criteria, so the lightbulb is lit.<a shape="rect"></a><a shape="rect"></a></p>
+<p class="calibre_1">Now all we have to do is design a circuit that makes this control panel work.</p>
+<p class="calibre_1">You'll recall that Claude <a shape="rect"></a>Shannon's thesis was entitled "A <a shape="rect"></a>Symbolic Analysis of Relay and Switching Circuits." The relays he was referring to were quite similar to the telegraph relays that we encountered in <a shape="rect" href="index_split_009.html#filepos126338">Chapter 6</a>. By the time of Shannon's paper, however, relays were being used for other purposes and, in particular, in the vast network of the telephone system. </p>
+<p class="calibre_1">Like switches, relays can be connected in series and in parallel to perform simple tasks in logic. These combinations of relays are called <span><em class="italic">logic gates</em></span>. When I say that these logic gates perform <span><em class="italic">simple</em></span> tasks in logic, I mean as simple as possible. Relays have an advantage over switches in that relays can be switched on and off by other relays rather than by fingers. This means that logic gates can be combined to perform more complex tasks, such as simple functions in arithmetic. Indeed, the next chapter will demonstrate how to wire switches, lightbulbs, a battery, and telegraph relays to make an adding machine (albeit one that works solely with binary numbers). </p>
+<p class="calibre_1">As you recall, relays were crucial to the workings of the telegraph system. Over long distances, the wires connecting telegraph stations had a very high resistance. Some method was needed to receive a weak signal and send an identical strong signal. The relay did this by using an electromagnet to control a switch. In effect, the relay <span><em class="italic">amplified</em></span> a weak signal to create a strong signal. </p>
+<p class="calibre_1">For our purposes, we're not interested in using the relay to amplify a weak signal. We're interested only in the idea of a relay being a switch that can be controlled by electricity rather than by fingers. We can wire a relay with a switch, a lightbulb, and a couple of batteries like this: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00123.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Notice that the switch at the left is open and the lightbulb is off. When you close the switch, the battery at the left causes current to flow through the many turns of wire around the iron bar. The iron bar becomes magnetic and pulls down a flexible metal contact that connects the circuit to turn on the lightbulb: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00124.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">When the electromagnet pulls the metal contact, the relay is said to be <span><em class="italic">triggered</em></span>. When the switch is turned off, the iron bar stops being magnetic, and the metal contact returns to its normal position. </p>
+<p class="calibre_1">This seems like a rather indirect route to light the bulb, and indeed it is. If we were interested only in lighting the bulb, we could dispense with the relay entirely. But we're not interested in lighting bulbs. We have a much more ambitious goal. </p>
+<p class="calibre_1">We're going to be using relays a lot in this chapter (and then hardly at all after the <a shape="rect"></a>logic gates have been built), so I want to simplify the diagram. We can eliminate some of the wires by using a ground. In this case, the grounds simply represent a common connection; they don't need to be connected to the physical earth: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00125.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">I know this doesn't look like a simplification, but we're not done yet. Notice that the negative terminals of both batteries are connected to ground. So anywhere we see something like this: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00126.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">let's replace it with the capital letter V (which stands for <span><em class="italic">voltage</em></span>), as we did in Chapters <a shape="rect" href="index_split_008.html#filepos105074">Chapter 5</a> and <a shape="rect" href="index_split_009.html#filepos126338">Chapter 6</a>. Now our relay looks like this: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00127.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">When the switch is closed, a current flows between V and ground through the coils of the electromagnet. This causes the electromagnet to pull the flexible metal contact. That connects the circuit between V, the lightbulb, and ground. The bulb lights up: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00128.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">These diagrams of the relay show two voltage sources and two grounds, but in all the diagrams in this chapter, all the V's can be connected to one another and all the grounds can be connected to one another. All the networks of relays and logic gates in this chapter and the next will require only one battery, although it might need to be a big battery. For example, the preceding diagram can be redrawn with only one battery like this: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00129.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">But for what we need to do with relays, this diagram isn't very clear. It's better to avoid the circular circuits and look at the relay—like the control panel earlier—in terms of <span><em class="italic">inputs</em></span> and <span><em class="italic">outputs</em></span>: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00130.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">If a current is flowing through the input (for example, if a switch connects the input to V), the electromagnet is triggered and the output has a voltage. </p>
+<p class="calibre_1">The input of a relay need not be a switch, and the output of a relay need not be a lightbulb. The output of one relay can be connected to the input of another relay, for example, like this: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00131.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">When you turn the switch on, the first relay is triggered, which then provides a voltage to the second relay. The second relay is triggered and the light goes on: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00132.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Connecting relays is the key to building logic gates.</p>
+<p class="calibre_1">Actually, the lightbulb can be connected to the relay in two ways. Notice the flexible metal piece that's pulled by the electromagnet. At rest, it's touching one contact; when the electromagnet pulls it, it hits another contact. We've been using that lower contact as the output of the relay, but we could just as well use the upper contact. When we use this contact, the output of the relay is reversed and the lightbulb is on when the input switch is open: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00133.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">And when the input switch is closed, the bulb goes out:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00134.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Using the terminology of switches, this type of relay is called a <span><em class="italic">double-throw</em></span> relay. It has two outputs that are electrically opposite—when one has a voltage, the other doesn't. </p>
+<p class="calibre_1">By the way, if you're having a tough time visualizing what modern relays look like, you can see a few in conveniently transparent packaging at your local <a shape="rect"></a>Radio Shack. Some, like the heavy-duty relays with Radio Shack part numbers 275-206 and 275-214, are about the size of ice cubes. The insides are encased in a clear plastic shell, so you can see the electromagnet and the metal contacts. The circuits I'll be describing in this chapter and the next could be built using Radio Shack part number 275-240 relays, which are smaller (about the size of a Chiclet) and cheaper ($2.99 apiece). </p>
+<p class="calibre_1">Just as two switches can be connected in series, two relays can be connected in series:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00135.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The output of the top relay supplies a voltage to the second relay. As you can see, when both switches are open, the lightbulb isn't lit. We can try closing the top switch: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00136.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Still the lightbulb doesn't light because the bottom switch is still open and that relay isn't triggered. We can try opening the top switch and closing the bottom switch: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00137.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The lightbulb is still not lit. The current can't reach the lightbulb because the first relay isn't triggered. The only way to get the bulb to light up is to close both switches: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00138.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Now both relays are triggered, and current can flow between V, the lightbulb, and ground.</p>
+<p class="calibre_1">Like the two switches wired in series, these two relays are performing a little exercise in logic. The bulb lights up only if both relays are triggered. These two relays wired in series are known as an <span><em class="italic">AND gate</em></span>. To avoid excessive drawing, electrical engineers have a special symbol for an AND gate. That symbol looks like this: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00139.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">This is the first of four basic logic gates. The AND gate has two inputs (at the left in this diagram) and one output (at the right). You'll often see the AND gate drawn as this one is with the inputs at the left and the output at the right. That's because people who are accustomed to reading from left to right also like to read electrical diagrams from left to right. But the AND gate can just as well be drawn with the inputs at the top, the right, or the bottom. </p>
+<p class="calibre_1">The original circuit with the two relays wired in series with two switches and a lightbulb looked like this:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00140.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Using the symbol for the AND gate, this same circuit looks like this:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00141.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Notice that this symbol for the AND gate not only takes the place of two relays wired in series, but it also implies that the top relay is connected to a voltage, and both relays are connected to ground. Again, the lightbulb lights up only if both the top switch <span><em class="italic">and</em></span> the bottom switch are closed. That's why it's called an <span><em class="italic">AND gate</em></span>. </p>
+<p class="calibre_1">The inputs of the AND gate don't necessarily have to be connected to switches, and the output doesn't necessarily have to be connected to a lightbulb. What we're really dealing with here are voltages at the inputs and a voltage at the output. For example, the output of one AND gate can be an input to a second AND gate, like this: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00142.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">This bulb will light up only if all three switches are closed. Only if the top two switches are closed will the output of the first AND gate trigger the first relay in the second AND gate. The bottom switch triggers the second relay in the second AND gate. </p>
+<p class="calibre_1">If we think of the absence of a voltage as a 0, and the presence of a voltage as a 1, the output of the AND gate is dependent on inputs like this: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00143.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">As with the two switches wired in series, the AND gate can also be described in this little table:</p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">AND</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">0</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">1</strong></span></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">0</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">1</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">It's also possible to make AND gates with more than two inputs. For example, suppose you connect three relays in series:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00144.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The lightbulb lights up only if all three switches are closed. This configuration is expressed by this symbol:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00145.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">It's called a 3-input AND gate.</p>
+<p class="calibre_1">The next logic gate involves two relays that are wired in parallel like this:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00146.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Notice that the outputs of the two relays are connected to each other. This connected output then provides power for the lightbulb. Either one of the two relays is enough to light the bulb. For example, if we close the top switch, the bulb lights up. The bulb is getting power from the left relay. </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00147.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Similarly, if we leave the top switch open but close the bottom switch, the bulb lights up:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00148.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The bulb also lights if both switches are closed:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00149.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">What we have here is a situation in which the bulb lights up if the top switch <span><em class="italic">or</em></span> the bottom switch is closed. The key word here is <span><em class="italic">or</em></span>, so this is called the <span><em class="italic">OR gate</em></span>. Electrical engineers use a symbol for the OR gate that looks like this: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00150.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">It's somewhat similar to the symbol for the AND gate except that the input side is rounded, much like the O in OR. (That might help you to keep them straight.) </p>
+<p class="calibre_1">The output of the OR gate supplies a voltage if either of the two inputs has a voltage. Again, if we say that the absence of a voltage is 0 and the presence of a voltage is 1, the OR gate has four possible states: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00151.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">In the same way that we summarized the output of the AND gate, we can summarize the output of the OR gate:</p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">OR</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">0</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">1</strong></span></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">0</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">1</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">OR gates can also have more than two inputs. (The output of such a gate is 1 if any of the inputs are 1; the output is 0 only if all the outputs are 0.) </p>
+<p class="calibre_1">Earlier I explained how the relays that we're using are called <span><em class="italic">double-throw</em></span> relays because an output can be connected two different ways. Normally, the bulb isn't lit when the switch is open: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00152.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">When the switch is closed, the bulb lights up.</p>
+<p class="calibre_1">Alternatively, you can use the other contact so that the bulb is lit when the switch is <span><em class="italic">open</em></span>: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00153.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">In this case, the lightbulb goes out when you close the switch. A single relay wired in this way is called an <span><em class="italic">inverter</em></span>. An inverter isn't a logic gate (logic gates always have two or more inputs), but it's often very useful nonetheless. It's represented by a special symbol that looks like this: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00154.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">It's called an inverter because it inverts 0 (no voltage) to 1 (voltage) and vice versa:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00155.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">With the inverter, the AND gate, and the OR gate, we can start wiring the control panel to automate a choice of the ideal kitty. Let's begin with the switches. The first switch is closed for female and open for male. Thus we can generate two signals that we'll call F and M, like this: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00156.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">When F is 1, M will be 0 and vice versa. Similarly, the second switch is closed for a neutered cat and open for an unneutered cat: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00157.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The next two switches are more complicated. In various combinations, these switches must indicate four different colors. Here are the two switches, both wired to a voltage: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00158.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">When both switches are open (as shown), they indicate the color white. Here's how to use two inverters and one AND gate to generate a signal I'll call W, which is a voltage (1) if you select a white cat and not a voltage (0) if not: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00159.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">When the switches are open, the inputs to both inverters are 0. The outputs of the inverters (which are inputs to the AND gate) are thus both 1. That means the output of the AND gate is 1. If either of the switches is closed, the output of the AND gate will be a 0. </p>
+<p class="calibre_1">To indicate a black cat, we close the first switch. This can be realized using one inverter and an AND gate:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00160.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The output of the AND gate will be 1 only if the first switch is closed and the second switch is open.</p>
+<p class="calibre_1">Similarly, if the second switch is closed, we want a tan cat:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00161.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">And if both switches are closed, we want a cat of an "other" color:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00162.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Now let's combine all four little circuits into one big circuit. (As usual, the black dots indicate connections between wires in the circuit; wires that cross without black dots <span><em class="italic">are not connected</em></span>.) </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00163.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Yes, I know this set of connections now looks very complicated. But if you trace through very carefully—if you look at the two inputs to each AND gate to see where they're coming from and try to ignore where they're also going—you'll see that the circuit works. If both switches are off, the W output will be 1 and the rest will be 0. If the first switch is closed, the B output will be 1 and the rest will be 0, and so forth. </p>
+<p class="calibre_1">Some simple rules govern how you can connect gates and inverters: The output of one gate (or inverter) can be the input to one or more other gates (or inverters). But the outputs of two or more gates (or inverters) are never connected to one another. </p>
+<p class="calibre_1">This circuit of four AND gates and two inverters is called a <span><em class="italic">2-Line-to-4-Line Decoder</em></span>. The input is two bits that in various combinations can represent four different values. The output is four signals, only one of which is 1 at any time, depending on the two input values. On similar principles, you can make a 3-Line-to-8-Line Decoder or a 4-Line-to-16-Line Decoder, and so forth. </p>
+<p class="calibre_1">The simplified version of the cat-selection expression was</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">(N x ((M x (W + T)) + (F x (1 – W)))) + B</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">For every + sign in this expression, there must be an OR gate in the circuit. For every x sign, there must be an AND gate.</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00164.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The symbols down the left side of the circuit diagram are in the same order as they appear in the expression. These signals come from the switches wired with inverters and the 2-line-to-4-line decoder. Notice the use of the inverter for the (1 – W) part of the expression. </p>
+<p class="calibre_1">Now you might say, "That's a heck of a lot of relays," and yes, that's true. There are two relays in every AND gate and OR gate, and one relay for each inverter. I'd say the only realistic response is, "Get used to it." We'll be using a lot more relays in the chapters ahead. Just be thankful you don't actually have to buy them and wire them at home. </p>
+<p class="calibre_1">We'll look at two more logic gates in this chapter. Both use the output of the relay that normally has a voltage present when the relay is untriggered. (This is the output used in the inverter.) For example, in this configuration the output from one relay supplies power to a second relay. With both inputs off, the lightbulb is on: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00165.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">If the top switch is closed, the bulb goes off:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00166.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The light goes off because power is no longer being supplied to the second relay. Similarly, if the bottom switch is closed, the light is also off: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00167.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">And if both switches are closed, the lightbulb is off:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00168.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">This behavior is precisely the opposite of what happens with the OR gate. It's called <span><em class="italic">NOT OR</em></span> or, more concisely, <span><em class="italic">NOR</em></span>. This is the symbol for the NOR gate: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00169.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">It's the same as the symbol for the OR except with a little circle at the output. The circle means <span><em class="italic">invert</em></span>. The NOR is the same as </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00170.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The output of the NOR gate is shown in the following table:</p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">NOR</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">0</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">1</strong></span></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">0</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">1</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">This table shows results opposite those of the OR gate, which are 1 if either of the two inputs is 1 and 0 only if both inputs are 0. </p>
+<p class="calibre_1">And yet another way to wire two relays is shown here:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00171.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">In this case, the two outputs are connected, which is similar to the OR configuration but using the other contacts. The lightbulb is on when both switches are open. </p>
+<p class="calibre_1">The lightbulb remains on when the top switch is closed:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00172.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Similarly, the lightbulb remains on when the bottom switch is closed:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00173.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Only when both switches are closed does the lightbulb go off:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00174.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">This behavior is exactly opposite that of the AND gate. This is called <span><em class="italic">NOT AND</em></span> or, more concisely, <span><em class="italic">NAND</em></span>. The NAND gate is drawn just like the AND gate but with a circle at the output, meaning the output is the inverse of the AND gate: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00175.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The NAND gate has the following behavior:</p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">NAND</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">0</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">1</strong></span></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">0</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">1</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">Notice that the output of the NAND gate is opposite the AND gate. The output of the AND gate is 1 only if both inputs are 1; otherwise, the output is 0. </p>
+<p class="calibre_1">At this point, we've looked at four different ways of wiring relays that have two inputs and one output. Each configuration behaves in a slightly different way. To avoid drawing and redrawing the relays, we've called them logic gates and decided to use the same symbols to represent them that are used by electrical engineers. The output of the particular logic gate depends on the input, which is summarized here: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00176.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">So now we have four logic gates and the inverter. Completing this array of tools is just a regular old relay:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00177.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">This is called a <span><em class="italic">buffer</em></span>, and this is the symbol for it: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00178.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">It's the same symbol as the inverter but without the little circle. The buffer is remarkable for not doing much. The output of the buffer is the same as the input: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00179.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">But you can use a buffer when an input signal is weak. You'll recall that this was the reason relays were used with the telegraph many years ago. Or a buffer can be used to slightly delay a signal. This works because the relay requires a little time—some fraction of a second—to be triggered. </p>
+<p class="calibre_1">From here on in the book, you'll see very few drawings of relays. Instead, the circuits that follow will be built from buffers, <a shape="rect"></a>inverters, the four basic logic gates, and more sophisticated circuits (like the 2-Line-to-4-Line Decoder) built from these logic gates. All these other components are made from relays, of course, but we don't actually have to look at the relays. </p>
+<p class="calibre_1">Earlier, when building the 2-Line-to-4-Line Decoder, we saw a little circuit that looked like this:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00180.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Two inputs are inverted and become inputs to an AND gate. Sometimes a configuration like this is drawn without the inverters:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00181.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Notice the little circles at the input to the AND gate. Those little circles mean that the signals are inverted at that point—a 0 (no voltage) becomes a 1 (voltage) and vice versa. </p>
+<p class="calibre_1">An AND gate with two inverted inputs does exactly the same thing as a NOR gate:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00182.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The output is 1 only if both inputs are 0.</p>
+<p class="calibre_1">Similarly, an OR gate with the two inputs inverted is equivalent to a NAND gate:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00183.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The output is 0 only if both inputs are 1.</p>
+<p class="calibre_1">These two pairs of equivalent circuits represent an electrical implementation of <span><em class="italic">De Morgan's Laws</em></span>. Augustus De Morgan was another Victorianera mathematician, nine years older than Boole, whose book <a shape="rect"></a><em class="italic">Formal Logic</em> was published in 1847, the very same day (the story goes) as Boole's <a shape="rect"></a><em class="italic">The Mathematical Analysis of Logic</em>. Indeed, Boole had been inspired to investigate logic by a very public feud that was being waged between De Morgan and another British mathematician involving accusations of plagiarism. (De Morgan has been exonerated by history.) Very early on, De Morgan recognized the importance of Boole's insights. He unselfishly encouraged Boole and helped him along the way, and is today sadly almost forgotten except for his famous laws. </p>
+<p class="calibre_1">De Morgan's Laws are most simply expressed this way:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00184.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">A and B are two Boolean operands. In the first expression, they're inverted and then combined with the Boolean AND operator. This is the same as combining the two operands with the Boolean OR operator and then inverting the result (which is the NOR). In the second expression, the two operands are inverted and then combined with the Boolean OR operator. This is the same as combining the operands with the Boolean AND operator and then inverting (which is the NAND). </p>
+<p class="calibre_1">De Morgan's Laws are an important tool for simplifying Boolean expressions and hence, for simplifying circuits. Historically, this was what Claude Shannon's paper really meant for electrical engineers. But obsessively simplifying circuits won't be a major concern in this book. It's preferable to get things working rather than to get things working as simply as possible. And what we're going to get working next is nothing less than an adding machine. </p>
+</div>  <div class="mbp_pagebreak" id="calibre_pb_41"></div>
+</body></html>

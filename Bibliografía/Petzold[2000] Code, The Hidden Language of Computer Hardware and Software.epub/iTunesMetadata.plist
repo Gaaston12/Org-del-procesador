@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>artistName</key>
+	<string>Charles Petzold</string>
+	<key>book-info</key>
+	<dict>
+		<key>cover-image-hash</key>
+		<string>9E313D950E71835FE5D00FBF448171BE</string>
+		<key>cover-image-path</key>
+		<string>images/calibre_cover.jpg</string>
+		<key>mime-type</key>
+		<string>application/epub+zip</string>
+		<key>package-file-hash</key>
+		<string>B11FFF514A710A867E43E89F5CF93DF5</string>
+		<key>publisher-unique-id</key>
+		<string>bfb92d8e-cc05-42f4-abc9-304aed626aef</string>
+		<key>unique-id</key>
+		<integer>6063191925861724026</integer>
+		<key>update-level</key>
+		<integer>2</integer>
+	</dict>
+	<key>genre</key>
+	<string>COMPUTERS / Software Development &amp; Engineering / General</string>
+	<key>itemName</key>
+	<string>CODE</string>
+	<key>playlistName</key>
+	<string>CODE</string>
+	<key>releaseDate</key>
+	<string>2009-11-30T06:00:00+00:00</string>
+	<key>sort-artist</key>
+	<string>Petzold, Charles</string>
+	<key>sort-artist-status</key>
+	<integer>3</integer>
+</dict>
+</plist>

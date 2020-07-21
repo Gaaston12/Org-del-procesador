@@ -1,0 +1,458 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Code: The Hidden Language of Computer Hardware and Software</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+<div id="filepos625949" style="height:0pt"></div><div id="filepos625949" class="calibre_">
+<div class="calibre_">
+<div class="calibre_">
+<div class="calibre_">
+<h1 class="calibre1" id="calibre_pb_46"><span class="calibre2"><a shape="rect" class="calibre4"></a>Chapter 13. But What About Subtraction? </span></h1>
+</div>
+</div>
+</div>
+<p class="calibre_1">After you've convinced yourself that relays can indeed be wired together to add binary numbers, you might ask, "But what about subtraction?" Rest assured that you're not making a nuisance of yourself by asking questions like this; you're actually being quite perceptive. Addition and subtraction complement each other in some ways, but the mechanics of the two operations are different. An addition marches consistently from the rightmost column of digits to the leftmost column. Each carry from one column is added to the next column. We don't <span><em class="italic">carry</em></span> in subtraction, however; we <span><em class="italic">borrow</em></span>, and that involves an intrinsically different mechanism—a messy back-and-forth kind of thing. </p>
+<p class="calibre_1">For example, let's look at a typical borrow-laden subtraction problem:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00208.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">To do this, we start with the rightmost column. First we see that 6 is bigger than 3, so we have to borrow 1 from the 5, and then subtract 6 from 13, which is 7. Then we have to remember that we borrowed 1 from the 5, so it's really a 4, and this 4 is smaller than 7, so we borrow 1 from the 2 and subtract 7 from 14, which is 7. Then we have to remember that we borrowed 1 from the 2, so it's really a 1, and then we subtract 1 from it to get 0. Our answer is 77: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00209.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Now how are we ever going to persuade a bunch of logic gates to go through such perverse logic?</p>
+<p class="calibre_1">Well, we're not going to try. Instead, we're going to use a little trick that lets us subtract <span><em class="italic">without</em></span> borrowing. This will please <a shape="rect"></a>Polonius ("Neither a borrower nor a lender be") and the rest of us as well. Moreover, examining subtraction in detail is useful because it directly relates to the way in which binary codes are used for storing negative numbers in computers. </p>
+<p class="calibre_1">For this explanation, I need to refer to the two numbers being subtracted. Their proper names are the <span><em class="italic">minuend</em></span> and the <span><em class="italic">subtrahend</em></span>. The subtrahend is subtracted from the minuend, and the result is the <span><em class="italic">difference:</em></span></p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00210.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">To subtract without borrowing, you first subtract the subtrahend <span><em class="italic">not</em></span> from the minuend but from 999: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00211.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">You use 999 here because the numbers have 3 digits. If the numbers had 4 digits, you would use 9999. Subtracting a number from a string of 9s results in a number called the <span><em class="italic">nines' complement</em></span>. The nines' complement of 176 is 823. And it works in reverse: The nines' complement of 823 is 176. What's nice is this: No matter what the subtrahend is, calculating the nines' complement <span><em class="italic">never requires a borrow</em></span>. </p>
+<p class="calibre_1">After you've calculated the nines' complement of the subtrahend, you add it to the original minuend:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00212.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">And finally you add 1 and subtract 1000:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00213.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">You're finished. The result is the same as before, and never once did you borrow.</p>
+<p class="calibre_1">Why does this work? The original subtraction problem is</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">253 – 176</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">If any number is both added to and subtracted from this expression, the result will be the same. So let's add 1000 and subtract 1000: </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">253 – 176 + 1000 – 1000</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">This expression is equivalent to</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">253 – 176 + 999 + 1 – 1000</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">Now the various numbers can be regrouped, this way:</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">253 + (999 – 176) + 1 – 1000</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">And this is identical to the calculation I demonstrated using the nines' complement. We replaced the one subtraction with two subtractions and two additions, but in the process we got rid of all the nasty borrows. </p>
+<p class="calibre_1">What if the subtrahend is larger than the minuend? For example, the subtraction problem could be</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00214.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Normally, you would look at this and say, "Hmmm. I see that the subtrahend is larger than the minuend, so I have to switch the two numbers around, perform the subtraction, and remember that the result is really a negative number." You might be able to switch them around in your head and write the answer this way: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00215.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Doing this calculation without borrowing is a little different from the earlier example. You begin as you did before by subtracting the subtrahend (253) from 999 to get the nines' complement: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00216.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Now add the nines' complement to the original minuend:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00217.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">At this point in the earlier problem, you were able to add 1 and subtract 1000 to get the final result. But in this case, that strategy isn't going to work well. You would need to subtract 1000 from 923, and that really means subtracting 923 from 1000, and that requires borrowing. </p>
+<p class="calibre_1">Instead, since we effectively added 999 earlier, let's subtract 999 now:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00218.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">When we see this, we realize that our answer will be a negative number and that we really need to switch around the two numbers by subtracting 922 from 999. This again involves no borrowing, and the answer is as we expect: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00219.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">This same technique can also be used with binary numbers and is actually simpler than with decimal numbers. Let's see how it works. </p>
+<p class="calibre_1">The original subtraction problem was</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00220.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">When these numbers are converted to binary, the problem becomes</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00221.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Step 1. Subtract the subtrahend from 11111111 (which equals 255):</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00222.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">When we were working with decimal numbers, the subtrahend was subtracted from a string of nines, and the result was called the nines' complement. With binary numbers, the subtrahend is subtracted from a string of ones and the result is called the <span><em class="italic">ones' complement</em></span>. But notice that we don't really have to do a subtraction to calculate the ones' complement. That's because every 0 bit in the original number becomes a 1 bit in the ones' complement, and every 1 bit becomes a 0 bit. For this reason, the ones' complement is also sometimes called the <span><em class="italic">negation</em></span>, or the <span><em class="italic">inverse</em></span>. (At this point, you might recall from <a shape="rect" href="index_split_014.html#filepos501329">Chapter 11</a> that we built something called an inverter that changed a 0 to a 1 and a 1 to a 0.)<a shape="rect"></a><a shape="rect"></a></p>
+<p class="calibre_1">Step 2. Add the ones' complement of the subtrahend to the minuend:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00223.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Step 3. Add 1 to the result:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00224.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Step 4. Subtract 100000000 (which equals 256):</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00225.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The result is equivalent to 77 in decimal.</p>
+<p class="calibre_1">Let's try it again with the two numbers reversed. In decimal, the <a shape="rect"></a>subtraction problem is </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00226.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">and in binary it looks like this:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00227.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Step 1. Subtract the subtrahend from 11111111. You get the ones' complement:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00228.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Step 2. Add the ones' complement of the subtrahend to the minuend:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00229.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Now 11111111 must be subtracted from the result in some way. When the original subtrahend is smaller than the minuend, you accomplish this task by adding 1 and subtracting 100000000. But you can't subtract this way without borrowing. So instead, we subtract this result from 11111111: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00230.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Again, this strategy really means that we're just inverting all the bits to get the result. The answer again is 77, but really –77. </p>
+<p class="calibre_1">At this point, we have all the knowledge we need to modify the adding machine developed in the last chapter so that it can perform <a shape="rect"></a>subtraction as well as addition. So that this doesn't become <span><em class="italic">too</em></span> complex, this new adding and subtracting machine will perform subtractions only when the subtrahend is less than the minuend, that is, when the result is a positive number. </p>
+<p class="calibre_1">The core of the adding machine was an 8-Bit Adder assembled from logic gates:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00231.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">As you probably recall, the inputs A0 through A7 and B0 through B7 were connected to switches that indicated two 8-bit values to be added. The Carry In input was connected to ground. The S0 through S7 outputs were connected to eight lightbulbs that displayed the result of the addition. Because the addition could result in a 9-bit value, the Carry Out output was also connected to a ninth lightbulb. </p>
+<p class="calibre_1">The control panel looked like this:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00232.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">In this diagram, the switches are set to add 183 (or 10110111) and 22 (00010110), producing the result of 205, or 11001101 as shown in the row of lightbulbs. </p>
+<p class="calibre_1">The new control panel for adding and subtracting two 8-bit numbers is just slightly modified. It includes an extra switch to indicate whether we want to add or subtract. </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00233.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">You turn this switch off for addition and on for subtraction, as labeled. Also, only the rightmost eight lightbulbs are used to display results. The ninth lightbulb is now labeled "Overflow/Underflow." This lightbulb indicates that a number is being calculated that can't be represented by the eight lightbulbs. This will happen if an addition produces a number greater than 255 (that's called an overflow) or if a subtraction produces a negative number (an underflow). A subtraction will produce a negative number if the subtrahend is larger than the minuend. </p>
+<p class="calibre_1">The major addition to the adding machine is some circuitry that calculates a ones' complement of an 8-bit number. Recall that the ones' complement is equivalent to inverting bits, so something to calculate the ones' complement of an 8-bit number might look as simple as eight inverters: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00234.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The problem with this circuit is that it <span><em class="italic">always</em></span> inverts the bits that enter into it. We're trying to create a machine that does both addition and subtraction, so the circuitry needs to invert the bits only if a subtraction is being performed. A better circuit looks like this: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00235.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">A single signal labeled <span><em class="italic">Invert</em></span> is input to each of eight XOR (exclusive OR) gates. Recall that the XOR exhibits the following behavior: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">XOR</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">0</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">1</strong></span></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">0</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">1</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">So if the Invert signal is 0, the eight outputs of the XOR gates are the same as the eight inputs. For example, if 01100001 is input, then 01100001 is output. If the Invert signal is 1, the eight input signals are inverted. If 01100001 is input, 10011110 is output. </p>
+<p class="calibre_1">Let's package these eight XOR gates in a box labeled <span><em class="italic">Ones' Complement</em></span>: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00236.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The Ones' Complement box, the 8-Bit Adder box, <a shape="rect"></a>and a final exclusive OR gate can now be wired together like this: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00237.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Notice the three signals all labeled <span><em class="italic">SUB</em></span>. This is the Add/Subtract switch. This signal is 0 if an addition is to be performed and 1 if a <a shape="rect"></a>subtraction is to be performed. For a subtraction, the B inputs (the second row of switches) are all inverted by the Ones' Complement circuit before entering the adder. Also for a subtraction, you add 1 to the result of the addition by setting the CI (Carry In) input of the adder to 1. For an addition, the Ones' Complement circuit has no effect and the CI input is 0. </p>
+<p class="calibre_1">The SUB signal and the CO (Carry Out) output of the adder also go into an XOR gate that's used to light up the Overflow/Underflow lamp. If the SUB signal is 0 (which means an addition is being performed), the lightbulb will be lit if the CO output of the adder is 1. This means that the result of the addition is greater than 255. </p>
+<p class="calibre_1">If a subtraction is being performed and if the subtrahend (the B switches) is less than the minuend (the A switches), it's normal that the CO output from the adder is 1. This represents the 100000000 that must be subtracted in the final step. So the Overflow/Underflow lamp is lit only if the CO output from the adder is 0. This means that the subtrahend is greater than the minuend and the result is negative. The machine shown above isn't designed to display negative numbers. </p>
+<p class="calibre_1">You must surely be glad you asked, "But what about subtraction?"</p>
+<p class="calibre_1">I've been talking about negative numbers in this chapter, but I haven't yet indicated what negative binary numbers look like. You might assume that the traditional negative sign is used with binary just as it is in decimal. For example, –77 is written in binary as –1001101. You can certainly do that, but one of the goals in using binary numbers is to represent <span><em class="italic">everything</em></span> using 0s and 1s—even tiny symbols such as the negative sign. </p>
+<p class="calibre_1">Of course, you could simply use another bit for the negative sign. You could make that extra bit 1 for a negative number and 0 for a positive number, which would work, although it doesn't go quite far enough. There's another solution for representing negative numbers that also provides a hassle-free method for adding negative and positive numbers together. The drawback of this other method is that you must decide ahead of time how many digits are required for all the numbers you might encounter. </p>
+<p class="calibre_1">Let's think about this for a moment. The advantage of writing positive and negative numbers the way we normally do is that they can go on forever. We imagine 0 as the middle of an infinite stream of positive numbers going off in one direction and an infinite stream of negative numbers going off in another: </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">… –1,000,000 –999,999 … –3 –2 –1 0 1 2 3 … 999,999 1,000,000 …</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">But suppose we don't need an infinite number of numbers. Suppose we know at the outset that every number we come across will be within a particular range. </p>
+<p class="calibre_1">Let's look at a checking account, which is one place people sometimes see negative numbers. Let's assume that we never have as much as $500 in our checking account and that the bank has given us a no-bounce checking limit of $500. This means that the balance in our checking account is always a number somewhere between $499 and –$500. Let's also assume that we never deposit as much as $500, we never write a check for more than $500, and we deal only in dollars and don't care about cents. </p>
+<p class="calibre_1">This set of conditions means that the range of numbers we deal with in using our checking account include -500 through 499. That's a total of 1000 numbers. This restriction implies that we can use just three decimal digits and no negative sign to represent <span><em class="italic">all</em></span> the numbers we need. The trick is that we really don't need positive numbers ranging from 500 through 999. That's because we've already established that the maximum positive number we need is 499. So the three-digit numbers from 500 through 999 can actually represent negative numbers. Here's how it works: </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">To mean –500, we use 500.</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">To mean –499, we use 501.</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">To mean –498, we use 502.</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">(yada, yada, yada)</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">To mean –2, we use 998.</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">To mean –1, we use 999.</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">To mean 0, we use 000.</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">To mean 1, we use 001.</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">To mean 2, we use 002.</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">(yada, yada, yada)</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">To mean 497, we use 497.</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">To mean 498, we use 498.</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">To mean 499, we use 499.</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">In other words, every 3-digit number that begins with a 5, 6, 7, 8, or 9 is actually a negative number. Instead of writing the numbers like this: </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">–500 –499 –498 … –4 –3 –2 –1 0 1 2 3 4 … 497 498 499</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">we write them this way:</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">500 501 502 … 996 997 998 999 000 001 002 003 004 … 497 498 499</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">Notice that this forms a circle of sorts. The lowest negative number (500) looks as if it continues from the highest positive number (499). And the number 999 (which is actually –1) is one less than zero. If we add 1 to 999, we'd normally get 1000. But since we're only dealing with three digits, it's actually 000. </p>
+<p class="calibre_1">This type of notation is called <span><em class="italic">ten's complement</em></span>. To convert a 3-digit negative number to ten's complement, we subtract it from 999 and add 1. In other words, the ten's complement is the nines' complement plus one. For example, to write –255 in ten's complement, subtract it from 999 to get 744 and then add 1 to get 745.<a shape="rect"></a></p>
+<p class="calibre_1">You've probably heard it said that "Subtraction is merely addition using negative numbers." To which you've probably replied, "Yeah, but you still have to <span><em class="italic">subtract</em></span> them." Well, using the ten's complement, you don't subtract numbers at all. Everything is addition. </p>
+<p class="calibre_1">Suppose you have a checking account balance of $143. You write a check for $78. That means you have to add a negative $78 to $143. In ten's complement, –78 is written as 999 –078 + 1, or 922. So, our new balance is $143 + $922, which equals (ignoring the overflow), $65. If we then write a check for $150 dollars, we have to add –150, which in ten's complement equals 850. So our previous balance of 065 plus 850 equals 915, our new balance. This is actually equivalent to –$85. </p>
+<p class="calibre_1">The equivalent system in binary is called <span><em class="italic">two's complement</em></span>. Let's assume that we're working with 8-bit numbers. These range from 00000000 to 11111111, which normally correspond to decimal numbers 0 through 255. But if you also want to express negative numbers, every 8-bit number that begins with a 1 will actually represent a negative number, as shown in the following table: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Binary</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Decimal</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10000000</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">–128</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10000001</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">–127</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10000010</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">–126</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10000011</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">–125</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">⋮</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre12"> </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11111101</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">–3</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11111110</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">–2</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11111111</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">–1</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">00000000</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">00000001</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">00000010</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">⋮</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre12"> </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">01111100</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">124</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">01111101</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">125</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">01111110</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">126</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">01111111</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">127</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">The range of numbers that you can represent is now limited to –128 through +127. The most <a shape="rect"></a>significant (leftmost) bit is known as the <span><em class="italic">sign bit</em></span>. The sign bit is 1 for negative numbers and 0 for positive numbers. </p>
+<p class="calibre_1">To calculate the two's complement, first calculate the ones' complement and then add 1. This is equivalent to inverting all the digits and adding 1. For example, the decimal number 125 is 01111101. To express –125 in two's complement, first invert the digits of 01111101 to get 10000010, and then add 1 to get 10000011. You can verify the result using the preceding table. To go backward, do the same thing—invert all the bits and add 1. </p>
+<p class="calibre_1">This system gives us a way to express positive and negative numbers without using negative signs. It also lets us freely add positive and negative numbers using only the rules of addition. For example, let's add the binary equivalents of –127 and 124. Using the preceding table as a cheat sheet, this is simply </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00238.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The result is equivalent to –3 in decimal.</p>
+<p class="calibre_1">What you need to watch out for here is overflow and underflow conditions. That's when the result of an addition is greater than 127 or less than –128. For example, suppose you add 125 to itself: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00239.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Because the high bit is set to 1, the result must be interpreted as a negative number, specifically the binary equivalent of –6. Something similar happens when –125 is added to itself: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00240.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">We decided at the outset that we're restricting ourselves to 8-bit numbers, so the leftmost digit of the result must be ignored. The rightmost 8 bits are equivalent to +6. </p>
+<p class="calibre_1">In general, the result of an addition involving positive and negative numbers is invalid if the sign bits of the two operands are the same but the sign bit of the result is different. </p>
+<p class="calibre_1">Now we have two different ways of using binary numbers. Binary numbers can be either <span><em class="italic">signed</em></span> or <span><em class="italic">unsigned</em></span>. Unsigned 8-bit numbers range from 0 through 255. Signed 8-bit numbers range from –128 through 127. Nothing about the numbers themselves will tell you whether they're signed or unsigned. For example, suppose someone says, "I have an 8-bit binary number and the value is 10110110. What's the decimal equivalent?" You must first inquire, "Is that a signed or an unsigned number? It could be –74 or 182." </p>
+<p class="calibre_1">That's the trouble with bits: They're just zeros and ones and don't tell you anything <span><em class="italic">about</em></span> themselves. </p>
+</div>  <div class="mbp_pagebreak" id="calibre_pb_47"></div>
+</body></html>

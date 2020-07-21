@@ -1,0 +1,891 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Code: The Hidden Language of Computer Hardware and Software</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+<div id="filepos950185" style="height:0pt"></div><div id="filepos950185" class="calibre_">
+<div class="calibre_">
+<div class="calibre_">
+<div class="calibre_">
+<h1 class="calibre1" id="calibre_pb_58"><span class="calibre2"><a shape="rect" class="calibre4"></a>Chapter 17. Automation </span></h1>
+</div>
+</div>
+</div>
+<p class="calibre_1">The human species is often amazingly inventive and industrious but at the same time profoundly lazy. It's very clear that we humans don't like to work. This aversion to work is so extreme—and our ingenuity so acute—that we're eager to devote countless hours designing and building devices that might shave a few minutes off our workday. Few fantasies tickle the human pleasure center more than a vision of relaxing in a hammock watching some newfangled contraption we just built mow the lawn. </p>
+<p class="calibre_1">I'm afraid I won't be showing plans for an automatic lawn-mowing machine in these pages. But in this chapter, through a progression of ever more sophisticated machines, I <span><em class="italic">will</em></span> automate the process of adding and subtracting numbers. This hardly sounds earth-shattering, I know. But the final machine in this chapter will be so versatile that it will be able to solve virtually any problem that makes use of addition and subtraction, and that includes a great many problems indeed. </p>
+<p class="calibre_1">Of course, with sophistication comes complexity, so some of this might be rough going. No one will blame you if you skim over the excruciating details. At times, you might rebel and promise that you'll never seek electrical or mechanical assistance for a math problem ever again. But stick with me because by the end of this chapter we'll have invented a machine we can legitimately call a <span><em class="italic">computer</em></span>. </p>
+<p class="calibre_1">The last adder we looked at was in <a shape="rect" href="index_split_017.html#filepos669318">Chapter 14</a>. That version included an 8-bit latch that accumulated a running total entered on one set of eight switches: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00339.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">As you'll recall, an 8-bit latch uses flip-flops to store an 8-bit value. To use this device, you first momentarily press the Clear switch to set the stored contents of the latch to all zeros. Then you use the switches to enter your first number. The adder simply adds this number to the zero output of the latch, so the result is the number you entered. Pressing the Add switch stores that number in the latch <a shape="rect"></a>and turns on some lightbulbs to display it. Now you set up the second number on the switches. The adder adds this one to the number stored in the latch. Pressing the Add button again stores the total in the latch and displays it using the lightbulbs. In this way, you can add a whole string of numbers and display the running total. The limitation, of course, is that the eight lightbulbs can't display a total greater than 255. </p>
+<p class="calibre_1">At the time I showed this circuit to you in <a shape="rect" href="index_split_017.html#filepos669318">Chapter 14</a>, the only latches that I had introduced so far were <span><em class="italic">level triggered</em></span>. In a level-triggered latch, the Clock input has to go to 1 and then back to 0 in order for the latch to store something. During the time the Clock input is 1, the data inputs of the latch can change and these changes will affect the stored output. Later in that chapter, I introduced <span><em class="italic">edge-triggered</em></span> latches. These latches save their values in the brief moment that the Clock input goes from 0 to 1. Edge-triggered latches are often somewhat easier to use, so I want to assume that all the latches in this chapter are edge triggered. </p>
+<p class="calibre_1">A latch used to accumulate a running total of numbers is called an <span><em class="italic">accumulator</em></span>. But we'll see later in this chapter that an accumulator need not simply accumulate. An accumulator is often a latch that holds first one number and then that number plus or minus another number. </p>
+<p class="calibre_1">The big problem with the adding machine shown above is fairly obvious: Say you have a list of 100 binary numbers you want to add together. You sit down at the adding machine and doggedly enter each and every number and accumulate the sum. But when you're finished, you discover that a couple of the numbers on the list were incorrect. Now you have to do the whole thing over again. </p>
+<p class="calibre_1">But maybe not. In the preceding chapter, we used almost 5 million relays to build a RAM array containing 64 KB of memory. We also wired a control panel (shown on page 204) that let us close a switch labeled <span><em class="italic">Takeover</em></span>
+<a shape="rect"></a>and literally take over all the writing and reading of this RAM array using switches. </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00340.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">If you had typed all 100 binary numbers into this RAM array rather than directly into the adding machine, making a few corrections would be a lot easier. </p>
+<p class="calibre_1">So now we face the challenge of connecting the RAM array to the accumulating adder. It's pretty obvious that the RAM Data Out signals replace the switches to the adder, but it's perhaps not so obvious that a 16-bit counter (such as we built in <a shape="rect" href="index_split_017.html#filepos669318">Chapter 14</a>) can control the address signals of the RAM array. The Data Input and Write signals to the RAM aren't needed in this circuit: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00341.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">This is certainly not the easiest piece of calculating equipment ever invented. To use it, you first must close the switch labeled Clear. This clears the contents of the latch and sets the output of the 16-bit counter to 0000h. Then you close the Takeover switch on the RAM control panel. You can then enter a set of 8-bit numbers that you want to add beginning at RAM address 0000h. If you have 100 numbers, you'll store these numbers at addresses 0000h through 0063h. (You should also set all the unused entries in the RAM array to 00h.) You can then open the Takeover switch of the RAM control panel (so that the control panel no longer has control over the RAM array) and open the Clear switch. Then just sit back and watch the flashing lightbulbs. </p>
+<p class="calibre_1">Here's how it works: When the Clear switch is first opened, the address of the RAM array is 0000h. The 8-bit value stored in the RAM array at that address is an input to the adder. The other input to the adder is 00h because the latch is also cleared. </p>
+<p class="calibre_1">The oscillator provides a clock signal—a signal that alternates between 0 and 1 very quickly. After the Clear switch is opened, whenever the clock changes from a 0 to a 1, two things happen simultaneously: The latch stores the sum from the adder, and the 16-bit counter increments, thus addressing the next value in the RAM array. The first time the clock changes from 0 to 1 after the Clear switch is opened, the latch stores the first value and the counter increments to 0001h. The second time, the latch stores the sum of the first and second values, and the counter increments to 0002h. And so on. </p>
+<p class="calibre_1">Of course, I'm making some assumptions here. Above all, I'm assuming that the oscillator is slow enough to allow all the rest of the circuitry to work. With each stroke of the clock, a lot of relays must trigger other relays before a valid sum shows up at the output of the adder. </p>
+<p class="calibre_1">One problem with this circuit is that we have no way of stopping it! At some point, the lightbulbs will stop flashing because all the rest of the numbers in the RAM array will be 00h. At that time, you can read the binary sum. But when the counter eventually reaches FFFFh, it will <span><em class="italic">roll over</em></span> (just like a car odometer) to 0000h and this automated adder will begin adding the numbers again to the sum that was already calculated. </p>
+<p class="calibre_1">This adding machine has other problems as well. All it does is add, and all it adds are 8-bit numbers. Not only is each number in the RAM array limited to 255, but the sum is limited to 255 as well. The adder also has no way to subtract numbers, although it's possible that you're using negative numbers in two's complements, in which case this machine is limited to handling numbers from -128 through 127. One obvious way to make it add larger numbers (for example, 16-bit values) is to double the width of the RAM array, the adder, and the latch, as well as provide eight more lightbulbs. But you might not be willing to make that investment quite yet. </p>
+<p class="calibre_1">Of course, I wouldn't even mention these problems unless I knew we were going to solve them eventually. But the problem I want to focus on first is yet another. What if you didn't need to add 100 numbers together in one big sum? What if instead you wanted to use an automated adder to add 50 pairs of numbers to get 50 different sums? Or maybe you'd like a machine versatile enough to add pairs of numbers together, or 10 numbers together, or 100. And you want all the results to be available for your convenient perusal. </p>
+<p class="calibre_1">The automated adder shown previously displays the running total on a set of lightbulbs attached to the latch. This approach is no good if you want to add 50 pairs of numbers together to get 50 different sums. Instead, you probably want the results to be stored back in the RAM array. That way, you can use the RAM control panel to examine the results at your convenience. That control panel has its own lightbulbs specifically for this purpose. </p>
+<p class="calibre_1">What this means is that we can get rid of the lightbulbs connected to the latch. But instead, the output from the latch must be connected to the data input of the RAM array so that the sums can be written into the RAM: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00342.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">I've eliminated some other parts of the automated adder in this diagram as well, specifically the oscillator and the Clear switch. I removed them because it's no longer at all obvious where the Clear and Clock inputs to the counter and the latch will come from. Moreover, now that we've made use of the RAM data inputs, we need a way to control the RAM Write signal. </p>
+<p class="calibre_1">So let's not worry about the circuit for a moment and instead focus on the problem we're trying to solve. What we're trying to do here is configure an automated adder so that it's not restricted merely to accumulating a running total of a bunch of numbers. We want to have complete freedom in how many numbers we add and how many different sums are saved in RAM for later examination. </p>
+<p class="calibre_1">For example, suppose we want to add three numbers together and then add two numbers together and then add another three numbers together. We might imagine typing these numbers into the RAM array beginning at address 0000h so that the contents of the memory look like this: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00343.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">This is how I'll be showing a section of memory in this book. The boxes represent the contents of the memory. Each byte of memory is in a box. The address of that box is at the left. Not every address needs to be indicated because the addresses are sequential and you can always figure out what address applies to a particular box. At the right are some comments about this memory. These particular comments indicate that we want the automated adder to store the three sums in the empty boxes. (Although these boxes are empty, the memory isn't necessarily empty. Memory always contains <span><em class="italic">something</em></span>, even if it's just random data. But right now it doesn't contain anything useful.) </p>
+<p class="calibre_1">Now I know you're tempted to practice your hexadecimal arithmetic and fill in the little boxes yourself. But that's not the point of this demonstration. We want the automated adder to do the additions for us. </p>
+<p class="calibre_1">Instead of making the automated adder do just one thing—which in the first version involved adding the contents of a RAM address to the 8-bit latch that I've called the accumulator—we actually want it now to do <span><em class="italic">four different things</em></span>. To begin an addition, we want it to transfer a byte from memory into the accumulator. I'll call this operation <span><em class="italic">Load</em></span>. The second operation we need to perform is to <span><em class="italic">Add</em></span> a byte in memory to the contents of the accumulator. Third, we need to take a sum in the accumulator and <span><em class="italic">Store</em></span> it in memory. Finally, we need some way to <span><em class="italic">Halt</em></span> the automated adder. </p>
+<p class="calibre_1">In gory detail, what we want the automated adder to do in this particular example is this:</p>
+<div class="calibre_">
+<ul class="calibre26">
+<li class="calibre27"><span><em class="italic">Load</em></span> the value at address 0000h into the accumulator. </li>
+<li class="calibre27"><span><em class="italic">Add</em></span> the value at address 0001h to the accumulator. </li>
+<li class="calibre27"><span><em class="italic">Add</em></span> the value at address 0002h to the accumulator. </li>
+<li class="calibre27"><span><em class="italic">Store</em></span> the contents of the accumulator at address 0003h. </li>
+<li class="calibre27"><span><em class="italic">Load</em></span> the value at address 0004h into the accumulator. </li>
+<li class="calibre27"><span><em class="italic">Add</em></span> the value at address 0005h to the accumulator. </li>
+<li class="calibre27"><span><em class="italic">Store</em></span> the contents of the accumulator at address 0006h. </li>
+<li class="calibre27"><span><em class="italic">Load</em></span> the value at address 0007h into the accumulator. </li>
+<li class="calibre27"><span><em class="italic">Add</em></span> the value at address 0008h to the accumulator. </li>
+<li class="calibre27"><span><em class="italic">Add</em></span> the value at address 0009h to the accumulator. </li>
+<li class="calibre27"><span><em class="italic">Store</em></span> the contents of the accumulator at address 000Ah. </li>
+<li class="calibre27"><span><em class="italic">Halt</em></span> the workings of the automated adder. </li>
+</ul>
+</div>
+<p class="calibre_1">Notice that just as in the original automated adder, each byte of memory is still being addressed sequentially beginning at 0000h. The original automated adder simply added the contents of the memory at that address to the contents of the accumulator. In some cases, we still want to do that. But we also sometimes want to <span><em class="italic">Load</em></span> the accumulator directly with a value in memory or to <span><em class="italic">Store</em></span> the contents of the accumulator in memory. And after everything is done, we want the automated adder to simply stop so that the contents of the RAM array can be examined. </p>
+<p class="calibre_1">How can we accomplish this? Well, it's not sufficient to simply key in a bunch of numbers in RAM and expect the automated adder to do the right thing. For each number in RAM, we also need some kind of numeric code that indicates what the automated adder is to do: <span><em class="italic">Load, Add, Store</em></span>, or <span><em class="italic">Halt</em></span>. </p>
+<p class="calibre_1">Perhaps the easiest (but certainly not the cheapest) way to store these codes is in a whole separate RAM array. This second RAM array is accessed at the same time as the original RAM array. But instead of containing numbers to be added, it contains the codes that indicate what the automated adder is supposed to do with the corresponding address in the original RAM array. These two RAM arrays can be labeled <span><em class="italic">Data</em></span> (the original RAM array) and <span><em class="italic">Code</em></span> (the new one): </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00344.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">We've already established that our new automated adder needs to be able to write sums into the original RAM array (labeled <span><em class="italic">Data</em></span>). But the new RAM array (labeled <span><em class="italic">Code</em></span>) will be written to solely through the control panel. </p>
+<p class="calibre_1">We need four codes for the four actions we want the new automated adder to do. These codes can be anything we want to assign. Here are four possibilities: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Operation</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Code</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Load</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Store</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Add</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">20h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Halt</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">FFh</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">So to perform the three sets of addition in the example I just outlined, you'll need to use the control panel to store the following values in the Code RAM array: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00345.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">You might want to compare the contents of this RAM array with the RAM array containing the data we want to add (shown on page 211). You'll notice that each code in the Code RAM corresponds to a value in the Data RAM that is to be loaded into or added to the accumulator, or the code indicates that a value is to be stored back in memory. Numeric codes used in such a manner are often called <span><em class="italic">instruction codes</em></span>, or <span><em class="italic">operation codes</em></span>, or (most concisely) <span><em class="italic">opcodes</em></span>. They "instruct" circuitry to perform a certain "operation."<a shape="rect"></a></p>
+<p class="calibre_1">As I mentioned earlier, the output of the 8-bit latch in the original automated adder needs to be an input to the Data RAM array. That's how the <span><em class="italic">Store</em></span> instruction works. Another change is necessary: Originally, the output of the 8-Bit Adder was the input to the 8-bit latch. But now, to carry out the <span><em class="italic">Load</em></span> instruction, the output of the Data RAM array must sometimes be the input to the 8-bit latch. What's needed is a 2-Line-to-1-Line Data Selector. The revised automated adder looks like the illustration on the next page. </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00346.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">This diagram is missing a few pieces, but it shows all the 8-bit data paths between the various components. The 16-bit counter provides an address for the two RAM arrays. The output of the Data RAM array goes into the 8-Bit Adder, as usual, to perform the <span><em class="italic">Add</em></span> instruction. But the input to the 8-bit latch can be either the output of the Data RAM array (in the case of a <span><em class="italic">Load</em></span> instruction) or the output of the adder (in the case of an <span><em class="italic">Add</em></span> instruction). This situation requires a 2-to-1 Selector. The output of the latch circles back to the adder, as usual, but it's also the data input of the Data RAM array for a <span><em class="italic">Store</em></span> instruction. </p>
+<p class="calibre_1">What this diagram is missing are all the little signals that control these components, known collectively as the <span><em class="italic">control</em></span> signals. These include the Clock and Clear inputs to the 16-bit counter, the Clock and Clear inputs to the 8-bit latch, the Write input to the Data RAM array, and the Select input to the 2-to-1 Selector. Some of these signals will obviously be based on the output of the Code RAM array. For example, the Select input to the 2-to-1 Selector must be 0 (selecting the Data RAM output) if the output of the Code RAM array indicates a <span><em class="italic">Load</em></span> instruction. The Write input to the Data RAM array must be 1 only when the opcode is a <span><em class="italic">Store</em></span> instruction. These control signals can be generated by various combinations of <a shape="rect"></a>logic gates. </p>
+<p class="calibre_1">With a minimal amount of extra hardware and the addition of a new opcode, we can also persuade this circuit to subtract a number from the value in the <a shape="rect"></a>accumulator. The first step is to expand the table of operation codes: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Operation</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Code</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Load</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Store</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Add</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">20h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Subtract</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">21h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Halt</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">FFh</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">The codes for <span><em class="italic">Add</em></span> and <span><em class="italic">Subtract</em></span> differ only by the least-significant bit of the code value, which we'll call C<sub class="calibre25">0</sub>. If the operation code is 21h, the circuit should do the same thing it does for an <span><em class="italic">Add</em></span> instruction, except that the data out from the Data RAM array is inverted before it goes into the adder, and the carry input to the adder is set to 1. The C<sub class="calibre25">0</sub> signal can perform both those tasks in this revised automated adder that includes an inverter: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00347.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Now suppose we wish to add 56h and 2Ah together and then subtract 38h from the sum. You can do it with the following codes and data stored in the two RAM arrays: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00348.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">After the <span><em class="italic">Load</em></span> operation, the accumulator contains the value 56h. After the <span><em class="italic">Add</em></span> operation, the accumulator contains the sum of 56h and 2Ah, or 80h. The <span><em class="italic">Subtract</em></span> operation causes the bits of the next value in the Data RAM array (38h) to be inverted. The inverted value C7h is added to 80h with the carry input of the adder set to 1: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00349.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The result is 48h. (In decimal, 86 plus 42 minus 56 equals 72.)</p>
+<p class="calibre_1">One persistent problem that hasn't yet been adequately addressed is the meager 8-bit data width of the adder and everything else that's attached to it. In the past, the only solution I've offered is to connect two 8-Bit Adders (and two of mostly everything else) together to get 16-bit devices. </p>
+<p class="calibre_1">But a much less expensive solution is possible. Suppose you want to add two 16-bit numbers, for example:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00350.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">This 16-bit addition is the same as separately adding this rightmost byte (often called the <span><em class="italic">low-order</em></span> byte):<a shape="rect"></a></p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00351.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">and then the leftmost, or <span><em class="italic">high-order</em></span>, byte: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00352.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">for a result of 99D7h. So if we store the two 16-bit numbers in memory like this:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00353.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">the result D7h will be stored at address 0002h, and the result 99h will be stored at address 0005h.</p>
+<p class="calibre_1">Of course, this won't work all the time. It works for the numbers I've chosen as an example, but what if the two 16-bit numbers to be added were 76ABh and 236Ch? In that case, adding the 2 <a shape="rect"></a>low-order bytes results in a carry: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00354.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">This carry must be added to the sum of the 2 high-order bytes:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00355.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">for a final result of 9A17h.</p>
+<p class="calibre_1">Can we enhance the circuitry of our automated adding machine to add two 16-bit numbers correctly? Yes, we can. All we need do is <span><em class="italic">save the Carry Out bit</em></span> from the 8-Bit Adder when the first addition is performed and then use that Carry Out bit as the Carry Input bit to the next addition. How can a bit be saved? By a 1-bit latch, of course; this time, the latch is known as the <span><em class="italic">Carry latch</em></span>. </p>
+<p class="calibre_1">To use the Carry latch, another operation code is needed. Let's call it <span><em class="italic">Add with Carry</em></span>. When you're adding 8-bit numbers together, you use the regular old <span><em class="italic">Add</em></span> instruction. The carry input to the adder is 0, and the carry output from the adder is latched in the Carry latch (although it need not be used at all). </p>
+<p class="calibre_1">If you want to add two 16-bit numbers together, you use the regular <span><em class="italic">Add</em></span> instruction for adding the low-order bytes. The carry input to the adder is 0 and the carry output is latched in the Carry latch. To add the 2 high-order bytes, you use the new <span><em class="italic">Add with Carry</em></span> instruction. In this case, the two numbers are added using the output of the Carry latch as the carry input to the adder. So if the first addition resulted in a carry, that carry bit is used in the second addition. If no carry resulted, the output from the Carry latch is 0. </p>
+<p class="calibre_1">If you're subtracting one 16-bit number from another, you need another new instruction; this one is called <span><em class="italic">Subtract with Borrow</em></span>. Normally, a <span><em class="italic">Subtract</em></span> instruction requires that you invert the subtrahend and set the carry input of the adder to 1. A carry out of 1 is normal and should usually be ignored. If you're subtracting a 16-bit number, however, that carry output should be saved in the Carry latch. In the second subtraction, the carry input to the adder should be set to the result of the Carry latch. </p>
+<p class="calibre_1">With the new <span><em class="italic">Add with Carry</em></span> and <span><em class="italic">Subtract with Borrow</em></span> operations, we have a total of seven opcodes so far: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Operation</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Code</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Load</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Store</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Add</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">20h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Subtract</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">21h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Add with Carry</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">22h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Subtract with Borrow</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">23h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Halt</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">FFh</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">The number sent to the adder is inverted for a <span><em class="italic">Subtract</em></span> or a <span><em class="italic">Subtract with Borrow</em></span> operation. The carry output of the adder is the data input to the Carry latch. The latch is clocked whenever an <span><em class="italic">Add, Subtract, Add with Carry</em></span>, or <span><em class="italic">Subtract with Borrow</em></span> operation is being performed. The carry input of the 8-Bit Adder is set to 1 when a <span><em class="italic">Subtract</em></span> operation is performed or when the data output of the Carry latch is 1 and an <span><em class="italic">Add with Carry</em></span> or <span><em class="italic">Subtract with Borrow</em></span> operation is being performed. </p>
+<p class="calibre_1">Keep in mind that the <span><em class="italic">Add with Carry</em></span> instruction causes the carry input of the 8-Bit Adder to be set to 1 only if the previous <span><em class="italic">Add</em></span> or <span><em class="italic">Add with Carry</em></span> instruction resulted in a carry output from the adder. Thus you use the <span><em class="italic">Add with Carry</em></span> instruction whenever you're adding multibyte numbers whether or not the operation is actually needed. To properly code the 16-bit addition shown earlier, you use </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00356.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">This works correctly regardless of what the numbers are.</p>
+<p class="calibre_1">With these two new opcodes, we've greatly expanded the scope of the machine. No longer are we restricted to adding 8-bit values. By repeated use of the <span><em class="italic">Add with Carry</em></span> instruction, we can now add 16-bit values, 24-bit values, 32-bit values, 40-bit values, <a shape="rect"></a>and so on. Suppose we want to add the 32-bit values 7A892BCDh and 65A872FFh. We need one <span><em class="italic">Add</em></span> instruction and three <span><em class="italic">Add with Carry</em></span> instructions: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00357.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Of course, actually keying these numbers into memory isn't the most rewarding job around. Not only do you have to use switches to represent binary numbers, but the numbers aren't stored in consecutive addresses. For example, the number 7A892BCDh goes into addresses 0000h, 0003h, 0006h, and 0009h starting with the least-significant byte. To get the final result, you have to examine the values located at addresses 0002h, 0005h, 0008h, and 000Bh. </p>
+<p class="calibre_1">Moreover, the current design of our automated adder doesn't allow the reuse of results in subsequent calculations. Suppose we want to add three 8-bit numbers together and then subtract an 8-bit number from that sum and store the result. That would require a <span><em class="italic">Load</em></span> instruction, two <span><em class="italic">Add</em></span> instructions, a <span><em class="italic">Subtract</em></span>, and a <span><em class="italic">Store</em></span>. But what if we also wanted to subtract other numbers from that original sum? That sum isn't accessible. We'd have to recalculate it every time we needed it. </p>
+<p class="calibre_1">The problem is that we've built an automated adder that addresses the <span><em class="italic">Code</em></span> memory and the <span><em class="italic">Data</em></span> memory simultaneously and sequentially beginning at address 0000h. Each instruction in the Code memory corresponds to a location in the Data memory at the same address. Once a <span><em class="italic">Store</em></span> instruction causes something to be stored in the Data memory, that value can't later be loaded back into the accumulator. </p>
+<p class="calibre_1">To fix this problem, I'm going to make a fundamental and excruciating change to the automated adder that will at first seem insanely complicated. But in time, you'll see (I hope) that it opens a wide door of flexibility. </p>
+<p class="calibre_1">Here we go. We currently have seven opcodes:</p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Operation</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Code</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Load</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Store</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Add</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">20h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Subtract</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">21h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Add with Carry</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">22h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Subtract with Borrow</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">23h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Halt</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">FFh</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">Each of these codes occupies 1 byte in memory. With the exception of the <span><em class="italic">Halt</em></span> code, I now want each of these instructions to require <span><em class="italic">3</em></span> bytes of memory. The first byte will be the code itself, and the next 2 bytes will be a 16-bit memory location. For the <span><em class="italic">Load</em></span> instruction, that address indicates a location in the Data RAM array that contains the byte to be loaded into the accumulator. For the <span><em class="italic">Add, Subtract, Add with Carry</em></span>, and <span><em class="italic">Subtract with Borrow</em></span> instructions, that address indicates the location of the byte that's to be added to or subtracted from the accumulator. For the <span><em class="italic">Store</em></span> instruction, the address indicates where the contents of the accumulator are to be stored. </p>
+<p class="calibre_1">For example, just about the simplest chore that the current automated adder can do is add two numbers together. To do this, you set up the Code and Data RAM arrays this way: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00358.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">In the revised automated adder, each instruction (except <span><em class="italic">Halt</em></span>) requires 3 bytes: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00359.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Each of the instruction codes (except <span><em class="italic">Halt</em></span>) is followed by 2 bytes that indicate a 16-bit address in the Data RAM array. These three addresses happen to be 0000h, 0001h, and 0002h, but they could be anything. </p>
+<p class="calibre_1">Earlier I showed how to add a pair of 16-bit numbers—specifically 76ABh and 232 Ch—using the <span><em class="italic">Add</em></span> and <span><em class="italic">Add with Carry</em></span> instructions. But we had to store the 2 low-order bytes of these numbers at memory locations 0000h and 0001h, and the 2 high-order bytes at 0003h and 0004h. The result of the addition was stored at 0002h and 0005h. </p>
+<p class="calibre_1">With this change, we can store the two numbers and the result in a more rational manner, and perhaps in an area of memory that we've never used before: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00360.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">These six locations don't have to be all together like this. They can be scattered anywhere throughout the whole 64-KB Data RAM array. To add these values at these memory locations, you must set up the instructions in the Code RAM array, like this: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00361.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Notice that the 2 <a shape="rect"></a>low-order bytes located at addresses 4001h and 4003h are added first, with the result stored at address 4005h. The 2 high-order bytes (at addresses 4000h and 4002h) are added with the <span><em class="italic">Add with Carry</em></span> instruction, and the result is stored at address 4004h. And if we were to remove the <span><em class="italic">Halt</em></span> instruction and add more instructions to the Code memory, a sub-sequent calculation could later make use of the original numbers and the sum of them simply by referring to these memory addresses. </p>
+<p class="calibre_1">The key to implementing this design is to have the data output of the Code RAM array go into three 8-bit latches. Each of these latches stores one of the bytes of the 3-byte instruction. The first latch stores the instruction code, the second latch stores the high-order byte of the address, and the third latch stores the low-order address byte. The output of the second and third latches becomes the 16-bit address of the Data RAM array: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00362.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The process of retrieving an instruction from memory is known as the <span><em class="italic">instruction fetch</em></span>. In our machine, each instruction is 3 bytes in length, and it's retrieved from memory 1 byte at a time; the instruction fetch requires three cycles of the Clock signal. The entire <span><em class="italic">instruction cycle</em></span> requires a fourth cycle of the Clock signal. These changes certainly complicate the control signals. </p>
+<p class="calibre_1">The machine is said to <span><em class="italic">execute</em></span> an instruction when it does a series of actions in response to the instruction code. But it's not as if the machine is <span><em class="italic">alive</em></span> or anything. It's not analyzing the machine code and deciding what to do. Each machine code is just triggering various control signals in a unique way that causes the machine to do various things. </p>
+<p class="calibre_1">Notice that by making this machine more versatile, we've also slowed it down. Using the same oscillator, it adds numbers at only one-fourth the speed of the first automated adder I showed in this chapter. This is the result of an engineering principle known as <a shape="rect"></a>TANSTAAFL (pronounced <span><em class="italic">tans toffle</em></span>), which means "There Ain't No Such Thing As A Free Lunch." Usually, whenever you make a machine better in one way, something else tends to suffer as a result. </p>
+<p class="calibre_1">If you were actually building such a machine out of relays, the bulk of the circuit would obviously be the two 64-KB RAM arrays. Indeed, much earlier you might have skimped on these components and decided that initially you would need only 1 KB of memory. If you made sure you stored everything in addresses 0000h through 03FFh, using less memory than 64 KB would work out just fine. </p>
+<p class="calibre_1">Still, however, you probably weren't thrilled that you needed <span><em class="italic">two</em></span> RAM arrays. And in fact, you don't. I originally introduced two RAM arrays—one for code and one for data—so that the architecture of the automated adder would be as clear and simple as possible. But now that we've decided to make each instruction 3 bytes long—with the second and third bytes indicating an address where the data is located—it's no longer necessary to have two separate RAM arrays. Both code and data can be stored in the <span><em class="italic">same</em></span> RAM array. </p>
+<p class="calibre_1">To accomplish this, we need to have a 2-to-1 Selector to determine how the RAM array is addressed. Usually, the address is the 16-bit counter, as before. The RAM Data Out is still connected to three latches that latch the instruction code and the 2 address bytes that accompany each instruction. But the 16-bit address is the second input to the 2-to-1 Selector. After the address is latched, this selector allows the latched address to be the address input to the RAM array: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00363.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">We've made a lot of progress. Now it's possible to enter the instructions and the data in a single RAM array. For example, the diagram on the next page shows how to add two 8-bit numbers together and subtract a third. </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00364.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">As usual, the instructions begin at 0000h because that's where the counter starts accessing the RAM array after it has been reset. The final <span><em class="italic">Halt</em></span> instruction is stored at address 000Ch. We could have stored the three numbers and the results anywhere in the RAM array (except in the first 13 bytes, of course, because those memory locations are occupied by instructions), but we chose to store the data starting at address 0010h. </p>
+<p class="calibre_1">Now suppose you discover that you need to add two more numbers to that result. Well, you can replace all the instructions you just entered with some new instructions, but maybe you don't want to do that. Maybe you'd prefer to just continue with the new instructions starting at the end of these instructions, first replacing the <span><em class="italic">Halt</em></span> instruction with a new <span><em class="italic">Load</em></span> instruction at address 000Ch. But you also need two new <span><em class="italic">Add</em></span> instructions, a <span><em class="italic">Store</em></span> instruction, and a new <span><em class="italic">Halt</em></span> instruction. Your only problem is that you have some data stored at address 0010h. You have to move that data someplace at a higher memory address. And you then have to change the instructions that refer to those memory instructions. </p>
+<p class="calibre_1">Hmmm, you think. Maybe combining Code and Data into a single RAM array wasn't such a hot idea after all. But I assure you, a problem such as this would have come up sooner or later. So let's solve it. In this case, maybe what you'd like to do is enter the new instructions beginning at address 0020h and the new data at address 0030h: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00365.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Notice that the first <span><em class="italic">Load</em></span> instruction refers to the memory location 0013h, which is where the result of the first calculation was stored. </p>
+<p class="calibre_1">So now we have some instructions starting at address 0000h, some data starting at 0010h, some more instructions at 0020h, and some more data at 0030h. We want to let the automated adding machine start at 0000h and execute all the instructions. </p>
+<p class="calibre_1">We know we must remove that <span><em class="italic">Halt</em></span> instruction at address 000Ch, and by <span><em class="italic">remove</em></span> I really mean replace it with something else. But is that sufficient? The problem is that whatever we replace the <span><em class="italic">Halt</em></span> instruction with is going to be interpreted as an instruction byte. And so will the bytes stored every 3 bytes after that—at 000Fh, and 0012h, and 0015h, and 0018h, and 001Bh, and 001Eh. What if one of these bytes just happens to be an 11h? That's a <span><em class="italic">Store</em></span> instruction. And what if the 2 bytes following that <span><em class="italic">Store</em></span> instruction happened to refer to address 0023h? That would cause the machine to write the contents of the accumulator to that address. But that address contains something important already! And even if nothing like this happened, the next instruction byte that the adder retrieves from memory after the one at 001Eh will be at address 0021h, not 0020h, which is where our next real instruction happens to be. </p>
+<p class="calibre_1">Are we all in agreement that we can't just remove the <span><em class="italic">Halt</em></span> instruction at address 000Ch and hope for the best? </p>
+<p class="calibre_1">But what we <span><em class="italic">can</em></span> replace it with is a new instruction called <span><em class="italic">Jump</em></span>. Let's add that to our repertoire. </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Operation</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Code</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Load</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Store</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Add</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">20h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Subtract</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">21h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Add with Carry</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">22h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Subtract with Borrow</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">23h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Jump</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">30h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Halt</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">FFh</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">Normally, this automated adder addresses the RAM array sequentially. A <span><em class="italic">Jump</em></span> instruction causes the machine to alter that pattern. Instead, it begins addressing the RAM array at a different specified address. Such an instruction is sometimes also called a <span><em class="italic">Branch</em></span> instruction, or <span><em class="italic">Goto</em></span>, as in "go to another place."<a shape="rect"></a></p>
+<p class="calibre_1">In the preceding example, we can replace the <span><em class="italic">Halt</em></span> instruction at address 000Ch with a <span><em class="italic">Jump</em></span> instruction: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00366.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The 30h byte is the code for a <span><em class="italic">Jump</em></span> instruction. The 16-bit address that follows indicates the address of the next instruction that the automated adder is to read. </p>
+<p class="calibre_1">So in the preceding example, the automated adder begins at 0000h, as usual, <a shape="rect"></a>and does a <span><em class="italic">Load</em></span> instruction, an <span><em class="italic">Add</em></span>, a <span><em class="italic">Subtract</em></span>, and a <span><em class="italic">Store</em></span>. It then does the <span><em class="italic">Jump</em></span> instruction and continues at address 0020h with a <span><em class="italic">Load</em></span>, two <span><em class="italic">Add</em></span> instructions, a <span><em class="italic">Store</em></span>, and finally <span><em class="italic">Halt</em></span>. </p>
+<p class="calibre_1">The <span><em class="italic">Jump</em></span> instruction affects the 16-bit counter. Whenever the automated adder encounters a <span><em class="italic">Jump</em></span> instruction, the counter must somehow be forced to output that new address that follows the <span><em class="italic">Jump</em></span> instruction code. This is implemented by using the Preset and Clear inputs of the edge-triggered D-type flip-flops that make up the 16-bit counter: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00367.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">You'll recall that the Preset and Clear inputs should both be 0 for normal operation. But if Preset is 1, Q becomes 1. And if Clear is 1, Q becomes 0. </p>
+<p class="calibre_1">If you want to load a single flip-flop with a new value (which I'll call <span><em class="italic">A</em></span> for address), you can wire it like this: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00368.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Normally the Set It signal is 0. In that case, the Preset input to the flip-flop is 0. The Clear input is also 0 unless the Reset signal is 1. This allows the flip-flop to be cleared independently of the Set It signal. When the Set It signal is 1, the Preset input will be 1 and the Clear input will be 0 if A is 1. If A is 0, the Preset input will be 0 and the Clear input will be 1. This means that Q will be set to the value of A. </p>
+<p class="calibre_1">We need one of these for each bit of the 16-bit counter. Once loaded with a particular value, the counter will continue counting from that value on. </p>
+<p class="calibre_1">Otherwise, the changes aren't severe. The 16-bit address that's latched from the RAM array is an input to both the 2-to-1 Selector (which allows this address to be an address input to the RAM array) and the 16-bit counter for the Set It function: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00369.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Obviously, we must ensure that the Set It signal is 1 only if the instruction code is 30h and the address has been latched.</p>
+<p class="calibre_1">The <span><em class="italic">Jump</em></span> instruction is certainly useful. But it's not nearly as useful as an instruction that jumps sometimes but not all the time. Such an instruction is known as a <span><em class="italic">conditional jump</em></span>, and perhaps the best way to show how useful such an instruction can be is to pose a question: How can we persuade our automated adder to <span><em class="italic">multiply</em></span> two 8-bit numbers? For example, how do we get the result for something as simple as A7h times 1Ch?<a shape="rect"></a></p>
+<p class="calibre_1">Easy, right? The result of multiplying two 8-bit values is a 16-bit product. For convenience, all three numbers involved in the multiplication are expressed as 16-bit values. The first job is to decide where you want to put the numbers and the product: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00370.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Everyone knows that multiplying A7h and 1Ch (which is 28 in decimal) is the same as 28 additions of A7h. So the 16-bit location at addresses 1004h and 1005h will actually be an accumulated summation. Here's the code for adding A7h to that location once: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00371.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">At the completion of these six instructions, the 16-bit value at memory locations 1004h and 1005h will equal A7h times 1. Therefore, these six instructions have to be repeated 27 more times in order for that 16-bit value to equal A7h times 1Ch. You can achieve this by typing in these six instructions 27 more times beginning at address 0012h. Or you can put a <span><em class="italic">Halt</em></span> instruction at 0012h and press the Reset button 28 times to get the final answer. </p>
+<p class="calibre_1">Of course, neither of these two options is ideal. They both require that you do something—type in a bunch of instructions or press the Reset button—a number of times that's proportional to one of the numbers being multiplied. Surely you wouldn't want to generalize this process for 16-bit values that you want to multiply. </p>
+<p class="calibre_1">But what if you put a <span><em class="italic">Jump</em></span> instruction at 0012h? This instruction causes the counter to start from 0000h again: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00372.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">This certainly does the trick (sort of). The first time through, the 16-bit value at memory locations 1004h and 1005h will equal A7h times 1. Then the <span><em class="italic">Jump</em></span> instruction will go back up to the top. At the end of the second time through, the 16-bit result will equal A7h times 2. Eventually, it will equal A7h times 1Ch, but there's no stopping it. It just keeps going and going and going. </p>
+<p class="calibre_1">What we want is a <span><em class="italic">Jump</em></span> instruction that starts the process over again only as many times as are needed. That's the conditional jump. And it's really not that hard to implement. The first thing we'll want to add is a 1-bit latch similar to the Carry latch. This will be called the <span><em class="italic">Zero latch</em></span> because it will latch a value of 1 only if the output of the 8-Bit Adder is all zeros: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00373.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The output of that 8-bit NOR gate is 1 only if all the inputs are 0. Like the Clock input of the Carry latch, the Clock input of the Zero latch latches a value only when an <span><em class="italic">Add, Subtract, Add with Carry</em></span>, or <span><em class="italic">Subtract with Borrow</em></span> instruction is being performed. This latched value is known as the <span><em class="italic">Zero flag</em></span>. Watch out because it could seem as if it's working backward: The Zero flag is 1 if the output of the adder is all zeros, and the Zero flag is 0 if output of the adder is not all zeros. </p>
+<p class="calibre_1">With the Carry latch and the Zero latch, we can expand our repertoire of instructions by four:</p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Operation</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Code</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Load</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Store</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Add</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">20h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Subtract</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">21h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Add with Carry</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">22h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Subtract with Borrow</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">23h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Jump</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">30h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Jump If Zero</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">31h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Jump If Carry</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">32h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Jump If Not Zero</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">33h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Jump If Not Carry</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">34h</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Halt</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">FFh</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">For example, the <span><em class="italic">Jump If Not Zero</em></span> instruction jumps to the specified address only if the output of the Zero latch is 0. In other words, there will be <span><em class="italic">no</em></span> jump if the last <span><em class="italic">Add, Subtract, Add with Carry</em></span>, or <span><em class="italic">Subtract with Borrow</em></span> instruction resulted in 0. Implementing this design is just an add-on to the control signals that implement the regular <span><em class="italic">Jump</em></span> command: If the instruction is <span><em class="italic">Jump If Not Zero</em></span>, the Set It signal on the 16-bit counter is triggered only if the Zero flag is 0. </p>
+<p class="calibre_1">Now all that's necessary to make the code shown above multiply two numbers are the following instructions starting at address 0012h: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00374.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The first time through, the 16-bit location at 0004h and 0005h contains A7h times 1, as we've already established. The instructions here load the byte from location 1003h into the accumulator. This is 1Ch. This byte is added to the value at location 001Eh. This happens to be the <span><em class="italic">Halt</em></span> instruction, but of course it's also a valid number. Adding FFh to 1Ch is the same as subtracting 1 from 1Ch, so the result is 1Bh. This isn't 0, so the Zero flag is 0. The 1Bh byte is stored back at address 1003h. Next is a <span><em class="italic">Jump If Not Zero</em></span> instruction. The Zero flag isn't set to 1, so the jump occurs. The next instruction is the one located at address 0000h. </p>
+<p class="calibre_1">Keep in mind that the <span><em class="italic">Store</em></span> instruction doesn't affect the Zero flag. The Zero flag is affected only by the <span><em class="italic">Add, Subtract, Add with Carry</em></span>, or <span><em class="italic">Subtract with Borrow</em></span> instruction, so it will remain the same value that was set the last time one of these instructions occurred. </p>
+<p class="calibre_1">The second time through, the 16-bit location at 1004h and 1005h will contain the value A7h times 2. The value 1Bh is added to FFh to get the result 1Ah. That's not 0, so back to the top. </p>
+<p class="calibre_1">On the twenty-eighth time through, the 16-bit location at 1004h and 1005h will contain the value A7h times 1Ch. At location 1003h will be the value 1. This will be added to FFh and the result will be zero. The Zero flag will be set! So the <span><em class="italic">Jump If Not Zero</em></span> instruction will <span><em class="italic">not</em></span> jump back to 0000h. Instead, the next instruction is a <span><em class="italic">Halt</em></span>. We're done. </p>
+<p class="calibre_1">I now assert that at long last we've assembled a piece of hardware that we can honestly call a <span><em class="italic">computer</em></span>. To be sure, it's a primitive computer, but it's a computer nonetheless. What makes the difference is the conditional jump. Controlled repetition or <span><em class="italic">looping</em></span> is what separates computers from <a shape="rect"></a>calculators. I've just demonstrated how a conditional jump instruction allows this machine to multiply two numbers. In a similar way, it can also divide two numbers. Moreover, it's not limited to 8-bit values. It can add, subtract, multiply, and divide 16-bit, 24-bit, 32-bit, or even larger numbers. And if it can do this, it can calculate square roots, <a shape="rect"></a>logarithms, and trigonometric functions. </p>
+<p class="calibre_1">Now that we've assembled a computer, we can start using words that sound like we're talking about computers.</p>
+<p class="calibre_1">The particular computer that we've assembled is classified as a <span><em class="italic">digital</em></span> computer because it works with discrete numbers. At one time, there were also <span><em class="italic">analog</em></span> computers that are now largely extinct. (<a shape="rect"></a>Digital data is <span><em class="italic">discrete</em></span> data—data that has certain specific distinct values. Analog information is <span><em class="italic">continuous</em></span> and varies throughout an entire range.)<a shape="rect"></a></p>
+<p class="calibre_1">A digital computer has four main parts: a <span><em class="italic">processor, memory</em></span>, at least one <span><em class="italic">input</em></span> device, and least one <span><em class="italic">output</em></span> device. In our machine, the memory is the 64-KB RAM array. The input and <a shape="rect"></a>output devices are the rows of switches and lightbulbs on the RAM array control panel. These switches and lightbulbs let us (the human beings in this show) put numbers into memory and examine the results.<a shape="rect"></a></p>
+<p class="calibre_1">The processor is everything else. A processor is also called a <span><em class="italic">central processing unit</em></span>, or CPU. More casually, the processor is sometimes called the <span><em class="italic">brain</em></span> of the computer, but I'd like to avoid using such terminology, mainly because what we designed in this chapter hardly seems anything like a brain to me. (The word <span><em class="italic">microprocessor</em></span> is very common these days. A microprocessor is just a processor that—through <a shape="rect"></a>use of technology I'll describe in <a shape="rect" href="index_split_021.html#filepos1065365">Chapter 18</a>—is very small. What we've built out of relays in this chapter could hardly be defined as a <span><em class="italic">micro</em></span> anything!) </p>
+<p class="calibre_1">The processor that we've built is an <span><em class="italic">8-bit</em></span> processor. The <a shape="rect"></a>accumulator is 8 bits wide and most of the data paths are 8 bits wide. The only 16-bit data path is the address to the RAM array. If we used 8 bits for that, we'd be limited to 256 bytes of memory rather than 65,536 bytes, and that would be quite restrictive. </p>
+<p class="calibre_1">A processor has several components. I've already identified the <span><em class="italic">accumulator</em></span>, which is simply a latch that holds a number inside the processor. In our computer, the 8-bit inverter and the 8-Bit Adder together can be termed the <span><em class="italic">Arithmetic Logic Unit</em></span>, or <a shape="rect"></a>ALU. Our ALU performs only arithmetic, specifically addition and subtraction. In slightly more sophisticated computers (as we'll see), the ALU can also perform logical functions, such as AND, OR, and XOR. The 16-bit counter is called a <span><em class="italic">Program Counter</em></span>. </p>
+<p class="calibre_1">The computer that we've built is constructed from relays, wires, switches, and lightbulbs. All of these things are <span><em class="italic">hardware</em></span>. In contrast, the instructions and other numbers that we enter into memory are called <span><em class="italic">software</em></span>. It's "soft" because it can be changed much more easily than the hardware can.<a shape="rect"></a></p>
+<p class="calibre_1">When we speak of computers, the word <span><em class="italic">software</em></span> is almost synonymous with the term <span><em class="italic">computer program</em></span>, or, more simply, <span><em class="italic">program</em></span>. Writing software is known as <span><em class="italic">computer programming</em></span>. Computer programming is what I was doing when I determined the series of instructions that would allow our computer to multiply two numbers together. </p>
+<p class="calibre_1">Generally, in computer programs, we can distinquish between <span><em class="italic">code</em></span> (which refers to the instructions themselves) and <span><em class="italic">data</em></span>, which are the numbers that the code manipulates. Sometimes the distinction isn't so obvious, as when the <span><em class="italic">Halt</em></span> instruction served double duty as the number –1. </p>
+<p class="calibre_1">Computer programming is sometimes also referred to as <span><em class="italic">writing code</em></span>, or <span><em class="italic">coding</em></span>, as in, "I spent my vacation coding" or "I was up until seven this morning banging out some code." Sometimes computer programmers are known as <span><em class="italic">coders</em></span>, although some might consider this a derogatory term. Such programmers might prefer to be called <span><em class="italic">software engineers</em></span>.<a shape="rect"></a></p>
+<p class="calibre_1">The operation codes that a processor responds to (such as 10h and 11h for <span><em class="italic">Load</em></span> and <span><em class="italic">Store</em></span>) are known as <span><em class="italic">machine codes</em></span>, or <span><em class="italic">machine language</em></span>. The term <span><em class="italic">language</em></span> is used because it's akin to a spoken or written human language in that a machine "understands" it and responds to it.<a shape="rect"></a><a shape="rect"></a></p>
+<p class="calibre_1">I've been referring to the instructions that our machine carries out by rather long phrases, such as <span><em class="italic">Add with Carry</em></span>. Commonly, machine codes are assigned short mnemonics that are written with uppercase letters. </p>
+<p class="calibre_1">These mnemonics can be as short as 2 or 3 letters. Here's a set of possible mnemonics for the machine codes that our computer recognizes: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Operation</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Code</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Mnemonic</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Load</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10h</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">LOD</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Store</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11h</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">STO</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Add</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">20h</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">ADD</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Subtract</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">21h</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">SUB</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Add with Carry</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">22h</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">ADC</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Subtract with Borrow</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">23h</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">SBB</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Jump</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">30h</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">JMP</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Jump If Zero</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">31h</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">JZ</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Jump If Carry</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">32h</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">JC</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Jump If Not Zero</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">33h</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">JNZ</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Jump If Not Carry</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">34h</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">JNC</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Halt</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">FFh</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">HLT</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">These mnemonics are particularly useful when combined with a couple of other shortcuts. For example, instead of saying something long-winded like, "Load byte at address 1003h into accumulator," we can instead write the statement: </p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">LOD A,[1003h]</tt></div></div><p class="calibre_1">The <span><em class="italic">A</em></span> and the <span><em class="italic">[1003]</em></span> that appear to the right of the mnemonic are called <span><em class="italic">arguments</em></span> that indicate what's going on with this particular <span><em class="italic">Load</em></span> instruction. The arguments are written with a <span><em class="italic">destination</em></span> on the left (the A stands for accumulator) and a <span><em class="italic">source</em></span> on the right. The brackets indicate that the accumulator should be loaded not with the value 1003h but with the value stored in memory at address 1003h.<a shape="rect"></a></p>
+<p class="calibre_1">Similarly, the instruction "Add byte at address 001Eh to accumulator" can be shortened to</p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">ADD A,[001Eh]</tt></div></div><p class="calibre_1">and "Store contents of accumulator at address 1003h" is</p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">STO [1003h],A</tt></div></div><p class="calibre_1">Notice that the destination (a memory location for the <span><em class="italic">Store</em></span> instruction) is still on the left and the source is on the right. The contents of the accumulator must be stored in memory at address 1003h. The wordy "Jump to 0000h if the Zero flag is not 1" is more concisely written as </p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">JNZ 0000h</tt></div></div><p class="calibre_1">The brackets aren't used in this instruction because the instruction jumps to address 0000h, not to the value that might be stored at address 0000h. </p>
+<p class="calibre_1">It's convenient to write these instructions in this type of shorthand because the instructions can be listed sequentially in a readable way that doesn't require us to draw boxes of memory locations. To indicate that a particular instruction is stored at a particular address, you can use the <a shape="rect"></a>hexadecimal address followed by a colon, such as </p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">0000h:    LOD A,[1005h]</tt></div></div><p class="calibre_1">And here's how we can indicate some data stored at a particular address:</p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">1000h:   00h, A7h<br class="calibre30"/>1002h:   00h, 1Ch<br class="calibre30"/>1004h:   00h, 00h</tt></div></div><p class="calibre_1">The 2 bytes separated by commas indicate that the first byte is stored at the address on the left and the second byte is stored at the next address. These three lines are equivalent to </p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">1000h:    00h,  A7h,  00h,  1Ch,  00h,  00h</tt></div></div><p class="calibre_1">So the entire multiplication program can be written as a series of statements like this:</p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">0000h:    LOD A,[1005h]<br class="calibre30"/>          ADD A,[1001h]<br class="calibre30"/>          STO [1005h],A<br class="calibre30"/><br class="calibre30"/>          LOD A,[1004h]<br class="calibre30"/>          ADC A,[1000h]<br class="calibre30"/>          STO [1004h],A<br class="calibre30"/><br class="calibre30"/>          LOD A,[1003h]<br class="calibre30"/>          ADD A,[001Eh]<br class="calibre30"/>          STO [1003h],A<br class="calibre30"/><br class="calibre30"/>          JNZ 0000h<br class="calibre30"/><br class="calibre30"/>001Eh:    HLT<br class="calibre30"/><br class="calibre30"/>1000h:    00h, A7h<br class="calibre30"/>1002h:    00h, 1Ch<br class="calibre30"/>1004h:    00h, 00h</tt></div></div><p class="calibre_1">The judicious use of blank lines and other <span><em class="italic">white space</em></span> is simply to make the whole program more readable for human beings like you and me.<a shape="rect"></a></p>
+<p class="calibre_1">It's better not to use actual numeric addresses when writing code because they can change. For example, if you decided to store the numbers at memory locations 2000h through 20005h, you'd need to rewrite many of the statements as well. It's better to use <span><em class="italic">labels</em></span> to refer to locations in memory. These labels are simply words, or they look almost like words, like this: </p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">BEGIN:    LOD A,[RESULT + 1]<br class="calibre30"/>          ADD A,[NUM1 + 1]<br class="calibre30"/>          STO [RESULT + 1],A<br class="calibre30"/><br class="calibre30"/>          LOD A,[RESULT]<br class="calibre30"/>          ADC A,[NUM1]<br class="calibre30"/>          STO [RESULT],A<br class="calibre30"/><br class="calibre30"/>          LOD A,[NUM2 + 1]<br class="calibre30"/>          ADD A,[NEG1]<br class="calibre30"/>          STO [NUM2 + 1],A<br class="calibre30"/><br class="calibre30"/>          JNZ BEGIN<br class="calibre30"/><br class="calibre30"/>NEG1:     HLT<br class="calibre30"/><br class="calibre30"/>NUM1:     00h, A7h<br class="calibre30"/>NUM2:     00h, 1Ch<br class="calibre30"/>RESULT:   00h, 00h</tt></div></div><p class="calibre_1">Notice that the labels <span><em class="italic">NUM1, NUM2</em></span>, and <span><em class="italic">RESULT</em></span> all refer to memory locations where 2 bytes are stored. In these statements, the labels <span><em class="italic">NUM1 + 1, NUM2 + 1</em></span>, and <span><em class="italic">RESULT + 1</em></span> refer to the second byte after the particular label. Notice the <span><em class="italic">NEG1</em></span> (<span><em class="italic">negative one</em></span>) label on the <span><em class="italic">HLT</em></span> instruction. </p>
+<p class="calibre_1">Finally, if there's a chance that you'll forget what these statements do, you can add little <span><em class="italic">comments</em></span>, which are in English and are separated from the actual statements by a semicolon: </p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">BEGIN:    LOD A,[RESULT + 1]<br class="calibre30"/>          ADD A,[NUM1 + 1]       ; Add low-order byte<br class="calibre30"/>          STO [RESULT + 1],A<br class="calibre30"/><br class="calibre30"/>          LOD A,[RESULT]<br class="calibre30"/>          ADC A,[NUM1]           ; Add high-order byte<br class="calibre30"/>          STO [RESULT],A<br class="calibre30"/><br class="calibre30"/>          LOD A,[NUM2 + 1]<br class="calibre30"/>          ADD A,[NEG1]           ; Decrement second number<br class="calibre30"/>          STO [NUM2 + 1],A<br class="calibre30"/><br class="calibre30"/>          JNZ BEGIN<br class="calibre30"/><br class="calibre30"/>NEG1:     HLT<br class="calibre30"/><br class="calibre30"/>NUM1:     00h, A7h<br class="calibre30"/>NUM2:     00h, 1Ch<br class="calibre30"/>RESULT:   00h, 00h</tt></div></div><p class="calibre_1">I'm showing you here a type of computer programming language known as <span><em class="italic">assembly language</em></span>. It's something of a compromise between the naked numbers of <a shape="rect"></a>machine code and the wordiness of our English descriptions of the instructions, coupled with symbolic representations of memory addresses. People are sometimes confused about the difference between <a shape="rect"></a>machine code and assembly language because they're really just two different ways of looking at the same thing. Every statement in assembly language corresponds to certain specific bytes of machine code.<a shape="rect"></a></p>
+<p class="calibre_1">If you were to write a program for the computer that we've built in this chapter, you'd probably want to write it first (on paper) in assembly language. Then, once you were satisfied that it was mostly correct and ready to be tested, you would <span><em class="italic">hand assemble</em></span> it: This means that you would manually convert each assembly-language statement to machine code, still on paper. At that point, you can use the switches to enter the machine code into the RAM array and <span><em class="italic">run the program</em></span>, which means to let the machine execute the instructions. </p>
+<p class="calibre_1">When you're learning the concepts of computer programming, it's never too early to get acquainted with <span><em class="italic">bugs</em></span>. When you're coding—particularly in machine code—it's very easy to make mistakes. It's bad enough to enter a number incorrectly, but what happens when you enter an instruction code incorrectly? If you enter a 11h (the <span><em class="italic">Store</em></span> instruction) when you really meant to enter a 10h (the <span><em class="italic">Load</em></span> instruction), not only will the machine not load in the number it's supposed to, but that number will be overwritten by whatever happens to be in the accumulator.<a shape="rect"></a></p>
+<p class="calibre_1">Some bugs can have unpredictable results. Suppose you use the <span><em class="italic">Jump</em></span> instruction to jump to a location that doesn't contain a valid instruction code. Or suppose you accidentally use the <span><em class="italic">Store</em></span> instruction to write over instructions. Anything can happen (and often does). </p>
+<p class="calibre_1">There's even a bug in my multiplication program. If you run it twice, the second time through it will multiply A7h by 256 and add that result to the result already calculated. This is because after you run the program once, the number at address 1003h will be 0. When you run it the second time, FFh will be added to that value. The result won't be 0, so the program will keep running until it is. </p>
+<p class="calibre_1">We've seen that this machine can do multiplication, and in a similar way it can also do division. I've also asserted that this machine can use these primitive functions to do square roots, <a shape="rect"></a>logarithms, and trigonometric functions. All a machine needs is the hardware to add and subtract and some way to use conditional jump instructions to execute the proper code. As a programmer might say, "I can do the rest in software." </p>
+<p class="calibre_1">Of course, this software might be quite complex. Many whole books have been written that describe the <span><em class="italic">algorithms</em></span> that programmers use to solve specific problems. We're not yet ready for that. We've been thinking about whole numbers and haven't taken a crack at how to represent decimal fractions in the computer. I'll get to that in <a shape="rect" href="index_split_026.html#filepos1662576">Chapter 23</a>.<a shape="rect"></a></p>
+<p class="calibre_1">I've mentioned several times that all the hardware to build these devices was available over a hundred years ago. But it's unlikely that the computer shown in this chapter could have been built at that time. Many of the concepts implicit in its design weren't apparent when relay computers were first built in the mid-1930s and only started to be understood around 1945 or so. Until that time, for example, people were still trying to build computers that internally used decimal numbers rather than binary. And computer programs weren't always stored in memory but instead were sometimes coded on paper tape. In particular, in the early days of computers, memory was expensive and bulky. Building a 64-KB RAM array from five million telegraph relays would have been as absurd one hundred years ago as it is now. </p>
+<p class="calibre_1">It's time to put what we've done in perspective and to review the history of calculation and computing devices and machines. Perhaps we shall find that we don't have to build this elaborate relay computer after all. As I mentioned in <a shape="rect" href="index_split_015.html#filepos561677">Chapter 12</a>, relays were eventually replaced with electronic devices such as vacuum tubes and transistors. Perhaps we shall also find that someone else has built something that's equivalent to the processor and the memory we designed but that can fit in the palm of your hand. </p>
+</div>  <div class="mbp_pagebreak" id="calibre_pb_59"></div>
+</body></html>
