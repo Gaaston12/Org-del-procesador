@@ -1,0 +1,25 @@
+--------------------------------
+ORGANIZACION DEL PROCESADOR 2020
+--------------------------------
+
+
+Teorico
+--------
+	** 27-07 **
+	
+Electrónica: es la parte de lafisica que estudia los cambios y los movientos de los electrones libres y la accion de fuerzas electromagneticas y los utilixan en aparatos que reciben y transmiten informacion.
+
+
+
+
+
+
+Práctico
+--------
+	** 27-07 **
+
+Sasm (instalado)
+	sudo apt install nasm
+	sudo apt search nasm e instalar todo lo que no tenga instalado
+
+
