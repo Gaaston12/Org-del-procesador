@@ -1,0 +1,53 @@
+;compilacion:
+;   nasm -f elf arguelloBaezMartin.asm			                    (genera el .o del archivo)
+;   nasm -f elf -d ELF_TYPE asm_io.asm	                		    (genera el .o de la libreria)
+;   gcc -o sumaPares driver.c arguelloBaezMartin.o asm_io.o -m32	    (genera un a.out que es el ejecutable)
+;   ./sumaPares
+
+; Integrantes:
+;   Arguello Maximiliano
+;   Baez Emilio
+;   Martin Gaston
+
+%include "asm_io.inc"
+
+section .data
+    a1 dd 1,2,3,4,5,6,7,8,9,10
+    text db "Suma de pares: ", 0
+    aux dd 0
+section .bss
+
+section .text
+global CMAIN
+CMAIN:
+    mov ebp, esp                ; for correct debugging
+    mov eax, a1
+    xor ebx, ebx                ;"i" recorre el arreglo
+    xor ecx, ecx                ;iterador
+    xor edx, edx                ;suma de los pares
+    while:
+        cmp ecx, 10
+        je endWhile
+        mov eax, [a1 + ebx]
+                                ;if para ver si es par
+            mov [aux], eax      ;guardo el valor de eax para no perderlo
+            and eax, 1
+            cmp eax, 0          ;si es 0 el numero es par
+            jpe es_par          ;si es 0 salta y suma
+            jmp next            ;sino sale del if y sigue con el recorrido del arreglo
+            es_par:
+                mov eax, [aux]
+                add edx, eax
+            next:
+        mov eax, [aux]
+        add ebx, 4
+        inc ecx
+        jmp while
+    endWhile:
+    mov eax, text
+    call print_string
+    xor eax, eax
+    mov eax, edx
+    call print_int              ;muestra por pontalla la suma de los numeros pares
+    call print_nl
+ret

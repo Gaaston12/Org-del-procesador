@@ -1,0 +1,7 @@
+a) EAX 0
+
+b) EAX 36
+
+c) EAX 113
+
+d) EAX 5

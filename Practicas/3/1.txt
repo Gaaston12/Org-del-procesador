@@ -1,0 +1,39 @@
+a)
+acc     16
+ir      16
+mar     12
+mdr     16
+pc      12
+status  3
+
+b)
+stop
+load
+store
+read
+write
+add
+subtract
+muiltiply
+divide
+jump
+jmpz
+jmpn
+
+c)
+pc->mar
+mar->pc
+ir(4-15)->mar
+mdr->ir
+mdr->acc
+acc->mdr
+ir(4-15)->pc
+
+d)
+2^mar = 2^12=4096
+
+e)
+
+
+f)
+direccionamiento directo

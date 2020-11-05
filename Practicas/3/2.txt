@@ -1,0 +1,2 @@
+pide numeros hasta que le pasen un numeros negativo.
+y te va sumando los numeros positivos

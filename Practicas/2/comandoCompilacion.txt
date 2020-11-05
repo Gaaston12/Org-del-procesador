@@ -1,0 +1,8 @@
+compilacion
+nasm -f elf archivo.asm (coff para windows- nasm -f coff archivo.asm)
+nasm -f elf -d ELF_TYPE asm_io.asm (nasm -f coff -d COFF_TYPE asm_io.asm - para windows)
+gcc driver.c archivo.o asm_io.o -m32  
+
+
+nasm -f elf archivo.asm
+gcc driver.c 

@@ -1,0 +1,19 @@
+Grupo: Arguello, Martin, Baez
+Correcciones del codigo espar.asm: 
+
+- El programa recorre el arreglo 'arre' en busca de los numero pares, si los encuentra a través del 'test' y muestra
+por pantalla un mensaje "\ PAR \" y acumula en una variable la suma de los pares. Si es impar, muestra por pantalla
+"\ IMPAR \" y no suma nadad. Al final del programa muestra la suma total de los numeros pares que estaba guardada
+en la variable acumulPares.
+
+- El programa funciona correctamente, hace lo que tiene que hacer.
+
+- Los comentarios estan un poco pobres teniendo en cuenta que tiene mucho movimiento de valores que se muestran en 
+pantalla. Le faltarian algunos para dejar mas en clase que hace en cada paso. Respeta la identacion, solo separaria un poco en bloques.
+
+- No tiene errores, lo unico que se crean muchas variables que no son necesarias para la resolucion (cadPAR cadIMPAR),
+ya que el ejercicio solo pide que se muestre el valor de la suma.
+
+
+
+

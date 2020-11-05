@@ -1,0 +1,6 @@
+se crea una micro de test if(acc<=0)skip-1 | acc | 0 | 16 | LT | 0 | 1
+
+se crea una instruccion jmpge | op -> addr
+                                if(acc<=0)skip-1
+                                ir(4-15)->pc
+                                End
