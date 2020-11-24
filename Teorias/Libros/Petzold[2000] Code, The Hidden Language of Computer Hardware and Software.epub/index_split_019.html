@@ -1,0 +1,801 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Code: The Hidden Language of Computer Hardware and Software</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+<div id="filepos880943" style="height:0pt"></div><div id="filepos880943" class="calibre_">
+<div class="calibre_">
+<div class="calibre_">
+<div class="calibre_">
+<h1 class="calibre1" id="calibre_pb_55"><span class="calibre2"><a shape="rect" class="calibre4"></a>Chapter 16. An Assemblage of Memory </span></h1>
+</div>
+</div>
+</div>
+<p class="calibre_1">As we rouse ourselves from sleep every morning, <a shape="rect"></a>memory fills in the blanks. We remember where we are, what we did the day before, and what we plan to do today. These memories might come in a rush or a dribble, and maybe after some minutes a few lapses might persist ("Funny, I don't remember wearing my socks to bed"), but all in all we can usually reassemble our lives and achieve enough continuity to commence living another day. </p>
+<p class="calibre_1">Of course, human memory isn't very orderly. Try to remember something about high school geometry, and you're likely to start thinking about the kid who sat in front of you or the day there was a fire drill just as the teacher was about to explain what QED meant. </p>
+<p class="calibre_1">Nor is human memory foolproof. Indeed, writing was probably invented specifically to compensate for the failings of human memory. Perhaps last night you suddenly woke up at 3:00 A.M. with a great idea for a screenplay. You grabbed the pen and paper you keep by your bed specifically for that purpose, and you wrote it down so you wouldn't forget. The next morning you can read the brilliant idea and start work on the screenplay. ("Boy meets girl w. car chase &amp; explosions"? That's it?) Or maybe not. </p>
+<p class="calibre_1">We <span><em class="italic">write</em></span> and we later <span><em class="italic">read</em></span>. We <span><em class="italic">save</em></span> and we later <span><em class="italic">retrieve</em></span>. We <span><em class="italic">store</em></span> and we later <span><em class="italic">access</em></span>. The function of memory is to keep the information intact between those two events. Anytime we store information, we're making use of different types of memory. Paper is a good medium for storing textual information, and magnetic tape works well for music and movies. </p>
+<p class="calibre_1">Telegraph relays too—when assembled into logic gates <a shape="rect"></a>and then flip-flops—can store information. As we've seen, a flip-flop is capable of storing 1 bit. This isn't a whole lot of information, but it's a start. For once we know how to store 1 bit, we can easily store 2, or 3, or more. </p>
+<p class="calibre_1">In <a shape="rect" href="index_split_017.html#filepos669318">Chapter 14</a>, we encountered the <a shape="rect"></a>level-triggered D-type flip-flop, which is made out of an inverter, two AND gates, and two NOR gates: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00315.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">When the Clock input is 1, the Q output is the same as the Data input. But when the Clock input goes to 0, the Q output holds the last value of the Data input. Further changes to the Data input don't affect the outputs until the Clock input goes to 1 again. The logic table of the flip-flop is the following: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th colspan="2" rowspan="1" class="calibre18"><span class="calibre12"><span class="calibre9">Inputs</span></span></th>
+<th colspan="2" rowspan="1" class="calibre18"><span class="calibre12"><span class="calibre9">Outputs</span></span></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">D</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">Clk</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">Q</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">Q-bar</strong></span></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">X</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Q</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Q-bar</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">In <a shape="rect" href="index_split_017.html#filepos669318">Chapter 14</a>, this flip-flop was featured in a couple of different circuits, but in this chapter it will be used in only one way—to store 1 bit of information. For that reason, I'm going to rename the inputs and outputs so that they'll be more in accordance with that purpose: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00316.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">This is the same flip-flop, but now the Q output is named Data Out, and the Clock input (which started out in <a shape="rect" href="index_split_017.html#filepos669318">Chapter 14</a> as <span><em class="italic">Hold That Bit</em></span>) is named Write. Just as we might write down some information on paper, the Write signal causes the Data In signal to be <span><em class="italic">written into</em></span> or <span><em class="italic">stored</em></span> in the circuit. Normally, the Write input is 0 and the Data In signal has no effect on the output. But whenever we want to store the Data In signal in the flip-flop, we make the Write input 1 and then 0 again. As I mentioned in <a shape="rect" href="index_split_017.html#filepos669318">Chapter 14</a>, this type of circuit is also called a <span><em class="italic">latch</em></span> because it latches onto data. Here's how we might represent a 1-bit latch without drawing all of the individual components: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00317.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">It's fairly easy to assemble multiple 1-bit latches into a multibit latch. All you have to do is connect the Write signals:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00318.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">This 8-bit latch has eight inputs and eight outputs. In addition, the latch has a single input named Write that's normally 0. To save an 8-bit value in this latch, make the Write input 1 and then 0 again. This latch can also be drawn as a single box, like so: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00319.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Or to be more consistent with the 1-bit latch, it can be drawn this way:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00320.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Another way of assembling eight 1-bit latches isn't quite as straightforward as this. Suppose we want only one Data In signal and one Data Out signal. But we want the ability to save the value of the Data In signal at eight different times during the day, or maybe eight different times during the next minute. And we also want the ability to later check those eight values by looking at just one Data Out signal. </p>
+<p class="calibre_1">In other words, rather than saving one 8-bit value as in the 8-bit latch, we want to save eight separate 1-bit values.</p>
+<p class="calibre_1">Why do we want to do it this way? Well, maybe because we have only one lightbulb.</p>
+<p class="calibre_1">We know we need eight 1-bit latches. Let's not worry right now about how data actually gets stored in these latches. Let's focus first on checking the Data Out signals of these eight latches using only one lightbulb. Of course, we could always test the output of each latch by <span><em class="italic">manually</em></span> moving the lightbulb from latch to latch, but we'd prefer something a bit more automated than that. In fact, we'd like to use switches to select which of the eight 1-bit latches we want to look at. </p>
+<p class="calibre_1">How many switches do we need? If we want to select something from eight items, we need three switches. Three switches can represent eight different values: 000, 001, 010, 011, 100, 101, 110, and 111. </p>
+<p class="calibre_1">So here are our eight 1-bit latches, three switches, a lightbulb, and something else that we need in between the switches and the lightbulb: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00321.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The "something else" is that mysterious box with eight inputs on top and three inputs on the left. By closing and opening the three switches, we can select which of the eight inputs is routed to the output at the bottom of the box. This output lights up the lightbulb. </p>
+<p class="calibre_1">So what exactly is "What Is This?"? We've encountered something like it before, although not with so many inputs. It's similar to a circuit we used in <a shape="rect" href="index_split_017.html#filepos669318">Chapter 14</a> in the first revised <a shape="rect"></a>adding machine. At that time, we needed something that let us select whether a row of switches or the output from a latch was used as an input to the adder. In that chapter, it was called a 2-Line-to-1-Line Selector. Here we need an <span><em class="italic">8-Line-to-1-Line Data Selector</em></span>: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00322.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The 8-to-1 Selector has eight Data inputs (shown at the top) and three Select inputs (shown at the left). The Select inputs choose which of the Data inputs appears at the Output. For example, if the Select inputs are 000, the Output is the same as D<sub class="calibre25">0</sub>. If the Select inputs are 111, the Output is the same as D<sub class="calibre25">7</sub>. If the Select inputs are 101, the Output is the same as D<sub class="calibre25">5</sub>. Here's the logic table: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th colspan="3" rowspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Inputs</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Outputs</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">S</strong></span><sub class="calibre28">2</sub></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">S</strong></span><sub class="calibre28">1</sub></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">S</strong></span><sub class="calibre28">0</sub></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">Q</strong></span></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">D</strong></span><sub class="calibre28">0</sub></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">D</strong></span><sub class="calibre28">1</sub></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">D</strong></span><sub class="calibre28">2</sub></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">D</strong></span><sub class="calibre28">3</sub></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">D</strong></span><sub class="calibre28">4</sub></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">D</strong></span><sub class="calibre28">5</sub></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">D</strong></span><sub class="calibre28">6</sub></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">D</strong></span><sub class="calibre28">7</sub></p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">The 8-to-1 Selector is built from three inverters, eight 4-input <a shape="rect"></a>AND gates, and an 8-input OR gate, like this: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00323.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Now, this is a fairly hairy circuit, but perhaps just one example will convince you that it works. Suppose S<sub class="calibre25">2</sub> is 1, S<sub class="calibre25">1</sub> is 0, and S<sub class="calibre25">0</sub> is 1. The inputs to the sixth AND gate from the top include S<sub class="calibre25">0</sub>, <span><a shape="rect"></a><img alt="" src="images/00324.jpg" class="calibre10"/></span><sub class="calibre25">1</sub>, S<sub class="calibre25">2</sub>, all of which are 1. No other AND gate has these three inputs, so all the other AND gates will have an output of 0. The sixth AND gate from the top will possibly have an output of 0 if D<sub class="calibre25">5</sub> is 0. Or it will have an output of 1 if D<sub class="calibre25">5</sub> is 1. The same goes for the OR gate at the far right. Thus, if the Select inputs are 101, the Output is the same as D<sub class="calibre25">5</sub>. </p>
+<p class="calibre_1">Let's recap what we're trying to do here. We're trying to wire eight 1-bit latches so that they can be individually written to using a single Data In signal and individually examined using a single Data Out signal. We've already established that we can choose a Data Output signal from one of the eight latches by using an 8-to-1 Selector, as shown on the following page. </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00325.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">We're halfway finished. Now that we've established what we need for the output side, let's look at the input side.</p>
+<p class="calibre_1">The input side involves the Data input signals and the Write signal. On the input side of the latches, we can connect all the Data input signals together. But we can't connect the eight Write signals together because we want to be able to write into each latch individually. We have a single Write signal that must be routed to one (and only one) of the latches: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00326.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">To accomplish this task, we need another circuit that looks somewhat similar to the 8-to-1 Selector but actually does the opposite. This is the <span><em class="italic">3-to-8 Decoder</em></span>. We've also seen a simple Data Decoder before—when wiring the switches to select the color of our ideal cat in <a shape="rect" href="index_split_014.html#filepos501329">Chapter 11</a>. </p>
+<p class="calibre_1">The 3-to-8 Decoder has eight Outputs. At any time, all but one of the Outputs are 0. The exception is the Output that's selected by the S<sub class="calibre25">0</sub>, S<sub class="calibre25">1</sub>, <a shape="rect"></a>and S<sub class="calibre25">2</sub> inputs. This Output is the same as the Data Input. </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00327.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Again, notice that the inputs to the sixth AND gate from the top include S<sub class="calibre25">0</sub>, <span><a shape="rect"></a><img alt="" src="images/00324.jpg" class="calibre10"/></span><sub class="calibre25">1</sub>, S<sub class="calibre25">2</sub>. No other AND gate has these three inputs. So if the Select inputs are 101, then all the other AND gates will have an output of 0. The sixth AND gate from the top will possibly have an output of 0 if the Data Input is 0 or an output of 1 if the Data Input is 1. Here's the complete logic table: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th colspan="3" rowspan="1" class="calibre18"><span class="calibre12"><span class="calibre9">Inputs</span></span></th>
+<th colspan="8" rowspan="1" class="calibre18"><span class="calibre12"><span class="calibre9">Outputs</span></span></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">S</strong></span><sub class="calibre28">2</sub></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">S</strong></span><sub class="calibre28">1</sub></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">S</strong></span><sub class="calibre28">0</sub></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">O</strong></span><sub class="calibre28">7</sub></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">O</strong></span><sub class="calibre28">6</sub></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">O</strong></span><sub class="calibre28">5</sub></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">O</strong></span><sub class="calibre28">4</sub></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">O</strong></span><sub class="calibre28">4</sub></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">O</strong></span><sub class="calibre28">2</sub></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">O</strong></span><sub class="calibre28">1</sub></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">O</strong></span><sub class="calibre28">0</sub></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Data</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Data</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Data</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Data</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Data</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Data</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Data</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Data</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">And here's the complete circuit with the 8 latches:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00328.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Notice that the three Select signals to the Decoder and the Selector are the same and that I've also labeled those three signals the <span><em class="italic">Address</em></span>. Like a post office box number, this 3-bit address determines which of the eight 1-bit latches is being referenced. On the input side, the Address input determines which latch the Write signal will trigger to store the Data input. On the output side (at the bottom of the figure), the Address input controls the 8-to-1 Selector to select the output of one of the eight latches. </p>
+<p class="calibre_1">This configuration of latches is sometimes known as <span><em class="italic">read/write memory</em></span>, but more commonly as <span><em class="italic">random access memory</em></span>, or RAM (pronounced the same as the animal). This particular RAM configuration stores eight separate 1-bit values. It can be represented this way:<a shape="rect"></a></p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00329.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">It's called <span><em class="italic">memory</em></span> because it retains information. It's called <span><em class="italic">read/write</em></span> memory because you can store a new value in each latch (that is, <span><em class="italic">write</em></span> the value) and because you can determine what's stored in each latch (that is, you can later <span><em class="italic">read</em></span> the value). It's called <span><em class="italic">random access</em></span> memory because each of the eight latches can be read from or written to simply by changing the Address inputs. In contrast, some other types of <a shape="rect"></a>memory have to be read sequentially—that is, you'd have to read the value stored at address 100 before you could read the value stored at address 101. </p>
+<p class="calibre_1">A particular configuration of RAM is often referred to as a RAM <span><em class="italic">array</em></span>. This particular RAM array is organized in a manner called in abbreviated form <span><em class="italic">8 x 1</em></span> (pronounced <span><em class="italic">eight by one</em></span>). Each of the eight values in the array is 1 bit. Multiply the two values to get the total number of bits that can be stored in the RAM array. </p>
+<p class="calibre_1"><a shape="rect"></a>RAM arrays can be combined in various ways. For example, you can take two 8 x 1 RAM arrays and arrange them so that they are addressed in the same way: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00330.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The Address and Write inputs of the two 8 x 1 RAM arrays are connected, so the result is an 8 x 2 RAM array:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00331.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">This RAM array stores eight values, but each of them is 2 bits in size.</p>
+<p class="calibre_1">Or the two 8 x 1 RAM arrays can be combined in much the same way that the individual latches were combined—by using a 2-to-1 Selector and a 1-to-2 Decoder, as shown on the next page. </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00332.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The Select input that goes to both the Decoder and the Selector essentially selects between the two 8 x 1 <a shape="rect"></a>RAM arrays. It's really a fourth address line. So this is actually a 16 x 1 RAM array: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00333.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">This RAM array stores 16 values, each of which is 1 bit.</p>
+<p class="calibre_1">The number of values that a RAM array stores is directly related to the number of Address inputs. With no Address inputs (which is the case with the 1-bit latch and the 8-bit latch), only one value can be stored. With one Address input, two values are possible. With two Address inputs, four values are stored. With three Address inputs, eight values, and with four Address inputs, sixteen values. The relationship is summed up by this equation: </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">Number of values in RAM array = 2<sup class="calibre22">Number of Address inputs</sup></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">I've demonstrated how small <a shape="rect"></a>RAM arrays can be constructed, and it shouldn't be difficult to imagine much larger ones. For example </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00334.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">This RAM array stores a total of 8196 bits, organized as 1024 values of eight bits each. There are ten Address inputs because 2<sup class="calibre21">10</sup> equals 1024. There are eight Data inputs and eight Data outputs. </p>
+<p class="calibre_1">In other words, this RAM array stores 1024 bytes. It's like a post office with 1024 post office boxes. Each one has a different 1-byte value inside (which may or may not be better than junk mail). </p>
+<p class="calibre_1">One thousand twenty-four bytes is known as a <span><em class="italic">kilobyte</em></span>, and herein lies much confusion. The prefix <span><em class="italic">kilo</em></span> (from the Greek <span><em class="italic">khilioi</em></span>, meaning a thousand) is most often used in the metric system. For example, a kilogram is 1000 grams and a kilometer is 1000 meters. But here I'm saying that a kilobyte is 1024 bytes—<span><em class="italic">not</em></span> 1000 bytes. </p>
+<p class="calibre_1">The problem is that the metric system is based on powers of 10, and binary numbers are based on powers of 2, and never the twain shall meet. Powers of 10 are 10, 100, 1000, 10000, 100000, and so on. Powers of 2 are 2, 4, 8, 16, 32, 64, and so on. There is no integral power of 10 that equals some integral power of 2. </p>
+<p class="calibre_1">But every once in a while they do come close. Yes, 1000 is fairly close to 1024, or to put it more mathematically using an "approximately equal to" sign: </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">2<sup class="calibre22">10</sup> ≈ 10<sup class="calibre22">3</sup></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">Nothing is magical about this relationship. All it implies is that a particular power of 2 is approximately equal to a particular power of 10. This little quirk allows people to conveniently refer to a kilobyte of <a shape="rect"></a>memory when they really mean 1024 bytes. </p>
+<p class="calibre_1">Kilobyte is abbreviated K or KB. The RAM array shown above can be said to store 1024 bytes or 1 kilobyte or 1K or 1 KB.</p>
+<p class="calibre_1">What you <span><em class="italic">don't</em></span> say is that a 1-KB RAM array stores 1000 bytes, or (in English) "one thousand bytes." It's <span><em class="italic">more</em></span> than a thousand—it's 1024. To sound like you know what you're talking about, you say either "1K" or "one kilobyte." </p>
+<p class="calibre_1">One kilobyte of memory has eight Data inputs, eight Data outputs, and ten Address inputs. Because the bytes are accessed by ten Address inputs, the RAM array stores 2<sup class="calibre21">10</sup> bytes. Whenever we add another address input, we double the amount of <a shape="rect"></a>memory. Each line of the following sequence represents a doubling of memory: </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 kilobyte = 1024 bytes = 2<sup class="calibre22">10</sup> bytes ≈ 10<sup class="calibre22">3</sup> bytes </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">2 kilobytes = 2048 bytes = 2<sup class="calibre22">11</sup> bytes </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">4 kilobytes = 4096 bytes = 2<sup class="calibre22">12</sup> bytes </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">8 kilobytes = 8192 bytes = 2<sup class="calibre22">13</sup> bytes </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">16 kilobytes = 16,384 bytes = 2<sup class="calibre22">14</sup> bytes </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">32 kilobytes = 32,768 bytes = 2<sup class="calibre22">15</sup> bytes </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">64 kilobytes = 65,536 bytes = 2<sup class="calibre22">16</sup> bytes </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">128 kilobytes = 131,072 bytes = 2<sup class="calibre22">17</sup> bytes </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">256 kilobytes = 262,144 bytes = 2<sup class="calibre22">18</sup> bytes </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">512 kilobytes = 524,288 bytes = 2<sup class="calibre22">19</sup> bytes </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1,024 kilobytes = 1,048,576 bytes = 2<sup class="calibre22">20</sup> bytes ≈ 10<sup class="calibre22">6</sup> bytes </span></td>
+</tr>
+</span></table>
+<p class="calibre_1">Note that the numbers of kilobytes shown on the left are also powers of 2.</p>
+<p class="calibre_1">With the same logic that lets us call 1024 bytes a kilobyte, we can also refer to 1024 kilobytes as a <span><em class="italic">megabyte</em></span>. (The Greek word <span><em class="italic">megas</em></span> means <span><em class="italic">great</em></span>.) Megabyte is abbreviated MB. And the memory doubling continues: </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 megabyte = 1,048,576 bytes = 2<sup class="calibre22">20</sup> bytes ≈ 10<sup class="calibre22">6</sup> bytes </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">2 megabytes = 2,097,152 bytes = 2<sup class="calibre22">21</sup> bytes </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">4 megabytes = 4,194,304 bytes = 2<sup class="calibre22">22</sup> bytes </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">8 megabytes = 8,388,608 bytes = 2<sup class="calibre22">23</sup> bytes </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">16 megabytes = 16,777,216 bytes = 2<sup class="calibre22">24</sup> bytes </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">32 megabytes = 33,554,432 bytes = 2<sup class="calibre22">25</sup> bytes </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">64 megabytes = 67,108,864 bytes = 2<sup class="calibre22">26</sup> bytes </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">128 megabytes = 134,217,728 bytes = 2<sup class="calibre22">27</sup> bytes </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">256 megabytes = 268,435,456 bytes = 2<sup class="calibre22">28</sup> bytes </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">512 megabytes = 536,870,912 bytes = 2<sup class="calibre22">29</sup> bytes </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1,024 megabytes = 1,073,741,824 bytes = 2<sup class="calibre22">30</sup> bytes ≈ 10<sup class="calibre22">9</sup> bytes </span></td>
+</tr>
+</span></table>
+<p class="calibre_1">The Greek work <span><em class="italic">gigas</em></span> means <span><em class="italic">giant</em></span>, so 1024 megabytes are called a <span><em class="italic">gigabyte</em></span>, which is abbreviated GB.<a shape="rect"></a></p>
+<p class="calibre_1">Similarly, a <span><em class="italic">terabyte</em></span> (<span><em class="italic">teras</em></span> means <span><em class="italic">monster</em></span>) equals 2<sup class="calibre21">40</sup> bytes (approximately 10<sup class="calibre21">12</sup>) or 1,099,511,627,776 bytes. Terabyte is abbreviated TB.<a shape="rect"></a></p>
+<p class="calibre_1">A kilobyte is approximately a thousand bytes, a megabyte is approximately a million bytes, a gigabyte is approximately a billion bytes, and a terabyte is approximately a trillion bytes. </p>
+<p class="calibre_1">Ascending into regions that few have traveled, a <span><em class="italic">petabyte</em></span> equals 2<sup class="calibre21">50</sup> bytes or 1,125,899,906,842,624 bytes, which is approximately 10<sup class="calibre21">15</sup> or a quadrillion. An <span><em class="italic">exabyte</em></span> equals 2<sup class="calibre21">60</sup> bytes or 1,152,921,504,606,846,976 bytes, approximately 10<sup class="calibre21">18</sup> or a quintillion.<a shape="rect"></a></p>
+<p class="calibre_1">Just to provide you with a little grounding here, home computers purchased at the time this book was written (1999) commonly have 32 MB or 64 MB or sometimes 128 MB of random access <a shape="rect"></a>memory. (And don't get too confused just yet—I haven't mentioned anything about hard drives; I'm talking only about <a shape="rect"></a>RAM.) That's 33,554,432 bytes or 67,108,864 bytes or 134,217,728 bytes. </p>
+<p class="calibre_1">People, of course, speak in shorthand. Somebody who has 65,536 bytes of memory will say, "I have 64K (and I'm a visitor from the year 1980)." Somebody who has 33,554,432 bytes will say, "I have 32 megs." That rare person who has 1,073,741,824 bytes of memory will say, "I've got a gig (and I'm not talking music)." </p>
+<p class="calibre_1">Sometimes people will refer to <span><em class="italic">kilobits</em></span> or <span><em class="italic">megabits</em></span> (notice <span><em class="italic">bits</em></span> rather than <span><em class="italic">bytes</em></span>), but this is rare. Almost always when people talk about memory, they're talking number of bytes, not bits. (Of course, to convert bytes to bits, multiply by 8.) Usually when kilobits or megabits come up in conversation, it will be in connection with data being transmitted over a wire and will occur in such phrases as "kilobits per second" or "megabits per second." For example, a 56K modem refers to 56 kilobits per second, not kilobytes. </p>
+<p class="calibre_1">Now that we know how to construct RAM in any array size we want, let's not get too out of control. For now, let's simply assume that we have assembled 65,536 bytes of memory: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00335.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Why 64 KB? Why not 32 KB or 128 KB? <span><em class="italic">Because 65,536 is a nice round number</em></span>. It's 2<sup class="calibre21">16</sup>. This RAM array has a 16-bit address. In other words, the address is 2 bytes exactly. In hexadecimal, the address ranges from 0000h through FFFFh. </p>
+<p class="calibre_1">As I implied earlier, 64 KB was a common amount of memory in personal computers purchased around 1980, although it wasn't constructed from telegraph relays. But could you really build such a thing using relays? I trust you won't consider it. Our design requires nine relays for each bit of memory, so the total 64K x 8 RAM array requires almost 5 million of them! </p>
+<p class="calibre_1">It will be advantageous for us to have a control panel that lets us manage all this memory—to write values into memory or examine them. Such a control panel has 16 switches to indicate an address, 8 switches to define an 8-bit value that we want to write into memory, another switch for the Write signal itself, and 8 lightbulbs to display a particular 8-bit value, as shown on the following page. </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00336.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">All the switches are shown in their off (0) positions. I've also included a switch labeled <span><em class="italic">Takeover</em></span>. The purpose of this switch is to let other circuits use the same <a shape="rect"></a>memory that the control panel is connected to. When the switch is set to 0 (as shown), the rest of the switches on the control panel don't do anything. When the switch is set to 1, however, the control panel has exclusive control over the memory. </p>
+<p class="calibre_1">This is a job for a bunch of 2-to-1 Selectors. In fact, we need 25 of them—16 for the Address signals, 8 for the Data input switches, and another for the Write switch. Here's the circuit: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00337.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">When the Takeover switch is open (as shown), the Address, Data input, and Write inputs to the 64K x 8 <a shape="rect"></a>RAM array come from external signals shown at the top left of the 2-to-1 Selectors. When the Takeover switch is closed, the Address, Data input, and Write signals to the RAM array come from the switches on the control panel. In either case, the Data Out signals from the RAM array go to the eight lightbulbs and possibly someplace else. </p>
+<p class="calibre_1">I'll draw a 64K x 8 RAM array with such a control panel this way:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00338.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">When the Takeover switch is closed, you can use the 16 Address switches to select any of 65,536 addresses. The lightbulbs show you the 8-bit value currently stored in memory at that address. You can use the 8 Data switches to define a new value, and you can write that value into memory using the Write switch. </p>
+<p class="calibre_1">The 64K x 8 RAM array and control panel can certainly help you keep track of any 65,536 8-bit values you may need to have handy. But we have also left open the opportunity for something else—some other circuitry perhaps—to use the values we have stored in memory and to write other ones in as well. </p>
+<p class="calibre_1">There's one more thing you have to remember about memory, and it's <span><em class="italic">very</em></span> important: When I introduced the concept of logic gates in <a shape="rect" href="index_split_014.html#filepos501329">Chapter 11</a>, I stopped drawing the individual relays that compose these gates. In particular, I no longer indicated that every relay is connected to some kind of supply of electricity. Whenever a relay is triggered, electricity is flowing through the coils of the electromagnet and holding a metal contact in place. </p>
+<p class="calibre_1">So if you have a 64K x 8 RAM array filled to the brim with 65,536 of your favorite bytes and you turn off the power to it, what happens? All the electromagnets lose their magnetism and with a loud <span><em class="italic">thunk</em></span>, all the relay contacts return to their untriggered states. And the contents of this RAM? They all go POOF! Gone forever. </p>
+<p class="calibre_1">This is why random access memory is also called <span><em class="italic">volatile</em></span> memory. It requires a constant supply of electricity to retain its contents. </p>
+</div>  <div class="mbp_pagebreak" id="calibre_pb_56"></div>
+</body></html>

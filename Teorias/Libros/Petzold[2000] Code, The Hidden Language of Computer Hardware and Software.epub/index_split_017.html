@@ -1,0 +1,1539 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Code: The Hidden Language of Computer Hardware and Software</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+<div id="filepos669318" style="height:0pt"></div><div id="filepos669318" class="calibre_">
+<div class="calibre_">
+<div class="calibre_">
+<div class="calibre_">
+<h1 class="calibre1" id="calibre_pb_49"><span class="calibre2"><a shape="rect" class="calibre4"></a>Chapter 14. Feedback and Flip-Flops </span></h1>
+</div>
+</div>
+</div>
+<p class="calibre_1">Everybody knows that electricity makes things move. A brief glance around the average home reveals electric motors in appliances as diverse as clocks, fans, food processors, and compact disc players. Electricity also makes the cones in loudspeakers vibrate, bringing forth sounds, speech, and music from the stereo system and the television set. But perhaps the simplest and most elegant way that electricity makes things move is illustrated by a class of devices that are quickly disappearing as electronic counterparts replace them. I refer to the marvelously retro electric buzzers and bells. </p>
+<p class="calibre_1">Consider a relay wired this way with a switch and battery:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00241.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">If this looks a little odd to you, you're not imagining things. We haven't seen a relay wired quite like this yet. Usually a relay is wired so that the input is separate from the output. Here it's all one big circle. If you close the switch, a circuit is completed: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00242.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The completed circuit causes the electromagnet to pull down the flexible contact:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00243.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">But when the contact changes position, the circuit is no longer complete, so the electromagnet loses its magnetism and the flexible contact flips back up: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00244.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">which, of course, completes the circuit again. What happens is this: As long as the switch is closed, the metal contact goes back and forth—alternately closing the circuit and opening it—most likely making a sound. If the contact makes a rasping sound, it's a buzzer. If you attach a hammer to it and provide a metal gong, you'll have the makings of an electric bell. </p>
+<p class="calibre_1">You can choose from a couple of ways to wire this relay to make a buzzer. Here's another way to do it using the conventional voltage <a shape="rect"></a>and ground symbols: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00245.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">You might recognize in this diagram the inverter from <a shape="rect" href="index_split_014.html#filepos501329">Chapter 11</a>. The circuit can be drawn more simply this way: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00246.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">As you'll recall, the output of an inverter is 1 if the input is 0, and 0 if the input is 1. Closing the switch on this circuit causes the relay in the inverter to alternately open and close. You can also wire the inverter without a switch to go continuously: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00247.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">This drawing might seem to be illustrating a logical contradiction because the output of an inverter is supposed to be opposite the input, but here the output <span><em class="italic">is</em></span> the input! Keep in mind, however, that the inverter is actually just a relay, and the relay requires a little bit of time to change from one state to another. So even if the input is the same as the output, the output will soon change, becoming the inverse of the input (which, of course, changes the input, and so forth and so on). </p>
+<p class="calibre_1">What is the output of this circuit? Well, the output quickly alternates between providing a voltage and not providing a voltage. Or, we can say, <span><em class="italic">the output quickly alternates between 0 and 1</em></span>. </p>
+<p class="calibre_1">This circuit is called an <span><em class="italic">oscillator</em></span>. It's intrinsically different from everything else we've looked at so far. All the previous circuits have changed their state only with the intervention of a human being who closes or opens a switch. The oscillator, however, doesn't require a human being; it basically runs by itself. </p>
+<p class="calibre_1">Of course, the oscillator in isolation doesn't seem to be very useful. We'll see later in this chapter <a shape="rect"></a>and in the next few chapters that such a circuit connected to other circuits is an essential part of automation. All computers have some kind of oscillator that makes everything else move in <a shape="rect"></a>synchronicity. </p>
+<p class="calibre_1">The output of the oscillator alternates between 0 and 1. A common way to symbolize that fact is with a diagram that looks like this: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00248.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">This is understood to be a type of graph. The horizontal axis represents time, and the vertical axis indicates whether the output is 0 or 1: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00249.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">All this is really saying that as time passes, the output of the oscillator alternates between 0 and 1 on a regular basis. For that reason, an oscillator is sometimes often referred to as a <span><em class="italic">clock</em></span> because by counting the number of oscillations you can tell time (kind of). </p>
+<p class="calibre_1">How fast will the oscillator run? That is, how quickly will the metal contact of the relay vibrate back and forth? How many times a second? That obviously depends on how the relay is built. One can easily imagine a big, sturdy relay that clunks back and forth slowly and a small, light relay that buzzes rapidly. </p>
+<p class="calibre_1">A <span><em class="italic">cycle</em></span> of an oscillator is defined as the interval during which the output of the oscillator changes and then comes back again to where it started: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00250.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The time required for one cycle is called the <span><em class="italic">period</em></span> of the oscillator. Let's assume that we're looking at a particular oscillator that has a period of 0.05 second. We can then label the horizontal axis in seconds beginning from some arbitrary time we denote as 0: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00251.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The <span><em class="italic">frequency</em></span> of the oscillator is 1 divided by the period. In this example, if the period of the oscillator is 0.05 second, the frequency of the oscillator is 1 ÷ 0.05, or 20 <span><em class="italic">cycles per second</em></span>. Twenty times per second, the output of the oscillator changes <a shape="rect"></a>and changes back. </p>
+<p class="calibre_1"><span><em class="italic">Cycles per second</em></span> is a fairly self-explanatory term, much like <span><em class="italic">miles per hour</em></span> or <span><em class="italic">pounds per square inch</em></span> or <span><em class="italic">calories per serving</em></span>. But <span><em class="italic">cycles per second</em></span> isn't used much any more. In commemoration of Heinrich Rudolph <a shape="rect"></a>Hertz (1857–1894), who was the first person to transmit and receive radio waves, the word <span><em class="italic">hertz</em></span> is now used instead. This usage started first in Germany in the 1920s and then expanded into other countries over the decades. </p>
+<p class="calibre_1">Thus, we can say that our oscillator has a frequency of 20 hertz, or (to abbreviate) 20 Hz.</p>
+<p class="calibre_1">Of course, we just guessed at the actual speed of one particular oscillator. By the end of this chapter, we'll be able to build something that lets us actually measure the speed of an oscillator. </p>
+<p class="calibre_1">To begin this endeavor, let's look at a pair of NOR gates wired a particular way. You'll recall that the output of a NOR gate is a voltage only if both inputs aren't voltages: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">NOR</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">0</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">1</strong></span></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">0</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">1</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">Here's a circuit with two NOR gates, two switches, and a lightbulb:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00252.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Notice the oddly contorted wiring: The output of the NOR gate on the left is an input to the NOR gate on the right, and the output of the right NOR gate is an input to the left NOR gate. This is a type of <span><em class="italic">feedback</em></span>. Indeed, just as in the oscillator, an output circles back to become an input. This idiosyncrasy will be a characteristic of most of the circuits in this chapter. </p>
+<p class="calibre_1">At the outset, the only current flowing in this circuit is from the output of the left NOR gate. That's because both inputs to that gate are 0. Now close the upper switch. The output from the left NOR gate becomes 0, which means the output from the right NOR gate becomes 1 and the lightbulb goes on: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00253.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The magic occurs when you now open the upper switch. Because the output of a NOR gate is 0 if either input is 1, the output of the left NOR gate remains the same and the light remains lit: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00254.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Now this is odd, wouldn't you say? Both switches are open—the same as in the first drawing—yet now the lightbulb is on. This situation is certainly different from anything we've seen before. Usually the output of a circuit is dependent solely upon the inputs. That doesn't seem to be the case here. Moreover, at this point you can close and open that upper switch and the light remains lit. That switch has no further effect on the circuit because the output of the left NOR gate remains 0. </p>
+<p class="calibre_1">Now close the lower switch. Because one of the inputs to the right NOR gate is now 1, the output becomes 0 and the lightbulb goes out. The output of the left NOR gate becomes 1: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00255.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Now you can open the bottom switch and the lightbulb stays <a shape="rect"></a>off: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00256.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">We're back where we started. At this time, you can close and open the bottom switch with no further effect on the lightbulb. In summary </p>
+<div class="calibre_">
+<ul class="calibre26">
+<li class="calibre27">Closing the top switch causes the lightbulb to go on, and it stays on when the top switch is opened.</li>
+<li class="calibre27">Closing the bottom switch causes the lightbulb to go off, and it stays off when the bottom switch is opened.</li>
+</ul>
+</div>
+<p class="calibre_1">The strangeness of this circuit is that sometimes when both switches are open the light is on, and sometimes when both switches are open, the light is off. We can say that this circuit has two <span><em class="italic">stable states</em></span> when both switches are open. Such a circuit is called a <span><em class="italic">flip-flop</em></span>, a word also used for beach sandals and the tactics of politicians. The flip-flop dates from 1918 with the work of English radio physicist William Henry <a shape="rect"></a>Eccles (1875–1966) and F.W. <a shape="rect"></a>Jordan (about whom not much seems to be known).<a shape="rect"></a></p>
+<p class="calibre_1">A flip-flop circuit <span><em class="italic">retains information</em></span>. It "remembers." In particular, the flip-flop shown previously remembers which switch was most recently closed. If you happen to come upon such a flip-flop in your travels and you see that the light is on, you can surmise that it was the upper switch that was most recently closed; if the light is off, the lower switch was most recently closed. </p>
+<p class="calibre_1">A flip-flop is very much like a seesaw. A seesaw has two stable states, never staying long in that precarious middle position. You can always tell from looking at a seesaw which side was pushed down most recently. </p>
+<p class="calibre_1">Although it might not be apparent yet, flip-flops are essential tools. They add memory to a circuit to give it a history of what's gone on before. Imagine trying to count if you couldn't remember anything. You wouldn't know what number you were up to and what number comes next! Similarly, a <span><em class="italic">circuit</em></span> that counts (which I'll show you later in this chapter) needs flip-flops. </p>
+<p class="calibre_1">There are a couple of different types of flip-flops. What I've just shown is the simplest and is called an R-S (or Reset-Set) flip-flop. The two NOR gates are more commonly drawn and labeled as in the diagram at the top of the next page to give it a symmetrical look. </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00257.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The output that we used for the lightbulb is traditionally called Q. In addition, there's a second output called <span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span> (pronounced <span><em class="italic">Q bar</em></span>) that's the opposite of Q. If Q is 0, then <span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span> is 1, and vice versa. The two inputs are called S for <span><em class="italic">set</em></span> and R for <span><em class="italic">reset</em></span>. You can think of these verbs as meaning "set Q to 1" and "reset Q to 0." When S is 1 (which corresponds to closing the top switch in the earlier diagram), Q becomes 1 and <span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span> becomes 0. When R is 1 (corresponding to closing the bottom switch in the earlier diagram), Q becomes 0 and <span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span> becomes 1. When both inputs are 0, the output indicates whether Q was last set or reset. These results are summed up in the following table: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th colspan="2" rowspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Inputs</span></p></div></th>
+<th colspan="2" rowspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Outputs</span></p></div></th>
+</tr>
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+S</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+R</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Q</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+<span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span></span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Q</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td colspan="2" rowspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Disallowd</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">This is called a <span><em class="italic">function table</em></span> or a <span><em class="italic">logic table</em></span> or a <span><em class="italic">truth table</em></span>. It shows the outputs that result from particular combinations of inputs. Because there are only two inputs to the R-S flip-flop, the number of combinations of inputs is four. These correspond to the four rows of the table under the headings.<a shape="rect"></a></p>
+<p class="calibre_1">Notice the row second from the bottom when S and R are both 0: The outputs are indicated as Q and <span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span>. This means that the Q and <span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span> outputs remain what they were before both the S and R inputs became 0. The final row of the table indicates that a situation in which the S and R inputs are both 1 is <span><em class="italic">disallowed</em></span> or <span><em class="italic">illegal</em></span>. This doesn't mean you'll get arrested for doing it, but if both inputs are 1 in this circuit, both outputs are 0, which violates the notion of <span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span> being the opposite of Q. So when you're designing circuitry that uses the R-S flip-flop, avoid situations in which the S and R inputs are both 1. </p>
+<p class="calibre_1">The R-S flip-flop is often drawn as a little box with the two inputs and two outputs labeled like this:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00259.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The R-S flip-flop is certainly interesting as a first example of a circuit that seems to "remember" which of two inputs was last a voltage. What turns out to be much more useful, however, is a circuit that remembers whether a particular signal was 0 or 1 <span><em class="italic">at a particular point in time</em></span>. </p>
+<p class="calibre_1">Let's think about how such a circuit should behave before we actually try to build it. It would have two inputs. Let's call one of them <span><em class="italic">Data</em></span>. Like all digital signals, the Data input can be 0 or 1. Let's call the other one <span><em class="italic">Hold That Bit</em></span>, which is the digital equivalent of a person saying "Hold that thought." Normally the Hold That Bit signal is 0, in which case the Data signal has no effect on the circuit. When Hold That Bit is 1, the circuit reflects the value of the Data signal. The Hold That Bit signal can then go back to being 0, at which time the circuit remembers the last value of the Data signal. Any changes in the Data signal have no further effect. </p>
+<p class="calibre_1">In other words, we want something that has the following function table:</p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th colspan="2" rowspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Inputs</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Outputs</span></p></div></th>
+</tr>
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Data</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Hold That Bit</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Q</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Q</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Q</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">In the first two cases, when the Hold That Bit signal is 1, the output Q is the same as the Data input. In the second two cases, when the Hold That Bit signal is 0, the Q output is the same as it was before. Notice in the second two cases that when Hold That Bit is 0, the Q output is the same regardless of what the Data input is. The function table can be simplified a little, like this: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th colspan="2" rowspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Inputs</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Outputs</span></p></div></th>
+</tr>
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Data</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Hold That Bit</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Q</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">X</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Q</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">The X means "don't care." It doesn't matter what the Data input is because if the Hold That Bit input is 0, the output Q is the same as it was before. </p>
+<p class="calibre_1">Implementing a Hold That Bit signal based on our existing R-S flip-flop requires that we add two AND gates at the input end, as in the diagram at the top of the following page. </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00260.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Recall that the output of an AND gate is 1 only if both inputs are 1. In this diagram, the Q output is 0 and the <span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span> output is 1. </p>
+<p class="calibre_1">As long as the Hold That Bit signal is 0, the Set signal has no effect on the outputs:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00261.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Similarly, the Reset signal has no effect:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00262.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Only when the Hold That Bit signal is 1 will this circuit function the same way as the normal R-S flip-flop shown earlier:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00263.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">It behaves like a normal R-S flip-flop because now the output of the upper AND gate is the same as the Reset signal, and the output of the lower AND gate is the same as the Set signal. </p>
+<p class="calibre_1">But we haven't yet achieved our goal. We want only two inputs, not three. How is this done? If you recall the original function table of the R-S flip-flop, the case in which Set and Reset were both 1 was disallowed, so we want to avoid that. And it doesn't make much sense for the Set and Reset signals to now both be 0 because that's simply the case in which the output didn't change. We can accomplish the same thing in this circuit by setting Hold That Bit to 0. </p>
+<p class="calibre_1">So it makes sense that if Set is 1, Reset is 0; and if Set is 0, Reset is 1. A signal called Data can be equivalent to a Set, and the Data signal inverted can be the Reset signal: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00264.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">In this case, both inputs are 0 and the output Q is 0 (which means that <span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span> is 1). As long as Hold That Bit is 0, the Data input has no effect on the circuit: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00265.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">But when Hold That Bit is 1, the circuit reflects the value of the Data input:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00266.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The Q output is now the same as the Data input, and <span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span> is the opposite. Now Hold That Bit can go back to being 0: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00267.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The circuit now remembers the value of Data when Hold That Bit was last 1, regardless of how Data changes. The Data signal could, for example, go back to 0 with no effect on the output: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00268.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">This circuit is called a <span><em class="italic">level-triggered D-type flip-flop</em></span>. The <span><em class="italic">D</em></span> stands for <span><em class="italic">Data. Level-triggered</em></span> means that the flip-flop saves the value of the Data input when the Hold That Bit input is at a particular <span><em class="italic">level</em></span>, in this case 1. (We'll look at an alternative to level-triggered flip-flops shortly.)<a shape="rect"></a></p>
+<p class="calibre_1">Usually when a circuit like this appears in a book, the input isn't labeled Hold That Bit. It's usually labeled <span><em class="italic">Clock</em></span>. Of course, this signal isn't a <span><em class="italic">real</em></span> clock, but it might sometimes have clocklike attributes, which means that it might tick back and forth between 0 and 1 on a regular basis. But for now, the Clock input simply indicates when the Data input is to be saved: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00269.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">And usually when the function table is shown, Data is abbreviated as <span><em class="italic">D</em></span> and Clock is abbreviated as <span><em class="italic">Clk</em></span>: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th colspan="2" rowspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Inputs</span></p></div></th>
+<th colspan="2" rowspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Outputs</span></p></div></th>
+</tr>
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+D</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Clk</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Q</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Q-bar</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">X</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Q</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Q-bar</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">This circuit is also known as a level-triggered D-type <span><em class="italic">latch</em></span>, and that term simply means that the circuit <span><em class="italic">latches onto</em></span> one bit of data and keeps it around for further use. The circuit can also be referred to as a <a shape="rect"></a>1-bit <span><em class="italic">memory</em></span>. I'll demonstrate in <a shape="rect" href="index_split_019.html#filepos880943">Chapter 16</a> how very many of these <a shape="rect"></a>flip-flops can be wired together to provide many bits of memory. </p>
+<p class="calibre_1">Saving a multibit value in latches is often useful. Suppose you want to use the adding machine in <a shape="rect" href="index_split_015.html#filepos561677">Chapter 12</a> to add three 8-bit numbers together. You'd key in the first number on the first set of switches and the second number on the second set of switches as usual, but then you'd have to write down the result. You'd then have to key in that result on one set of switches and key in the third number on the other set of switches. You really shouldn't have to key in an intermediate result. You should be able to use it directly from the first calculation. </p>
+<p class="calibre_1">Let's solve this problem using latches. Let's assemble eight latches in a box. Each of the eight latches uses two NOR gates and two AND gates and one inverter, as shown previously. The Clock inputs are all connected. Here's the resultant package: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00270.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">This latch is capable of saving 8 bits at once. The eight inputs on the top are labeled D<sub class="calibre25">0</sub> through D<sub class="calibre25">7</sub>, and the eight outputs on the bottom are labeled Q<sub class="calibre25">0</sub> through Q<sub class="calibre25">7</sub>. The input at the left is the Clock. The Clock signal is normally 0. When the Clock signal is 1, the 8-bit value on the D inputs is transferred to the Q outputs. When the Clock signal goes back to 0, that 8-bit value stays there until the next time the Clock signal is 1. </p>
+<p class="calibre_1">The 8-Bit Latch can also be drawn with the eight Data inputs and eight Q outputs grouped together as you see on the following page. </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00271.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Here's the 8-Bit Adder:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00272.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Normally (ignoring what we did with subtraction in the last chapter), the eight A inputs and eight B inputs are connected to switches, the CI (Carry In) input is connected to ground, and the eight S (Sum) outputs and CO (Carry Out) are connected to lightbulbs. </p>
+<p class="calibre_1">In this revised version, the eight S outputs of the 8-Bit Adder can be connected to both the lightbulbs <span><em class="italic">and</em></span> the D inputs of the 8-Bit Latch. A switch labeled <span><em class="italic">Save</em></span> can be the Clock input of the latches to save a result from the adder: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00273.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The box labeled <span><em class="italic">2-Line-to-1-Line Selector</em></span> lets you choose with a switch whether you want the B inputs to the adder to come from the second row of switches or from the Q outputs of the latches. You close the switch to select the outputs from the 8-Bit Latch. The 2-Line-to-1-Line Selector uses eight of the following circuits: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00274.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">If the Select input is 1, the output of the OR gate is the same as the B input. That's because the output of the top <a shape="rect"></a>AND gate is the same as the B input, and the output of the bottom AND gate is 0. Similarly, if the Select input is 0, the output is the same as the A input. This is summed up in the following <a shape="rect"></a>function table: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th colspan="3" rowspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Inputs</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Outputs</span></p></div></th>
+</tr>
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Select</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+A</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+B</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Q</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">X</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">X</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">x</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">x</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">The box shown in the revised adding machine comprises eight of these 1-bit selectors. All the Select inputs are wired together.</p>
+<p class="calibre_1">This revised adding machine isn't handling the Carry Out signal very well. If the addition of two numbers causes the Carry Out signal to be 1, the signal is ignored when the next number is added in. One possible solution is to make the Adder, the Latch, and the Selector all 16 bits wide, or at least wider than the largest sum you'll encounter. I won't really be solving this problem until <a shape="rect" href="index_split_020.html#filepos950185">Chapter 17</a>. </p>
+<p class="calibre_1">A more interesting approach to the adding machine eliminates an entire row of eight switches. But first we need to modify the D-type flip-flop slightly by adding an OR gate and an input signal called <span><em class="italic">Clear</em></span>. The Clear input is normally 0. But when it's 1, the Q output becomes 0, as shown here: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00275.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">This signal forces Q to be 0 regardless of the other input signals, in effect clearing the flip-flop.</p>
+<p class="calibre_1">Why do we need this, you might ask? Why can't we clear the flip-flop by setting the Data input to 0 and the Clock input to 1? Well, maybe we can't control exactly what's going into the Data input. Maybe we have a set of eight of these latches wired to the outputs of an 8-Bit Adder, like so: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00276.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Notice that the switch labeled <span><em class="italic">Add</em></span> now controls the Clock input of the latch. </p>
+<p class="calibre_1">You might find this adder easier to use than the previous one, particularly if you need to add a long list of numbers. You begin by pressing the Clear switch. That action causes the output of the latches to be 0, turning off all the lights and also setting the second set of inputs to the 8-Bit Adder to all 0s. You key in the first number and press the Add button. That number appears on the lights. You then key in the second number and again press the Add button. The number set up by the switches is added to the previous total, and it appears on the lights. Just continue keying in more numbers and pressing the Add switch. </p>
+<p class="calibre_1">I mentioned earlier that the D-type flip-flop we designed was <span><em class="italic">level-triggered</em></span>. This means that the Clock input must change its <span><em class="italic">level</em></span> from 0 to 1 in order for the value of the Data input to be stored in the latch. But during the time that the Clock input is 1, the Data input can change; any changes in the Data input while the Clock input is 1 will be reflected in the values of the Q and <span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span> outputs.<a shape="rect"></a></p>
+<p class="calibre_1">For some applications, a level-triggered Clock input is quite sufficient. But for other applications, an <span><em class="italic">edge-triggered</em></span> Clock input is preferred. An edge trigger causes the outputs to change <span><em class="italic">only when the Clock makes a transition from 0 to 1</em></span>. As with the level-triggered flip-flop, when the Clock input is 0, any changes to the Data input don't affect the outputs. The difference in an edge-triggered flip-flop is that changes to the Data input also don't affect the outputs when the Clock input is 1. The Data input affects the outputs only at the instant that the Clock changes from 0 to 1. </p>
+<p class="calibre_1">An edge-triggered D-type flip-flop is constructed from two stages of R-S flip-flops, wired together this way:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00277.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The idea here is that the Clock input controls both the first stage and the second stage. But notice that the clock is inverted in the first stage. This means that the first stage works exactly like a D-type flip-flop except that the Data input is stored when the Clock is 0. The outputs of the second stage are inputs to the first stage, and these are saved when the Clock is 1. The overall result is that the Data input is saved when the Clock changes from 0 to 1. </p>
+<p class="calibre_1">Let's take a closer look. Here's the flip-flop at rest with both the Data and Clock inputs at 0 and the Q output at 0:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00278.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Now change the Data input to 1:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00279.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">This changes the first flip-flop stage because the inverted Clock input is 1. But the second stage remains unchanged because the uninverted Clock input is 0. Now change the Clock input to 1: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00280.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">This causes the second stage to change, and the Q output goes to 1. The difference is that the Data input can now change (for example, back to 0) without affecting the Q output: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00281.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The Q and <span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span> outputs can change only at the instant that the Clock input changes from 0 to 1. </p>
+<p class="calibre_1">The function table of the edge-triggered D-type flip-flop requires a new symbol, which is an arrow pointing up (↑). This symbol indicates a signal making a transition from a 0 to a 1: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th colspan="2" rowspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Inputs</span></p></div></th>
+<th colspan="2" rowspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Outputs</span></p></div></th>
+</tr>
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+D</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Clk</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Q</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+<span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span></span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">↑</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">↑</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">X</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Q</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span></p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">The arrow indicates that the output Q becomes the same as the Data input when the Clock makes a transition from 0 to 1. This is known as a <span><em class="italic">positive transition</em></span> of the Clock signal. (A <span><em class="italic">negative transition</em></span> is the transition from 1 to 0.) The flip-flop has a diagram like this:<a shape="rect"></a></p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00282.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The little angle bracket indicates that the flip-flop is edge triggered.</p>
+<p class="calibre_1">Now I want to show you a circuit using the edge-triggered D-type flip-flop that you can't duplicate with the <a shape="rect"></a>level-triggered version. You'll recall the oscillator that we constructed at the beginning of this chapter. The output of the oscillator alternates between 0 and 1: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00283.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Let's connect the output of the oscillator to the Clock input of the edgetriggered D-type flip-flop. And let's connect the <span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span> output to the D input: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00284.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The output of the flip-flop is itself an input to the flip-flop. It's feedback upon feedback! (In practice, this could present a problem. The oscillator is constructed out of a relay that's flipping back and forth as fast as it can. The output of the oscillator is connected to the relays that make up the flip-flop. These other relays might not be able to keep up with the speed of the oscillator. To avoid these problems, let's assume that the relay used in the oscillator is much slower than the relays used elsewhere in these circuits.) </p>
+<p class="calibre_1">To see what happens in this circuit, let's look at a function table that illustrates the various changes. At the start, let's say that the Clock input is 0 and the Q output is 0. That means that the <span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span> output is 1, which is connected to the D input: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th colspan="2" rowspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Inputs</span></p></div></th>
+<th colspan="2" rowspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Outputs</span></p></div></th>
+</tr>
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+D</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Clk</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Q</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+<span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span></span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">When the Clock input changes from 0 to 1, the Q output will become the same as the D input:</p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th colspan="2" rowspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Inputs</span></p></div></th>
+<th colspan="2" rowspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Outputs</span></p></div></th>
+</tr>
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+D</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Clk</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Q</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+<span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span></span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">↑</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">But because the <span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span> output changes to 0, the D input will also change to 0. The Clock input is now 1: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th colspan="2" rowspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Inputs</span></p></div></th>
+<th colspan="2" rowspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Outputs</span></p></div></th>
+</tr>
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+D</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Clk</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Q</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+<span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span></span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">↑</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">The Clock input changes to back to 0 without affecting the outputs:</p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th colspan="2" rowspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Inputs</span></p></div></th>
+<th colspan="2" rowspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Outputs</span></p></div></th>
+</tr>
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+D</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Clk</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Q</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+<span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span></span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">↑</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">Now the Clock input changes to 1 again. Because the D input is 0, the Q output becomes 0 and the <span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span> output becomes 1: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th colspan="2" rowspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Inputs</span></p></div></th>
+<th colspan="2" rowspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Outputs</span></p></div></th>
+</tr>
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+D</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Clk</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Q</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+<span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span></span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">↑</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">↑</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">So the D input also becomes 1:</p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th colspan="2" rowspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Inputs</span></p></div></th>
+<th colspan="2" rowspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Outputs</span></p></div></th>
+</tr>
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+D</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Clk</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Q</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+<span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span></span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">↑</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">↑</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">What's happening here can be summed up very simply: Every time the Clock input changes from 0 to 1, the Q output changes, either from 0 to 1 or from 1 to 0. The situation is clearer if we look at the timing diagram: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00285.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">When the Clock input goes from 0 to 1, the value of D (which is the same as <span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span>) is transferred to Q, thus also changing <span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span> and D for the next transition of the Clock input from 0 to 1. </p>
+<p class="calibre_1">If the frequency of the oscillator is 20 Hz (which means 20 cycles per second), the frequency of the Q output is half that, or 10 Hz. For this reason, such a circuit—in which the <span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span> output is routed back to the Data input of a flip-flop—is also known as a <span><em class="italic">frequency divider</em></span>. </p>
+<p class="calibre_1">Of course, the output from the frequency divider can be the Clock input of another frequency divider to divide the frequency once again. Here's an arrangement of three of them: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00286.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Let's look at the four signals I've labeled at the top of that diagram:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00287.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">I'll admit that I've started and ended this diagram at an opportune spot, but there's nothing dishonest about it: The circuit will repeat this pattern over and over again. But do you recognize anything familiar about it? </p>
+<p class="calibre_1">I'll give you a hint. Let's label these signals with 0s and 1s:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00288.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Do you see it yet? Try turning the diagram 90 degrees clockwise, and read the 4-bit numbers going across. Each of them corresponds to a decimal number from 0 through 15: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Binary</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Decimal</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0000</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0001</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0010</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0011</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">3</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0100</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0101</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">5</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0110</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0111</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1000</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">8</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1001</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">9</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1010</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1011</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1100</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">12</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1101</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">13</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1110</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">14</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1111</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">15</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">Thus, this circuit is doing nothing less than <span><em class="italic">counting in binary numbers</em></span>, and the more <a shape="rect"></a>flip-flops we add to the circuit, the higher it will count. I pointed out in <a shape="rect" href="index_split_011.html#filepos208213">Chapter 8</a> that in a sequence of increasing binary numbers, each column of digits alternates between 0 and 1 at half the frequency of the column to the right. The counter mimics this. At each positive transition of the Clock signal, the outputs of the counter are said to <span><em class="italic">increment</em></span>, that is, to increase by 1. </p>
+<p class="calibre_1">Let's string eight flip-flops together and put them in a box:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00289.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">This is called a <span><em class="italic">ripple</em></span> counter because the output of each flip-flop becomes the Clock input of the next flip-flop. Changes ripple through the stages sequentially, and the flip-flops at the end might be delayed a little in changing. More sophisticated counters are <span><em class="italic">synchronous</em></span>, in which all the outputs change at the same time. </p>
+<p class="calibre_1">I've labeled the outputs Q<sub class="calibre25">0</sub> through Q<sub class="calibre25">7</sub>. These are arranged so that the output from the first flip-flop in the chain (Q<sub class="calibre25">0</sub>) is at the far right. Thus, if you connected lightbulbs to these outputs, you could read an 8-bit number. A timing diagram of such a counter could show all eight outputs separately, or it could show them together, like this: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00290.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">At each positive transition of the Clock, some Q outputs might change and some might not, but together they reflect increasing binary numbers. </p>
+<p class="calibre_1">I said earlier in this chapter that we'd discover some way to determine the frequency of an oscillator. This is it. If you connect an oscillator to the Clock input of the 8-Bit Counter, the counter will show you how many cycles the oscillator has gone through. When the total reaches 11111111 (255 in decimal), it goes back to 00000000. Probably the easiest way to use this counter to determine the frequency of an oscillator is to connect eight lightbulbs to the outputs of the 8-Bit Counter. Now wait until all the outputs are 0 (that is, when none of the lightbulbs are lit) and start a stopwatch. Stop the stopwatch when all the lights go out again. That's the time required for 256 cycles of the oscillator. Say it's 10 seconds. The frequency of the oscillator is thus 256 ÷ 10, or 25.6 Hz. </p>
+<p class="calibre_1">As flip-flops gain features, they also gain in complexity. This one is called an <span><em class="italic">edge-triggered D-type flip-flop with preset and clear</em></span>: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00291.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The Preset and Clear inputs override the Clock and Data inputs. Normally these two inputs are 0. When the Preset input is 1, Q becomes 1 and <span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span> becomes 0. When the Clear input is 1, Q becomes 0 and <span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span> becomes 1. (Like the Set and Reset inputs of an R-S flip-flop, Preset and Clear shouldn't be 1 at the same time.) Otherwise, this behaves like a normal edge-triggered D-type flip-flop: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th colspan="4" rowspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Inputs</span></p></div></th>
+<th colspan="2" rowspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Outputs</span></p></div></th>
+</tr>
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Pre</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Clr</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+D</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Clk</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Q</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+<span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span></span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">X</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">X</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">X</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">X</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">↑</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">↑</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">X</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Q</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><a shape="rect"></a><img alt="" src="images/00258.jpg" class="calibre10"/></span></p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">The diagram for the edge-triggered D-type flip-flop with preset and clear looks like this:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00292.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">We have now persuaded telegraph relays to add, subtract, and count in binary numbers. This is quite an accomplishment, particularly considering that all the hardware we've been using was available more than a hundred years ago. We have still more to discover. But let's now take a short break from building things and have another look at number bases. </p>
+</div>  <div class="mbp_pagebreak" id="calibre_pb_50"></div>
+</body></html>

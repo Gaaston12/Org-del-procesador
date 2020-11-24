@@ -1,0 +1,2748 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Code: The Hidden Language of Computer Hardware and Software</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+<div id="filepos1154024" style="height:0pt"></div><div id="filepos1154024" class="calibre_">
+<div class="calibre_">
+<div class="calibre_">
+<div class="calibre_">
+<h1 class="calibre1" id="calibre_pb_64"><span class="calibre2"><a shape="rect" class="calibre4"></a>Chapter 19. Two Classic Microprocessors </span></h1>
+</div>
+</div>
+</div>
+<p class="calibre_1">The microprocessor—a consolidation of all the components of a central processing unit (CPU) of a computer on a single chip of silicon—was born in 1971. It was a modest beginning: The first microprocessor, the Intel 4004, contained about 2300 transistors. Today, nearly three decades later, microprocessors made for home computers are approaching the 10,000,000 transistor mark. </p>
+<p class="calibre_1">Yet what the microprocessor actually does on a fundamental level has remained unchanged. While those millions of additional transistors in today's chips might be doing interesting things, in an initial exploration of the microprocessor they offer more distraction than enlightenment. To obtain the clearest view of what a microprocessor does, let's look at the first ready-for-prime-time microprocessors. </p>
+<p class="calibre_1">These microprocessors appeared in 1974, the year in which Intel introduced the 8080 (pronounced <span><em class="italic">eighty eighty</em></span>) in April and Motorola—a company that had been making <a shape="rect"></a>semiconductors and transistor-based products since the 1950s—introduced the 6800 (<span><em class="italic">sixty-eight hundred</em></span>) in August. These weren't the only microprocessors available that year. Also in 1974, Texas Instruments introduced the 4-bit TMS 1000, which was used in many calculators, toys, and appliances; and <a shape="rect"></a>National Semiconductor introduced the PACE, which was the first 16-bit microprocessor. In retrospect, however, the 8080 and the 6800 were certainly the two most historically significant chips. </p>
+<p class="calibre_1">Intel set the initial price of the 8080 at $360, a sly dig at <a shape="rect"></a>IBM's System/360, a large mainframe system used by many large corporations that cost millions. (Today you can buy an 8080 chip for $1.95.) It's not as if the 8080 is comparable to System/360 in any way, but within a few years IBM itself would certainly be taking notice of these very small computers. </p>
+<p class="calibre_1">The 8080 is an 8-bit microprocessor that contains about 6000 transistors, runs at a 2 MHz clock <a shape="rect"></a>speed, and addresses 64 kilobytes of memory. The 6800 (also selling these days for $1.95) has about 4000 transistors and also addresses 64 KB of memory. The first 6800 ran at 1 MHz, but by 1977 Motorola introduced later versions running at 1.5 and 2 MHz. </p>
+<p class="calibre_1">These chips are referred to as <span><em class="italic">single-chip microprocessors</em></span> and less accurately as <span><em class="italic">computers on a chip</em></span>. The processor is only one part of the whole computer. In addition to the processor, a computer at the very least requires some random access memory (RAM), some way for a person to get information into the computer (an input device), some way for a person to get information out of the computer (an output device), and several other chips that bind everything together. But I'll describe these other components in greater detail in <a shape="rect" href="index_split_024.html#filepos1533684">Chapter 21</a>.<a shape="rect"></a><a shape="rect"></a></p>
+<p class="calibre_1">For now, let's look at the microprocessor itself. Often a description of a microprocessor is accompanied by a block diagram that illustrates the internal components of the microprocessor and how they're connected. But we had enough of that in <a shape="rect" href="index_split_020.html#filepos950185">Chapter 17</a>. Instead, we'll get a sense of what's inside the processor by seeing how it interacts with the outside world. In other words, we can think of the microprocessor as a black box whose internal operations we don't need to study minutely in order to understand what it does. We can instead grasp what the microprocessor does by examining the chip's input and output signals, and in particular the chip's instruction set. </p>
+<p class="calibre_1">Both the 8080 and 6800 are 40-pin integrated circuits. The most common IC package for these chips is about 2 inches long, about a half inch wide, and ⅛ inch thick: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00390.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Of course, what you see is just the packaging. The actual wafer of silicon inside is much smaller—in the case of the early 8-bit microprocessors, the silicon is less than ¼ inch square. The packaging protects the silicon chip and also provides access to all of the chip's input and output points through the pins. The diagram on the following page shows the function of the 40 pins of the 8080. </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00391.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Every electrical or electronic device that we've built in this book has required some kind of electrical power supply. One of the 8080's quirks is that it requires <span><em class="italic">three</em></span> power supply voltages. Pin 20 must be connected to a 5-volt power supply, pin 11 to a –5-volt power supply, and pin 28 to a 12-volt power supply. You connect pin 2 to ground. (In 1976, Intel released the 8085 chip, which simplified these power requirements.) </p>
+<p class="calibre_1">All the remaining pins are drawn as arrows. An arrow <span><em class="italic">from</em></span> the chip indicates an <span><em class="italic">output</em></span> signal. This is a signal controlled by the microprocessor that other chips in the computer respond to. An arrow <span><em class="italic">into</em></span> the chip indicates an <span><em class="italic">input</em></span> signal. This is a signal that comes from another chip in the computer that the 8080 responds to. Some pins are both inputs <span><em class="italic">and</em></span> outputs. </p>
+<p class="calibre_1">The processor in <a shape="rect" href="index_split_020.html#filepos950185">Chapter 17</a> required an oscillator to make it go. The 8080 requires two different synchronized 2-MHz clock inputs labeled ø<sub class="calibre25">1</sub> and ø<sub class="calibre25">2</sub> on pins 22 and 15. These signals are most conveniently supplied by another chip made by Intel known as the 8224 Clock Signal Generator. You connect an 18-MHz quartz crystal to this chip, and it basically does the rest. </p>
+<p class="calibre_1">A microprocessor always has multiple output signals that address memory. The number of signals it has for this purpose is directly related to the amount of memory the microprocessor can address. The 8080 has 16 signals labeled A<sub class="calibre25">0</sub> through A<sub class="calibre25">15</sub>, which give it the ability to address 2<sup class="calibre21">16</sup>, or 65,536, bytes of memory. </p>
+<p class="calibre_1">The 8080 is an 8-bit microprocessor that reads data from memory and writes data to memory 8 bits at a time. The chip includes eight signals labeled D<sub class="calibre25">0</sub> through D<sub class="calibre25">7</sub>. These signals are the only ones on the chip that are both inputs <a shape="rect"></a>and outputs. When the microprocessor reads a byte of memory, the pins function as inputs; when the microprocessor writes a byte to memory, the pins function as outputs. </p>
+<p class="calibre_1">The other ten pins of the microprocessor are <span><em class="italic">control</em></span> signals. The <span><em class="italic">RESET</em></span> input, for example, is used to reset the microprocessor. The output signal <span><a shape="rect"></a><img alt="" src="images/00392.jpg" class="calibre10"/></span> indicates that the microprocessor needs to write a byte of memory into RAM. (The <span><a shape="rect"></a><img alt="" src="images/00392.jpg" class="calibre10"/></span> signal corresponds to the Write input of the RAM array.) In addition, other control signals appear on the D<sub class="calibre25">0</sub> through D<sub class="calibre25">7</sub> pins at a particular time while the chip reads instructions. Computer systems built around the 8080 generally use the 8228 System Controller chip to latch these additional control signals. I'll describe some control signals later on, but the 8080's control signals are notoriously messy, so unless you're going to actually design a computer based on the chip, it's best not to torture yourself with its control signals. </p>
+<p class="calibre_1">Let's assume that the 8080 microprocessor is connected to 64 KB of memory that we have the ability to write bytes into and read bytes from independent of the microprocessor. </p>
+<p class="calibre_1">After the 8080 chip is reset, it reads the byte located at memory address 0000h into the microprocessor. It does this by outputting 16 zeros on the address signals A<sub class="calibre25">0</sub> through A<sub class="calibre25">15</sub>. The byte it reads should be an 8080 instruction, and the process of reading this byte is known as an <span><em class="italic">instruction fetch</em></span>. </p>
+<p class="calibre_1">In the computer we built in <a shape="rect" href="index_split_020.html#filepos950185">Chapter 17</a>, all instructions (except <span><em class="italic">HLT</em></span>) were 3 bytes in length, consisting of an opcode and a 2-byte address. In the 8080, instructions can be 1 byte, 2 bytes, or 3 bytes in length. Some instructions cause the 8080 to read a byte from a particular location in memory into the microprocessor. Some instructions cause the 8080 to write a byte from the microprocessor into a particular location in memory. Other instructions cause the 8080 to do something internally without using any RAM. After processing the first instruction, the 8080 accesses the second instruction in memory, and so forth. Together, these instructions constitute a computer program that can do something interesting. </p>
+<p class="calibre_1">When the 8080 is running at its maximum speed of 2 MHz, each clock cycle is 500 nanoseconds. (1 ÷ 2,000,000 cycles per second = 0.000000500 seconds.) The instructions in the <a shape="rect" href="index_split_020.html#filepos950185">Chapter 17</a> computer all required 4 clock cycles. Each 8080 instruction requires anywhere from 4 to 18 clock cycles. This means that each instruction is executed in 2 to 9 microseconds (millionths of a second). </p>
+<p class="calibre_1">Probably the best way to understand what a particular microprocessor is capable of doing is to examine its complete instruction set in a systematic manner. </p>
+<p class="calibre_1">The final computer in <a shape="rect" href="index_split_020.html#filepos950185">Chapter 17</a> had only 12 instructions. An 8-bit microprocessor could easily have as many as 256 instructions, each opcode corresponding to a particular 8-bit value. (It could actually have more if some instructions have 2-byte opcodes.) The 8080 doesn't go quite that far, but it does have 244 opcodes. That might seem like a lot, but all in all, the 8080 doesn't really do all that much more than the computer in <a shape="rect" href="index_split_020.html#filepos950185">Chapter 17</a>. For example, if you need to do multiplication or division using an 8080, you still need to write your own little program to do it. </p>
+<p class="calibre_1">As you'll recall from <a shape="rect" href="index_split_020.html#filepos950185">Chapter 17</a>, each opcode in a processor's instruction set is usually associated with a particular mnemonic, and some of these <a shape="rect"></a>mnemonics might have arguments. But these mnemonics are solely for convenience in referring to the opcodes. The processor reads only bytes; it knows nothing about the text that makes up the mnemonics. (For purposes of clarity, I've taken some liberty with the mnemonics as they appear in Intel's documentation of the 8080.) </p>
+<p class="calibre_1">The <a shape="rect" href="index_split_020.html#filepos950185">Chapter 17</a> computer had two important instructions that we initially called <span><em class="italic">Load</em></span> and <span><em class="italic">Store</em></span>. Each of these instructions occupied 3 bytes of memory. The first byte of a <span><em class="italic">Load</em></span> instruction was the opcode, and the 2 bytes that followed the opcode indicated a 16-bit address. The processor loaded the byte at that address into the <a shape="rect"></a>accumulator. Similarly, the <span><em class="italic">Store</em></span> instruction saved the contents of the accumulator in the address indicated in the instruction. </p>
+<p class="calibre_1">Later on, we discovered that we could abbreviate these two opcodes using mnemonics:</p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">LOD A,[aaaa]<br class="calibre30"/>STO [aaaa],A</tt></div></div><p class="calibre_1">where <span><em class="italic">A</em></span> stands for the accumulator (the destination in the Load instruction and the source in the <span><em class="italic">Store</em></span> instruction) and <span><em class="italic">aaaa</em></span> indicates a 16-bit memory address, usually written as 4 hexadecimal digits. </p>
+<p class="calibre_1">The 8-bit accumulator in the 8080 is called A, just like the accumulator in <a shape="rect" href="index_split_020.html#filepos950185">Chapter 17</a>. And like the computer in <a shape="rect" href="index_split_020.html#filepos950185">Chapter 17</a>, the 8080 includes two instructions that do exactly the same thing as the <span><em class="italic">Load</em></span> and <span><em class="italic">Store</em></span> instructions. The 8080 opcodes for these two instructions are 32h and 3Ah, and each opcode is followed by a 16-bit address. The 8080 mnemonics are <span><em class="italic">STA</em></span> (standing for <span><em class="italic">Store Accumulator</em></span>) and <span><em class="italic">LDA</em></span> (<span><em class="italic">Load Accumulator</em></span>): </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">32</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">STA [aaaa],A</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">3A</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">LDA A,[aaaa]</code></p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">In addition to the accumulator, the 8080 contains six <span><em class="italic">registers</em></span> that can also hold 8-bit values inside the microprocessor. These registers are very similar to the accumulator; indeed, the accumulator is considered to be a special type of register. Like the accumulator, the other six registers are latches; the processor can move bytes from memory into registers, and from registers back into memory. The other registers, however, aren't as versatile as the accumulator. When you add two 8-bit numbers, for example, the result always goes into the accumulator rather than into one of the other registers. </p>
+<p class="calibre_1">The six additional registers in the 8080 are named B, C, D, E, H, and L. The first question people usually ask is, "What happened to F and G?" and the second question is, "And what about I, J, and K?" The answer is that registers H and L are so called because they're special in a certain way. H stands for <span><em class="italic">high</em></span> and L stands for <span><em class="italic">low</em></span>. Very often the 8-bit quantities in H and L are treated in tandem as a 16-bit <span><em class="italic">register pair</em></span> named HL, H being the high-order byte and L being the low-order byte. This 16-bit value is often used to address memory. We'll see how this works shortly. </p>
+<p class="calibre_1">Are all these registers necessary? Why didn't we need them in the <a shape="rect" href="index_split_020.html#filepos950185">Chapter 17</a> computer? In theory, they aren't necessary. But they turn out to be very convenient. Many computer programs juggle several numbers at the same time. It's easiest to do this if all the numbers are stored in microprocessor registers rather than memory. The program is usually faster as well: The fewer times a program needs to access memory, generally the faster it will run. </p>
+<p class="calibre_1">No fewer than 63 opcodes are devoted to a single 8080 instruction called <span><em class="italic">MOV</em></span>, which is short for <span><em class="italic">Move</em></span>. This instruction is just a single byte. The instruction usually moves the contents of one register into another (or the same) register. The large number of <span><em class="italic">MOV</em></span> instructions is a normal consequence of designing a microprocessor with seven registers (including the accumulator). </p>
+<p class="calibre_1">Here are the first 32 <span><em class="italic">MOV</em></span> instructions. Remember that the destination is the argument on the left and the source is the argument on the right: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">40</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV B,B</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">50</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV D,B</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">41</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV B,C</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">51</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV D,C</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">42</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV B,D</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">52</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV D,D</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">43</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV B,E</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">53</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV D,E</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">44</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV B,H</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">54</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV D,H</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">45</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV B,L</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">55</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV D,L</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">46</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV B,[HL]</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">56</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV D,[HL]</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">47</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV B,A</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">57</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV D,A</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">48</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV C,B</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">58</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV E,B</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">49</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV C,C</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">59</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV E,C</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4A</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV C,D</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">5A</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV E,D</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4B</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV C,E</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">5B</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV E,E</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4C</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV C,H</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">5C</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV E,H</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4D</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV C,L</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">5D</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV E,L</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4E</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV C,[HL]</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">5E</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV E,[HL]</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4F</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV C,A</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">5F</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV E,A</code></p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">These are handy instructions to have. Whenever you have a value in one register, you know you can move it to another register. Notice also the four instructions that use the HL register pair, such as </p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">MOV B,[HL]</tt></div></div><p class="calibre_1">The <span><em class="italic">LDA</em></span> instruction shown earlier transfers a byte from memory into the accumulator; the 16-bit address of the byte directly follows the <span><em class="italic">LDA</em></span> opcode. This <span><em class="italic">MOV</em></span> instruction transfers a byte from memory into register B. But the address of the byte to be loaded into the register is stored in the register pair HL registers. How did HL come to hold a 16-bit memory address? Well, it could happen in a variety of ways. Maybe the address was calculated in some way. </p>
+<p class="calibre_1">To summarize, these two instructions</p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">LDA A,[aaaa]<br class="calibre30"/>MOV B,[HL]</tt></div></div><p class="calibre_1">both load a byte from memory into the microprocessor, but they use two different methods to address memory. The first method is called <span><em class="italic">direct addressing</em></span> and the second method is called <span><em class="italic">indexed addressing</em></span>. </p>
+<p class="calibre_1">The second batch of 32 <span><em class="italic">MOV</em></span> instructions shows that the memory location addressed by HL can also be a destination: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">40</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV B,B</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">50</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV D,B</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">60</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV H,B</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">70</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV [HL],B</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">61</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV H,C</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">71</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV [HL],C</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">62</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV H,D</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">72</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV [HL],D</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">63</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV H,E</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">73</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV [HL],E</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">64</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV H,H</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">74</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV [HL],H</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">65</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV H,L</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">75</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV [HL],L</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">66</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV H,[HL]</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">76</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">HLT</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">67</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV H,A</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">77</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV [HL],A</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">68</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV L,B</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">78</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV A,B</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">69</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV L,C</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">79</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV A,C</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6A</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV L,D</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7A</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV A,D</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6B</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV L,E</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7B</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV A,E</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6C</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV L,H</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7C</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV A,H</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6D</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV L,L</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7D</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV A,L</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6E</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV L,[HL]</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7E</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV A,[HL]</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6F</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV L,A</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7F</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MOV A,A</code></p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">Several of these instructions, such as</p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">MOV A,A</tt></div></div><p class="calibre_1">don't do anything useful. But the instruction</p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">MOV [HL],[HL]</tt></div></div><p class="calibre_1">doesn't exist. The opcode that would otherwise correspond to that instruction is actually a <span><em class="italic">HLT</em></span> (<span><em class="italic">Halt</em></span>) instruction. </p>
+<p class="calibre_1">A more revealing way to look at all these <span><em class="italic">MOV</em></span> opcodes is to examine the bit pattern of the opcode. The <span><em class="italic">MOV</em></span> opcode consists of the 8 bits </p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">01dddsss</tt></div></div><p class="calibre_1">in which the letters <span><em class="italic">ddd</em></span> represent a 3-bit code that refers to a destination, and <span><em class="italic">sss</em></span> is a 3-bit code that refers to a source. These 3-bit codes are </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">000 = Register B</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">001 = Register C</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">010 = Register D</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">011 = Register E</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">100 = Register H</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">101 = Register L</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">110 = Contents of memory at address HL</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">111 = Accumulator</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">For example, the instruction</p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">MOV L,E</tt></div></div><p class="calibre_1">is associated with the opcode</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">01101011</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">or 6Bh. You can check the preceding table to verify that.</p>
+<p class="calibre_1">So probably somewhere inside the 8080, the 3 bits labeled <span><em class="italic">sss</em></span> are used in a 8-Line-to-1-Line Data Selector, and the 3 bits labeled <span><em class="italic">ddd</em></span> are used to control a 3-Line-to-8-Line Decoder that determines which register latches a value. </p>
+<p class="calibre_1">It's also possible to use registers B and C as a 16-bit register pair BC, and registers D and E as a 16-bit register pair DE. If either register pair contains the address of a memory location that you want to use to load or store a byte, you can use the following instructions: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">02</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">STAX [BC],A</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0A</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">LDAX A,[BC]</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">12</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">STAX [DE],A</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1A</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">LDAX A,[DE]</code></p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">Another type of <span><em class="italic">Move</em></span> instruction is called <span><em class="italic">Move Immediate</em></span> and is assigned the mnemonic <span><em class="italic">MVI</em></span>. The <span><em class="italic">Move Immediate</em></span> instruction is composed of 2 bytes. The first is the opcode, and the second is a byte of data. That byte is transferred from memory into one of the registers or to the memory location addressed by the HL register pair: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">06</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MVI B,xx</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0E</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MVI C,xx</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">16</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MVI D,xx</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1E</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MVI E,xx</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">26</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MVI H,xx</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2E</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MVI L,xx</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">36</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MVI [HL],xx</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">3E</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">MVI A,xx</code></p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">For example, after the instruction</p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">MVI E,37h</tt></div></div><p class="calibre_1">the register E contains the byte 37h. This is considered to be a third method of addressing memory, called <span><em class="italic">immediate addressing</em></span>. </p>
+<p class="calibre_1">A collection of 32 opcodes do the four basic arithmetical operations we're familiar with from the processor we developed in <a shape="rect" href="index_split_020.html#filepos950185">Chapter 17</a>. These are addition (<span><em class="italic">ADD</em></span>), addition with carry (<span><em class="italic">ADC</em></span>), subtraction (<span><em class="italic">SUB</em></span>), and subtraction with borrow (<span><em class="italic">SBB</em></span>). In all cases, the <a shape="rect"></a>accumulator is one of the two operands and is also the destination for the result: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">80</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">ADD A,B</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">90</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">SUB A,B</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">81</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">ADD A,C</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">91</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">SUB A,C</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">82</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">ADD A,D</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">92</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">SUB A,D</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">83</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">ADD A,E</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">93</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">SUB A,E</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">84</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">ADD A,H</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">94</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">SUB A,H</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">85</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">ADD A,L</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">95</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">SUB A,L</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">86</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">ADD A,[HL]</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">96</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">SUB A,[HL]</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">87</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">ADD A,A</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">97</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">SUB A,A</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">88</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">ADC A,B</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">98</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">SBB A,B</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">89</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">ADC A,C</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">99</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">SBB A,C</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">8A</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">ADC A,D</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">9A</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">SBB A,D</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">8B</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">ADC A,E</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">9B</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">SBB A,E</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">8C</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">ADC A,H</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">9C</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">SBB A,H</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">8D</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">ADC A,L</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">9D</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">SBB A,L</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">8E</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">ADC A,[HL]</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">9E</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">SBB A,[HL]</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">8F</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">ADC A,A</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">9F</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">SBB A,A</code></p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">Suppose A contains the byte 35h and register B contains the byte 22h. After executing</p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">SUB A,B</tt></div></div><p class="calibre_1">the accumulator contains the byte 13h.</p>
+<p class="calibre_1">If A contains the byte 35h, and register H contains the byte 10h, and L contains the byte 7Ch, and the memory location 107Ch contains the byte 4Ah, the instruction </p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">ADD A,[HL]</tt></div></div><p class="calibre_1">adds the byte in the accumulator (35h) and the byte addressed by the register pair HL (4Ah) and stores the result (7Fh) in the accumulator. </p>
+<p class="calibre_1">The <span><em class="italic">ADC</em></span> and <span><em class="italic">SBB</em></span> instructions allow the 8080 to add and subtract 16-bit, 24-bit, 32-bit, and larger numbers. For example, suppose the register pairs BC and DE both contain 16-bit numbers. You want to add them and put the result in BC. Here's how to do it: </p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">MOV A,C     ; Low-order byte<br class="calibre30"/>ADD A,E<br class="calibre30"/>MOV C,A<br class="calibre30"/>MOV A,B     ; High-order byte<br class="calibre30"/>ADC A,D<br class="calibre30"/>MOV B,A</tt></div></div><p class="calibre_1">The two addition instructions are <span><em class="italic">ADD</em></span> for the low-order byte and <span><em class="italic">ADC</em></span> for the high-order byte. Any carry bit that results from the first addition is included in the second addition. But because you can add only with the accumulator, this little snippet of code requires no fewer than 4 <span><em class="italic">MOV</em></span> instructions. Lots of <span><em class="italic">MOV</em></span> instructions usually show up in 8080 code. </p>
+<p class="calibre_1">This is a good time to talk about the 8080 flags. In our processor in <a shape="rect" href="index_split_020.html#filepos950185">Chapter 17</a>, we had a Carry flag and a Zero flag. The 8080 has three more, called Sign, Parity, and Auxiliary Carry. All the flags are stored in yet another 8-bit register called the <span><em class="italic">Program Status Word</em></span> (<span><em class="italic">PSW</em></span>). Instructions such as <span><em class="italic">LDA, STA</em></span>, or <span><em class="italic">MOV</em></span> don't affect the flags at all. The <span><em class="italic">ADD, SUB, ADC</em></span>, and <span><em class="italic">SBB</em></span> instructions do affect the flags, however, in the following way: </p>
+<div class="calibre_">
+<ul class="calibre26">
+<li class="calibre27">The Sign flag is set to 1 if the most significant bit of the result is 1, meaning that the result is negative.</li>
+<li class="calibre27">The Zero flag is set to 1 if the result is 0.</li>
+<li class="calibre27">The Parity flag is set to 1 if the result has <span><em class="italic">even parity</em></span>, which means that the number of 1 bits in the result is even. The parity flag is 0 if the result has <span><em class="italic">odd parity</em></span>. Parity is sometimes used as a crude form of error checking. This flag isn't often used in 8080 programming. </li>
+<li class="calibre27">The Carry flag is set to 1 if an <span><em class="italic">ADD</em></span> or <span><em class="italic">ADC</em></span> operation results in a carry or if a <span><em class="italic">SUB</em></span> and <span><em class="italic">SBB</em></span> does <span><em class="italic">not</em></span> result in a carry. (This is different from the implementation of the Carry flag in the <a shape="rect" href="index_split_020.html#filepos950185">Chapter 17</a> computer.) </li>
+<li class="calibre27">The Auxiliary Carry flag is 1 if the operation results in a carry from the low nibble into the high nibble. This flag is used only for the <span><em class="italic">DAA</em></span> (<span><em class="italic">Decimal Adjust Accumulator</em></span>) instruction. </li>
+</ul>
+</div>
+<p class="calibre_1">Two instructions affect the carry flag directly:</p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Meaning</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">37</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">STC</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Set Carry flag to 1</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">3F</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">CMC</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Complement Carry flag</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">The computer in <a shape="rect" href="index_split_020.html#filepos950185">Chapter 17</a> performed <span><em class="italic">ADD, ADC, SUB</em></span>, and <span><em class="italic">SBB</em></span> instructions (although not with nearly as much flexibility), but the 8080 does Boolean AND, OR, and XOR operations as well. Both arithmetic and logical operations are performed by the processor's Arithmetic Logic Unit (<a shape="rect"></a>ALU). </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">A0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">AND A,B</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">B0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">OR A,B</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">A1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">AND A,C</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">B1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">OR A,C</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">A2</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">AND A,D</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">B2</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">OR A,D</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">A3</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">AND A,E</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">B3</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">OR A,E</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">A4</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">AND A,H</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">B4</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">OR A,H</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">A5</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">AND A,L</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">B5</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">OR A,L</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">A6</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">AND A,[HL]</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">B6</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">OR A,[HL]</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">A7</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">AND A,A</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">B7</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">OR A,A</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">A8</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">XOR A,B</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">B8</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">CMP A,B</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">A9</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">XOR A,C</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">B9</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">CMP A,C</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">AA</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">XOR A,D</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">BA</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">CMP A,D</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">AB</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">XOR A,E</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">BB</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">CMP A,E</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">AC</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">XOR A,H</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">BC</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">CMP A,H</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">AD</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">XOR A,L</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">BD</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">CMP A,L</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">AE</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">XOR A,[HL]</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">BE</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">CMP A,[HL]</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">AF</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">XOR A,A</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">BF</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">CMP A,A</code></p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">The <span><em class="italic">AND, XOR</em></span>, and <span><em class="italic">OR</em></span> instructions perform <span><em class="italic">bitwise</em></span> operations. This means that the logical operation is performed on each pair of bits separately. </p>
+<p class="calibre_1">For example,</p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">MVI A,0Fh<br class="calibre30"/>MVI B,55h<br class="calibre30"/>AND A,B</tt></div></div><p class="calibre_1">The value in the accumulator will be 05h. If the third instruction were an <span><em class="italic">OR</em></span>, the result would be 5Fh. If the instruction were an <span><em class="italic">XOR</em></span>, the result would be 5Ah. </p>
+<p class="calibre_1">The <span><em class="italic">CMP</em></span> (<span><em class="italic">Compare</em></span>) instruction is just like the <span><em class="italic">SUB</em></span> instruction except that the result isn't stored in the accumulator. In other words, the <span><em class="italic">CMP</em></span> performs a subtraction and then throws away the result. What's the point? The flags! The flags tell you the relationship between the 2 bytes that you compared. For example, consider the following instructions: </p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">MVI B,25h<br class="calibre30"/>CMP A,B</tt></div></div><p class="calibre_1">After this instruction, the contents of A remain unchanged. However, the Zero flag is set if the value in A equals 25h. The Carry flag is set if the value in A is less than 25h. </p>
+<p class="calibre_1">The eight arithmetic and logic operations also have versions that operate on an immediate byte:</p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">C6</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">ADI A,xx</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">E6</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">ANI A,xx</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">CE</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">ACI A,xx</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">EE</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">XRI A,xx</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">D6</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">SUI A,xx</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">F6</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">ORI A,xx</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">DE</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">SBI A,xx</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">FE</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">CPI A,xx</code></p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">For example, the two lines shown above can be replaced with</p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">CPI A,25h</tt></div></div><p class="calibre_1">Here are two miscellaneous 8080 instructions:</p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">27</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">DAA</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2F</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">CMA</code></p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1"><span><em class="italic">CMA</em></span> stands for <span><em class="italic">Complement Accumulator</em></span>. It performs a ones' complement of the value in the accumulator. Every 0 becomes a 1 and every 1 becomes a 0. If the accumulator is 01100101, the <span><em class="italic">CMA</em></span> instruction causes it to be 10011010. You can also complement the accumulator using the instruction </p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">XRI A,FFh</tt></div></div><p class="calibre_1"><span><em class="italic">DAA</em></span> stands for <span><em class="italic">Decimal Adjust Accumulator</em></span>, as I mentioned earlier, and it's probably the most sophisticated single instruction in the 8080. A whole little section of the microprocessor is dedicated specifically to performing this instruction. </p>
+<p class="calibre_1">The <span><em class="italic">DAA</em></span> instruction helps a programmer implement decimal arithmetic using a method of representing numbers known as <span><em class="italic">binary-coded decimal</em></span>, or <span><em class="italic">BCD</em></span>. In BCD, each nibble of data may range only from 0000 through 1001, corresponding to decimal digits 0 through 9. The 8 bits of a byte can store two decimal digits in BCD format.<a shape="rect"></a></p>
+<p class="calibre_1">Suppose the accumulator contains the BCD value 27h. Because this is a BCD value, it actually refers to the decimal value 27. (Normally, the hexadecimal value 27h has the decimal equivalent 39.) Suppose also that register B contains the BCD value 94h. If you execute the instruction </p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">MVI A,27h<br class="calibre30"/>MVI B,94h<br class="calibre30"/>ADD A,B</tt></div></div><p class="calibre_1">the accumulator will contain the value BBh, which, of course, isn't a BCD value because the nibbles of BCD bytes never exceed 9. But now execute the instruction </p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">DAA</tt></div></div><p class="calibre_1">Now the accumulator contains 21h, and the Carry flag is set. That's because the decimal sum of 27 and 94 equals 121. This can be handy if you need to do BCD arithmetic. </p>
+<p class="calibre_1">Very often it's necessary to add 1 to a particular value or subtract 1 from a value. In the multiplication program in <a shape="rect" href="index_split_020.html#filepos950185">Chapter 17</a>, we needed to subtract 1 from a value, and the way we did it was to add FFh, which is the two's complement value of –1. The 8080 includes special instructions for increasing a register or memory location by 1 (this is known as an <span><em class="italic">increment</em></span>) or decreasing by 1 (<span><em class="italic">decrement</em></span>): </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">04</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">INR B</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">05</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">DCR B</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0C</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">INR C</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0D</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">DCR C</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">14</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">INR D</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">15</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">DCR D</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1C</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">INR E</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1D</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">DCR E</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">24</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">INR H</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">25</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">DCR H</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2C</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">INR L</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2D</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">DCR L</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">34</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">INR [HL]</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">35</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">DCR [HL]</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">3C</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">INR A</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">3D</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">DCR A</code></p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">The single-byte <span><em class="italic">INR</em></span> and <span><em class="italic">DCR</em></span> instructions affect all flags except the Carry flag. </p>
+<p class="calibre_1">The 8080 also includes four <span><em class="italic">Rotate</em></span> instructions. These instructions shift the contents of the accumulator 1 bit to the left or right: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Meaning</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">07</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">RLC</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Rotate accumulator left</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0F</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">RRC</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Rotate accumulator right</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">17</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">RAL</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Rotate accumulator left through carry</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1F</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">RAR</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Rotate accumulator right through carry</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">Only the Carry flag is affected by these instructions.</p>
+<p class="calibre_1">Suppose the accumulator contains the value A7h, or 10100111 in binary. The <span><em class="italic">RLC</em></span> instruction shifts the bits left. The lowest bit (shifted out of the bottom) becomes the highest bit (shifted into the top) and also determines the state of the Carry flag. The result is 01001111, and the Carry flag is 1. The <span><em class="italic">RRC</em></span> instruction shifts the bits right in the same way. Beginning with 10100111, the result after an <span><em class="italic">RRC</em></span> instruction is 11010011, and the Carry flag is 1. </p>
+<p class="calibre_1">The <span><em class="italic">RAL</em></span> and <span><em class="italic">RAR</em></span> instructions work a little differently. The <span><em class="italic">RAL</em></span> instruction sets the Carry flag to the lowest bit of the accumulator when shifting left but sets the highest bit to the previous contents of the Carry flag. For example, if the accumulator contains 10100111 and the Carry flag is 0, <span><em class="italic">RAL</em></span> causes the accumulator to become 01001110 and the Carry flag to be 1. Similarly, under the same initial conditions <span><em class="italic">RAR</em></span> causes the accumulator to become 01010011 and the Carry flag to be set to 1. </p>
+<p class="calibre_1">The shift instructions come in handy when you're multiplying a number by 2 (that's a shift left) or dividing a number by 2 (a shift right). </p>
+<p class="calibre_1">The memory that the microprocessor addresses is called <span><em class="italic">random access</em></span> memory (RAM) for a reason: The microprocessor can access any particular memory location simply by supplying an address of that location. RAM is like a book that we can open to any page. It's <span><em class="italic">not</em></span> like a week's worth of a newspaper on microfilm. Finding something in Saturday's edition requires us to scan through most of the week. Similarly, playing the last song on a cassette tape requires us to fast forward through the whole side of the album. The term for microfilm or tape storage isn't random access but <span><em class="italic">sequential access</em></span>. </p>
+<p class="calibre_1">Random access memory is definitely a good thing, particularly for microprocessors, but sometimes it's advantageous to treat memory a little differently. Here's a form of storage that's neither random nor sequential: Suppose you work in an office where people come to your desk to give you jobs to do. Each job involves a file folder of some sort. Often when you're working on one job, you find that before you can continue you must do a related job using another file folder. So you leave the first folder on your desk and put the second one on top of it to work on that. Now someone comes to your desk to give you yet another job that has higher priority than the earlier one. You're handed a new file folder and you work with that one on top of the other two. That job requires yet another file folder, and soon you have a pile of four file folders on your desk. </p>
+<p class="calibre_1">Notice that this pile is actually a very orderly way to store and keep track of all the jobs you're doing. The topmost file folder always has the highest-priority job. After you get rid of that one, the next one on the pile must be attended to, and so on. When you finally get rid of the last file folder on your desk (the first one you started with), you can go home. </p>
+<p class="calibre_1">The technical term for this form of storage is a <span><em class="italic">stack</em></span>. You're stacking things from the bottom up and removing them from the top down. It's also called <span><em class="italic">last-in-first-out</em></span> storage, or <span><em class="italic">LIFO</em></span>. The last thing put on the stack is the first thing taken off the stack. The first thing put on the stack is the last thing taken off the stack.<a shape="rect"></a></p>
+<p class="calibre_1">Computers also can use a stack, not for storing jobs but for storing numbers, and it's something that turns out to be quite convenient. Putting something on the stack is called a <span><em class="italic">push</em></span>, and taking something off the stack is called a <span><em class="italic">pop</em></span>.<a shape="rect"></a><a shape="rect"></a></p>
+<p class="calibre_1">Suppose you were writing an assembly-language program that used registers A, B, and C. But you notice that you've reached a point where the program needs to do something else—another little calculation that also needs to use registers A, B, and C. You eventually want to come back to what you were doing before, however, and continue using A, B, and C with the values they previously had. </p>
+<p class="calibre_1">What you could do, of course, is simply store registers A, B, and C in various locations in memory and later load these locations back into the registers. But that requires keeping track of where you stored them. A much cleaner way to do it is to push the registers on the stack: </p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">PUSH A<br class="calibre30"/>PUSH B<br class="calibre30"/>PUSH C</tt></div></div><p class="calibre_1">I'll explain what these instructions actually do in a moment. For now, all we need to know is that they somehow save the contents of the registers in last-in-first-out memory. Once these statements are executed, your program can use these registers for other purposes without worry. To get the earlier values back, you simply pop them from the stack in the reverse order, as shown at the top of the following page. </p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">POP C<br class="calibre30"/>POP B<br class="calibre30"/>POP A</tt></div></div><p class="calibre_1">Remember: Last in, first out. Accidentally switching around these <span><em class="italic">POP</em></span> statements would constitute a bug. </p>
+<p class="calibre_1">What's particularly nice about the stack mechanism is that lots of different sections of a program can use the stack without causing problems. For example, after the program pushes A, B, and C on the stack, another section of the program could decide it needs to do the same thing with registers C, D, and E: </p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">PUSH C<br class="calibre30"/>PUSH D<br class="calibre30"/>PUSH E</tt></div></div><p class="calibre_1">Then all that's necessary is for that section of the program to restore the registers this way:</p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">POP E<br class="calibre30"/>POP D<br class="calibre30"/>POP C</tt></div></div><p class="calibre_1">before the first section popped C, B, and A.</p>
+<p class="calibre_1">How is the stack implemented? The stack is, first of all, just a section of normal RAM that isn't being used for anything else. The 8080 microprocessor contains a special 16-bit register that addresses this section of memory. That 16-bit register is called the <span><em class="italic">Stack Pointer</em></span>. </p>
+<p class="calibre_1">My examples of pushing and popping individual registers weren't quite accurate for the 8080. The 8080 <span><em class="italic">PUSH</em></span> instruction actually stores <span><em class="italic">16-bit</em></span> values on the stack, and the <span><em class="italic">POP</em></span> instruction retrieves them. So instead of instructions like <span><em class="italic">PUSH C</em></span> and <span><em class="italic">POP C</em></span>, we have the following 8 instructions: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">C5</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">PUSH BC</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">C1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">POP BC</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">D5</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">PUSH DE</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">D1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">POP DE</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">E5</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">PUSH HL</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">E1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">POP HL</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">F5</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">PUSH PSW</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">F1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">POP PSW</code></p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">The <span><em class="italic">PUSH BC</em></span> instruction stores registers B and C on the stack, and <span><em class="italic">POP BC</em></span> retrieves them. The abbreviation PSW in the last row refers to the <span><em class="italic">Program Status Word</em></span>, which, as you'll recall, is the 8-bit register that contains the flags. The two instructions in the bottom row actually push and pop both the accumulator <span><em class="italic">and</em></span> the PSW. If you want to save the contents of <span><em class="italic">all</em></span> the registers and flags, you can use </p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">PUSH PSW<br class="calibre30"/>PUSH BC<br class="calibre30"/>PUSH DE<br class="calibre30"/>PUSH HL</tt></div></div><p class="calibre_1">When you later need to restore the contents of these registers, use the <span><em class="italic">POP</em></span> instructions in reverse order: </p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">POP HL<br class="calibre30"/>POP DE<br class="calibre30"/>POP BC<br class="calibre30"/>POP PSW</tt></div></div><p class="calibre_1">How does the stack work? Let's assume the Stack Pointer is 8000h. The <span><em class="italic">PUSH BC</em></span> instruction causes the following to occur: </p>
+<div class="calibre_">
+<ul class="calibre26">
+<li class="calibre27">The Stack Pointer is decremented to 7FFFh.</li>
+<li class="calibre27">The contents of register B are stored at the Stack Pointer address, or 7FFFh.</li>
+<li class="calibre27">The Stack Pointer is decremented to 7FFEh.</li>
+<li class="calibre27">The contents of register C are stored at the Stack Pointer address, or 7FFEh.</li>
+</ul>
+</div>
+<p class="calibre_1">A <span><em class="italic">POP BC</em></span> instruction executed when the Stack Pointer is still 7FFEh undoes everything: </p>
+<div class="calibre_">
+<ul class="calibre26">
+<li class="calibre27">The contents of register C are loaded from the Stack Pointer address, or 7FFEh.</li>
+<li class="calibre27">The Stack Pointer is incremented to 7FFFh.</li>
+<li class="calibre27">The contents of register B are loaded from the Stack Pointer address, or 7FFFh.</li>
+<li class="calibre27">The Stack Pointer is incremented to 8000h.</li>
+</ul>
+</div>
+<p class="calibre_1">For every <span><em class="italic">PUSH</em></span> instruction, the stack increases 2 bytes in size. It's possible—possibly due to a bug in a program—that the stack will get so big that it will begin to overwrite some code or data needed by a program. This is a problem known as <span><em class="italic">stack overflow</em></span>. Similarly, too many <span><em class="italic">POP</em></span> instructions can prematurely exhaust the contents of the stack, a condition known as <span><em class="italic">stack underflow</em></span>. </p>
+<p class="calibre_1">If you have 64 KB of memory connected to your 8080, you might want to initially set the Stack Pointer to 0000h. The first <span><em class="italic">PUSH</em></span> instruction decrements that address to FFFFh. The stack then occupies the area of memory with the very highest addresses, quite a distance from your programs, which will probably be in the area of memory starting at address 0000h. </p>
+<p class="calibre_1">The instruction to set the value of the stack register is <span><em class="italic">LXI</em></span>, which stands for <span><em class="italic">Load Extended Immediate</em></span>. These instructions also load 16-bit register pairs with the two bytes that follow the opcode: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">01</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">LXI BC,xxxx</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">LXI DE,xxxx</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">21</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">LXI HL,xxxx</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">31</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">LXI SP,xxxx</code></p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">The instruction</p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">LXI BC,527Ah</tt></div></div><p class="calibre_1">is equivalent to</p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">MVI B,52<br class="calibre30"/>MVI C,7Ah</tt></div></div><p class="calibre_1">The <span><em class="italic">LXI</em></span> instruction saves a byte. In addition, the last <span><em class="italic">LXI</em></span> instruction in the preceding table is used to set the Stack Pointer to a particular value. It's not uncommon for this instruction to be one of the first instructions that a microprocessor executes after being restarted: </p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">0000h:     LXI SP,0000h</tt></div></div><p class="calibre_1">It's also possible to increment and decrement register pairs and the Stack Pointer as if they were 16-bit registers:</p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">03</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">INX BC</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0B</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">DCX BC</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">13</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">INX DE</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1B</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">DCX DE</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">23</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">INX HL</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2B</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">DCX HL</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">33</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">INX SP</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">3B</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">DCX SP</code></p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">While I'm on the subject of 16-bit instructions, let's look at a few more. The following instructions add the contents of 16-bit register pairs to the register pair HL: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">09</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">DAD HL,BC</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">19</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">DAD HL,DE</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">29</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">DAD HL,HL</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">39</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">DAD HL,SP</code></p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">These instructions could save a few bytes. For example, the first of these instructions would normally require 6 bytes:</p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">MOV A,L<br class="calibre30"/>ADD A,C<br class="calibre30"/>MOV L,A<br class="calibre30"/>MOV A,H<br class="calibre30"/>ADC A,B<br class="calibre30"/>MOV H,A</tt></div></div><p class="calibre_1">The <span><em class="italic">DAD</em></span> instruction is normally used for calculating memory addresses. The only flag that the instruction affects is the Carry flag. </p>
+<p class="calibre_1">Next let's look at some miscellaneous instructions. These two opcodes are followed by a 2-byte address and store and load the contents of the register pair HL at that address: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Meaning</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2h</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">SHLD [aaaa],HL</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Store HL Direct</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2Ah</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">LHLD HL,[aaaa]</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Load HL Direct</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">The L register is stored at address <span><em class="italic">aaaa</em></span>, and the H register is stored at address <span><em class="italic">aaaa</em></span> + 1. </p>
+<p class="calibre_1">These two instructions load the Program Counter or the Stack Pointer from the register pair HL:</p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Meaning</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">E9h</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">PCHL PC,HL</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Load Program Counter from HL</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">F9h</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">SPHL SP,HL</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Load Stack Pointer from HL</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">The <span><em class="italic">PCHL</em></span> instruction is actually a type of <span><em class="italic">Jump</em></span>. The next instruction that the 8080 executes is the one located at the address stored in the HL register pair. <span><em class="italic">SPHL</em></span> is another method to set the Stack Pointer. </p>
+<p class="calibre_1">These two instructions exchange the contents of HL first with the two bytes located on top of the stack and second with the register pair DE: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Meaning</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">E3h</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">XTHL HL,[SP]</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Exchange top of stack with HL</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">EBh</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">XCHG HL,DE</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Exchange DE and HL</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">I haven't described the 8080 <span><em class="italic">Jump</em></span> instructions yet, except for <span><em class="italic">PCHL</em></span>. As you'll recall from <a shape="rect" href="index_split_020.html#filepos950185">Chapter 17</a>, a processor includes a register called the Program Counter that contains the memory address the processor uses to retrieve the instructions that it executes. Normally the Program Counter causes the processor to execute instructions that are located sequentially in memory. But some instructions—usually named <span><em class="italic">Jump</em></span> or <span><em class="italic">Branch</em></span> or <span><em class="italic">Goto</em></span>—cause the processor to deviate from this steady course. Such instructions cause the Program Counter to be loaded with another value. The next instruction that the processor fetches is somewhere else in memory. </p>
+<p class="calibre_1">While a plain old ordinary <span><em class="italic">Jump</em></span> instruction is certainly useful, <span><em class="italic">conditional</em></span> jumps are even better. These instructions cause the processor to jump to another address based on the setting of a particular flag, such as the Carry flag or the Zero flag. The presence of a conditional Jump instruction is what turned the <a shape="rect" href="index_split_020.html#filepos950185">Chapter 17</a> automated adding machine into a general-purpose digital computer. </p>
+<p class="calibre_1">The 8080 has five flags, four of which are used for conditional jumps. The 8080 supports nine different Jump instructions, including the unconditional Jump and conditional jumps based on whether the Zero, Carry, Parity, and Sign flags are 1 or 0. </p>
+<p class="calibre_1">Before I show these instructions to you, however, I want to introduce two other types of instructions that are related to the <span><em class="italic">Jump</em></span>. The first is the <span><em class="italic">Call</em></span> instruction. A <span><em class="italic">Call</em></span> is similar to a <span><em class="italic">Jump</em></span> except that prior to loading the Program Counter with a new address, the processor saves the previous address. Where does it save that address? Why, on the stack, of course! </p>
+<p class="calibre_1">This strategy means that the <span><em class="italic">Call</em></span> instruction effectively saves a reminder of <span><em class="italic">where it jumped from</em></span>. The saved address allows the processor to eventually return to the original location. The returning instruction is called, appropriately, <span><em class="italic">Return</em></span>. The <span><em class="italic">Return</em></span> instruction pops 2 bytes from the stack and loads the Program Counter with that value. </p>
+<p class="calibre_1">The <span><em class="italic">Call</em></span> and <span><em class="italic">Return</em></span> instructions are extremely important features of any processor. They allow a programmer to implement <span><em class="italic">subroutines</em></span>, which are snippets of frequently used code. (By <span><em class="italic">frequently</em></span> I generally mean <span><em class="italic">more than once</em></span>.) Subroutines are the primary organizational elements of assembly-language programs. </p>
+<p class="calibre_1">Let's look at an example. Suppose you're writing an assembly-language program and you come to a point where you need to multiply 2 bytes. So you write some code that does precisely that, and you continue with the program. Now you come to another point where you need to multiply 2 bytes. Well, you already know how to multiply two numbers, so you can simply use the same instructions all over again. But do you simply enter the instructions into memory a second time? I hope not. It's a waste of time and memory. What you'd rather do is just jump to the previous code. But the normal <span><em class="italic">Jump</em></span> doesn't work either because there's no way to return to the current place in the program. That's what the <span><em class="italic">Call</em></span> and <span><em class="italic">Return</em></span> instructions let you do. </p>
+<p class="calibre_1">A group of instructions that multiply 2 bytes is an ideal candidate for a subroutine. Let's take a look at such a subroutine. In <a shape="rect" href="index_split_020.html#filepos950185">Chapter 17</a>, the bytes to be multiplied (and the result) were stored in particular locations in memory. This 8080 subroutine instead multiplies the byte in register B by the byte in register C and puts the 16-bit product in register HL: </p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">Multiply:    PUSH PSW         ; Save registers being altered<br class="calibre30"/>             PUSH BC<br class="calibre30"/><br class="calibre30"/>             SUB H,H          ; Set HL (result) to 0000h<br class="calibre30"/>             SUB L,L<br class="calibre30"/><br class="calibre30"/>             MOV A,B          ; The multiplier goes in A<br class="calibre30"/>             CPI A,00h        ; If it's 0, we're finished.<br class="calibre30"/>             JZ AllDone<br class="calibre30"/><br class="calibre30"/>             MVI B,00h        ; Set high byte of BC to 0<br class="calibre30"/><br class="calibre30"/>MultLoop:    DAD HL,BC        ; Add BC to HL<br class="calibre30"/>             DEC A            ; Decrement multiplier<br class="calibre30"/>             JNZ MultLoop     ; Loop if it's not 0<br class="calibre30"/><br class="calibre30"/>AllDone:     POP BC           ; Restore saved registers<br class="calibre30"/>             POP PSW<br class="calibre30"/>             RET              ; Return</tt></div></div><p class="calibre_1">Notice that the first line of the subroutine begins with a label, which is the word <span><em class="italic">Multiply</em></span>. This label, of course, actually corresponds to a memory address where the subroutine is located. The subroutine begins with two <span><em class="italic">PUSH</em></span> instructions. Usually a subroutine should attempt to save (and later restore) any registers that it might need to use. </p>
+<p class="calibre_1">The subroutine then sets the contents of the H and L registers to 0. It could have used the <span><em class="italic">MVI</em></span> (<span><em class="italic">Move Immediate</em></span>) instructions rather than <span><em class="italic">SUB</em></span> instructions for this job, but that would have required 4 instruction bytes rather than 2. The register pair HL will hold the result of the multiplication when the subroutine is completed. </p>
+<p class="calibre_1">Next the subroutine moves the contents of register B (the multiplier) into A and checks if it's 0. If it's 0, the multiplication subroutine is complete because the product is 0. Since registers H and L are already 0, the subroutine can just use the <span><em class="italic">JZ</em></span> (<span><em class="italic">Jump If Zero</em></span>) instruction to skip to the two <span><em class="italic">POP</em></span> instructions at the end. </p>
+<p class="calibre_1">Otherwise, the subroutine sets register B to 0. Now the register pair BC contains a 16-bit multiplicand and A contains the multiplier. The <span><em class="italic">DAD</em></span> instruction adds BC (the multiplicand) to HL (the result). The multiplier in A is decremented and, as long as it's not 0, the <span><em class="italic">JNZ</em></span> (<span><em class="italic">Jump If Not Zero</em></span>) instruction causes BC to be added to HL again. This little loop will continue until BC is added to HL a number of times equal to the multiplier. (It's possible to write a more efficient multiplication subroutine using the 8080 shift instructions.) </p>
+<p class="calibre_1">A program that wishes to make use of this subroutine to multiply (for example) 25h by 12h uses the following code:</p><a shape="rect"></a><div class="calibre11"><div class="calibre_"><tt class="calibre29">MVI B,25h<br class="calibre30"/>MVI C,12h<br class="calibre30"/>CALL Multiply</tt></div></div><p class="calibre_1">The <span><em class="italic">CALL</em></span> instruction saves the value of the Program Counter on the stack. The value saved on the stack is the address of the next instruction <span><em class="italic">after</em></span> the <span><em class="italic">CALL</em></span> instruction. Then the <span><em class="italic">CALL</em></span> instruction causes a jump to the instruction identified by the label <span><em class="italic">Multiply</em></span>. That's the beginning of the subroutine. When the subroutine has calculated the product, it executes a <span><em class="italic">RET</em></span> (<span><em class="italic">Return</em></span>) instruction, which causes the Program Counter to be popped from the stack. The program continues with the next statement after the <span><em class="italic">CALL</em></span> instruction. </p>
+<p class="calibre_1">The 8080 instruction set includes conditional <span><em class="italic">Call</em></span> instructions and conditional <span><em class="italic">Return</em></span> instructions, but these are used much less than the conditional <span><em class="italic">Jump</em></span> instructions. The complete array of these instructions is shown in the following table: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Condition</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">None</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">C9</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">RET</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">C3</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">JMP aaaa</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">CD</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">CALL aaaa</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">Z not set</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">C0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">RNZ</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">C2</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">JNZ aaaa</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">C4</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">CNZ aaaa</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">Z set</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">C8</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">RZ</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">CA</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">JZ aaaa</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">CC</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">CZ aaaa</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">C not set</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">D0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">RNC</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">D2</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">JNC aaaa</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">D4</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">CNC aaaa</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">C set</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">D8</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">RC</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">DA</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">JC aaaa</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">DC</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">CC aaaa</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">Odd parity</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">E0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">RPO</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">E2</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">JPO aaaa</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">E4</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">CPO aaaa</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">Even parity</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">E8</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">RPE</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">EA</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">JPE aaaa</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">EC</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">CPE aaaa</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">S not set</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">F0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">RP</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">F2</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">JP aaaa</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">F4</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">CP aaaa</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">S set</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">F8</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">RM</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">FA</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">JM aaaa</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">FC</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">CM aaaa</code></p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">As you probably know, memory isn't the only thing connected to a microprocessor. A computer system usually requires input and output (I/O) devices that make it easier for humans to communicate with the machine. These input devices usually include a keyboard and a video display. </p>
+<p class="calibre_1">How does the microprocessor communicate with these <span><em class="italic">peripherals</em></span> (as anything connected to a microprocessor that isn't memory is called)? Peripherals are built so that they have an interface similar to memory. A microprocessor can write into and read from a peripheral by specifying certain addresses that the peripheral responds to. In some microprocessors, peripherals actually replace some addresses that would normally be used to address memory. This configuration is known as <span><em class="italic">memory-mapped I/O</em></span>. In the 8080, however, 256 additional addresses beyond the normal 65,536 are specifically reserved for input and output devices. These are known as I/O <span><em class="italic">ports</em></span>. The I/O address signals are A<sub class="calibre25">0</sub> through A<sub class="calibre25">7</sub>, but I/O accesses are distinguished from memory accesses through signals latched by the 8228 System Controller chip.<a shape="rect"></a></p>
+<p class="calibre_1">The <span><em class="italic">OUT</em></span> instruction writes the contents of the accumulator to a port addressed by the byte that follows the instruction. The <span><em class="italic">IN</em></span> instruction reads a byte into the accumulator. </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">D3</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">OUT pp</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">DB</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">IN pp</code></p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">Peripherals sometimes need to get the attention of the microprocessor. For example, when you press a key on a keyboard, it's usually helpful if the microprocessor knows about this event right away. This is a accomplished by a mechanism called an <span><em class="italic">interrupt</em></span>, which is a signal connected from the peripheral to the INT input of the 8080. </p>
+<p class="calibre_1">When the 8080 is reset, however, it doesn't respond to interrupts. A program must execute the <span><em class="italic">EI</em></span> (<span><em class="italic">Enable Interrupts</em></span>) instruction to enable interrupts and can later execute <span><em class="italic">DI</em></span> (<span><em class="italic">Disable Interrupts</em></span>) to disable them: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">F3</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">DI</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">FB</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">EI</code></p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">The INTE output signal from the 8080 indicates when interrupts have been enabled. When a peripheral needs to interrupt the microprocessor, it sets the INT input of the 8080 to 1. The 8080 responds to that by fetching an instruction from memory, but control signals indicate that an interrupt is occurring. The peripheral usually responds by supplying one of the following instructions to the 8080: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">C7</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">RST 0</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">E7</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">RST 4</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">CF</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">RST 1</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">EF</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">RST 5</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">D7</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">RST 2</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">F7</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">RST 6</code></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">DF</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">RST 3</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">FF</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">RST 7</code></p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">These are called <span><em class="italic">Restart</em></span> instructions, and they're similar to <span><em class="italic">Call</em></span> instructions in that the current Program Counter is saved on the stack. But the Restart instructions then jump to specific locations: <span><em class="italic">RST 0</em></span> jumps to address 0000h, <span><em class="italic">RST 1</em></span> to address 0008h, and so forth, up to <span><em class="italic">RST 7</em></span>, which jumps to address 0038h. Located at these addresses are sections of code that deal with the interrupt. For example, an interrupt from the keyboard might cause a <span><em class="italic">RST 4</em></span> instruction to be executed. At address 0020h begins some code to read a byte from the keyboard. (I'll explain this more fully in <a shape="rect" href="index_split_024.html#filepos1533684">Chapter 21</a>.) </p>
+<p class="calibre_1">So far I've described 243 opcodes. The 12 bytes that aren't associated with any opcodes are 08h, 10h, 18h, 20h, 28h, 30h, 38h, CBh, D9h, DDh, EDh, and FDh. That brings the total to 255. There's one more opcode I need to mention, and that's this one: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">00</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">NOP</code></p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1"><span><em class="italic">NOP</em></span> stands for (and is pronounced) <span><em class="italic">no op</em></span>, as in <span><em class="italic">no operation</em></span>. The <span><em class="italic">NOP</em></span> causes the processor to do absolutely nothing. What's it good for? Filling space. The 8080 can usually execute a bunch of <span><em class="italic">NOP</em></span> instructions without anything bad happening. </p>
+<p class="calibre_1">I won't go into nearly as much detail discussing the <a shape="rect"></a>Motorola 6800 because many of the aspects of its design and functionality are quite similar to those of the 8080. Here are the 40 pins of the 6800: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00393.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The V<sub class="calibre25">SS</sub> indicates Ground, and V<sub class="calibre25">CC</sub> is 5 volts. Like the 8080, the 6800 has 16 output Address signals and 8 Data signals used for both input and output. There's a RESET signal and a R/<span><a shape="rect"></a><img alt="" src="images/00116.jpg" class="calibre10"/></span> (read/write) signal. The <span><a shape="rect"></a><img alt="" src="images/00394.jpg" class="calibre10"/></span> signal stands for <span><em class="italic">interrupt request</em></span>. The signal timing of the 6800 is considered to be much simpler than that of the 8080. What the 6800 doesn't have is the concept of I/O ports. All input and output devices must be part of the 6800 memory address space. </p>
+<p class="calibre_1">The 6800 has a 16-bit Program Counter, a 16-bit Stack Pointer, an 8-bit Status Register (for flags), and two 8-bit accumulators called A and B. These are both considered accumulators (rather than B being considered just a register) because there is nothing that you can do with A that you can't also do with B. There are no additional 8-bit <a shape="rect"></a>registers, however. </p>
+<p class="calibre_1">The 6800 instead has a 16-bit <span><em class="italic">index register</em></span> that can be used to hold a 16-bit address, much like the register pair HL is used in the 8080. For many instructions, an address can be formed from the sum of the index register and the byte that follows the opcode. </p>
+<p class="calibre_1">While the 6800 does just about the same operations as the 8080—loading, storing, adding, subtracting, shifting, jumping, calling—it should be obvious that the opcodes and the mnemonics are completely different. Here, for example, are the 6800 <span><em class="italic">Branch</em></span> instructions: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Opcode</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Instruction</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Meaning</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">20h</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">BRA</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Branch</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">22h</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">BHI</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Branch If Higher</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">23h</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">BLS</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Branch If Lower or Same</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">24h</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">BCC</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Branch If Carry Clear</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">25h</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">BCS</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Branch If Carry Set</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">26h</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">BNE</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Branch If Not Equal</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">27h</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">BEQ</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Branch If Equal</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">28h</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">BVC</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Branch If Overflow Clear</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">29h</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">BVS</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Branch If Overflow Set</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2Ah</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">BPL</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Branch If Plus</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2Bh</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">BMI</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Branch If Minus</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2Ch</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">BGE</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Branch If Greater than or Equal to Zero</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2Dh</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">BLT</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Branch If Less than Zero</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2Eh</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">BGT</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Branch If Greater than Zero</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2Fh</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><code class="calibre29">BLE</code></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">Branch If Less than or Equal to Zero</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">The 6800 doesn't have a Parity flag like the 8080, but it does have a flag the 8080 doesn't have—an Overflow flag. Some of these <span><em class="italic">Branch</em></span> instructions depend on <span><em class="italic">combinations</em></span> of flags. </p>
+<p class="calibre_1">Of <span><em class="italic">course</em></span> the 8080 and 6800 instructions sets are different. The two chips were designed about the same time by two different groups of engineers at two different companies. What this incompatibility means is that neither chip can execute the other chip's machine codes. Nor can an assembly-language program written for one chip be translated into opcodes that run on the other chip. Writing computer programs that run on more than one processor is the subject of <a shape="rect" href="index_split_027.html#filepos1727052">Chapter 24</a>. </p>
+<p class="calibre_1">Here's another interesting difference between the 8080 and the 6800: In both microprocessors, the instruction <span><em class="italic">LDA</em></span> loads the accumulator from a specified memory address. In the 8080, for example, the following sequence of bytes: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00395.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">will load the accumulator with the byte stored at memory address 347Bh. Now compare that with the 6800 <span><em class="italic">LDA</em></span> instruction using the so-called 6800 extended addressing mode: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00396.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">This sequence of bytes loads accumulator A with the byte stored at memory address 7B34h.</p>
+<p class="calibre_1">The difference is subtle. You expect the opcode to be different, of course: 3Ah for the 8080 and B6h for the 6800. But the two microprocessors treat the address that follows the opcode differently. The 8080 assumes that the low-order byte comes first, followed by the high-order byte. The 6800 assumes that the high-order byte comes first! </p>
+<p class="calibre_1">This fundamental difference in how Intel and <a shape="rect"></a>Motorola microprocessors store multibyte values <span><em class="italic">has never been resolved</em></span>. To this very day, Intel microprocessors continue to store multibyte values with the least-significant byte first (that is, at the lowest memory address), and Motorola microprocessors store multibyte values with the most-significant byte first. </p>
+<p class="calibre_1">These two methods are known as <span><em class="italic">little-endian</em></span> (the Intel way) and <span><em class="italic">big-endian</em></span> (the Motorola way). It might be fun to argue over which method is better, but before you do so, be aware that the term <span><em class="italic">Big-Endian</em></span> comes from Jonathan Swift's <span><em class="italic">Gulliver's Travels</em></span> and refers to the war between Lilliput and Blefuscu over which end of an egg to break before eating it. Such an argument is probably purposeless. (On the other hand, I feel obliged to confess that the approach I used in the <a shape="rect" href="index_split_020.html#filepos950185">Chapter 17</a> computer wasn't the one I personally prefer!) Despite neither method being intrinsically "right," the difference does create an additional incompatibility problem when sharing information between systems based on little-endian and big-endian machines.<a shape="rect"></a><a shape="rect"></a></p>
+<p class="calibre_1">What became of these two microprocessors? The 8080 was used in what some people have called the first personal computer but which is probably more accurately the first <span><em class="italic">home</em></span> computer. This is the Altair 8800, which appeared on the cover of the January 1975 issue of <span><em class="italic">Popular Electronics</em></span>. </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00397.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">When you look at the Altair 8800, the lights and switches on the front panel should seem familiar. This is the same type of primitive "control panel" interface that I proposed for the 64-KB RAM array in <a shape="rect" href="index_split_019.html#filepos880943">Chapter 16</a>. </p>
+<p class="calibre_1">The <a shape="rect"></a>8080 was followed by the <a shape="rect"></a>Intel 8085 and, more significantly, by the Z-80 chip made by Zilog, a rival of Intel founded by former Intel employee Federico Faggin, who had done important work on the 4004. The Z-80 was entirely compatible with the 8080 but added many more very useful instructions. In 1977, the Z-80 was used in the <a shape="rect"></a>Radio Shack TRS-80 Model 1. </p>
+<p class="calibre_1">Also in 1977, the Apple Computer Company, founded by Steven <a shape="rect"></a>Jobs and Stephen <a shape="rect"></a>Wozniak, introduced the <a shape="rect"></a>Apple II. The Apple II, however, used neither the 8080 nor the <a shape="rect"></a>6800 but instead used <a shape="rect"></a>MOS Technology's less expensive 6502 chip, which was an enhancement of the 6800. </p>
+<p class="calibre_1">In June 1978, Intel introduced the 8086, which was a 16-bit microprocessor that could access 1 megabyte of memory. The 8086 opcodes weren't compatible with the 8080, but I should note that they included instructions to multiply and divide. A year later, Intel introduced the 8088, which internally was identical to the 8086 but externally accessed memory in bytes, thus allowing the microprocessor to use the more-prevalent 8-bit support chips designed for the 8080. IBM used the 8088 chip in its 5150 Personal Computer—commonly called the IBM PC—introduced in the fall of 1981. </p>
+<p class="calibre_1">IBM's entrance into the personal computer market had a great impact, with many companies releasing machines that were compatible with the PC. (What it means to be compatible will be explored more in subsequent chapters.) Over the years "IBM PC compatible" has also implied "Intel inside," specifically Intel <a shape="rect"></a>microprocessors of the so-called x86 family. The x86 family continued in 1982 with the 186 and 286 chips, in 1985 with the 32-bit 386 chip, in 1989 with the 486, and beginning in 1993, with the Intel Pentium line of microprocessors that are currently used in PC compatibles. While these Intel microprocessors have ever-increasing instruction sets, they continue to support the opcodes of all earlier processors starting with the 8086. </p>
+<p class="calibre_1">The Apple Macintosh, first introduced in 1984, used the Motorola 68000, a 16-bit microprocessor that's a direct descendant of the 6800. The 68000 and its descendants (often called the 68K series) are some of the most beloved microprocessors ever made. </p>
+<p class="calibre_1">Since 1994, Macintosh computers have used the PowerPC microprocessor that was developed in a coalition of Motorola, IBM, and Apple. The PowerPC was designed with a type of microprocessor architecture known as RISC (Reduced Instruction Set Computing), which attempts to increase the speed of the processor by simplifying it in some respects. In a RISC computer, generally each instruction is the same length (32 bits on the PowerPC), memory accesses are restricted to just load and store instructions, and instructions do simple operations rather than complex ones. RISC processors usually have plenty of registers to avoid frequent accesses of memory. </p>
+<p class="calibre_1">The PowerPC can't execute 68K code because it has a whole different instruction set. But the PowerPC microprocessors currently used in the Apple Macintoshes can <span><em class="italic">emulate</em></span> the 68K. An emulator program running on the PowerPC examines each opcode of a 68K program, one by one, and performs an appropriate action. It's not as fast as native PowerPC code, but it works. </p>
+<p class="calibre_1">According to Moore's Law, the number of transistors in microprocessors should double every 18 months. What are those many additional transistors used for? </p>
+<p class="calibre_1">Some of the transistors accommodate the increase in processor data width, from 4 bits to 8 bits to 16 bits to 32 bits. Another part of the increase is due to new instructions. Most microprocessors these days have instructions to do floating-point arithmetic (as I'll explain in <a shape="rect" href="index_split_026.html#filepos1662576">Chapter 23</a>); new instructions have also been added to microprocessors to do some of the repetitive calculations required to display pictures or movies on computer screens. </p>
+<p class="calibre_1">Modern processors use several techniques to help improve their speed. One is pipelining. When the processor is executing one instruction, it's reading in the next instructions, even to a certain extent anticipating how <span><em class="italic">Jump</em></span> instructions will alter the execution flow. Modern processors also include a cache (pronounced <span><em class="italic">cash</em></span>). This is an array of very fast RAM inside the processor that is used to store recently executed instructions. Because computer programs often execute small loops of instructions, the cache prevents these instructions from being repetitively reloaded. All these speed-improving features require more logic and more transistors in the microprocessor. </p>
+<p class="calibre_1">As I mentioned earlier, the microprocessor is only one part (although the most important part) of a complete computer system. We'll build such a system in <a shape="rect" href="index_split_024.html#filepos1533684">Chapter 21</a>, but first we must learn how to encode something else in memory besides opcodes and numbers. We must go back to first grade and learn again how to read and write text. </p>
+</div>  <div class="mbp_pagebreak" id="calibre_pb_65"></div>
+</body></html>

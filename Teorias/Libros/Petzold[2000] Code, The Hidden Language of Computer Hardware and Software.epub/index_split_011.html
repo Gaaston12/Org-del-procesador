@@ -1,0 +1,1788 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Code: The Hidden Language of Computer Hardware and Software</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+<div id="filepos208213" style="height:0pt"></div><div id="filepos208213" class="calibre_">
+<div class="calibre_">
+<div class="calibre_">
+<div class="calibre_">
+<h1 class="calibre1" id="calibre_pb_31"><span class="calibre2"><a shape="rect" class="calibre4"></a>Chapter 8. Alternatives to Ten </span></h1>
+</div>
+</div>
+</div>
+<p class="calibre_1">Ten is an exceptionally important <a shape="rect"></a>number to us humans. Ten is the number of fingers and toes most of us have, and we certainly prefer to have all ten of each. Because our fingers are convenient for counting, we humans have adapted an entire number system that's based on the number 10. </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00072.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">As I mentioned in the previous chapter, the number system that we use is called <span><em class="italic">base ten</em></span>, or <span><em class="italic">decimal</em></span>. The number system seems so natural to us that it's difficult at first to conceive of <a shape="rect"></a>alternatives. Indeed, when we see the number <span><em class="italic">10</em></span> we can't help but think that this number refers to this many ducks: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00073.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">But the only reason that the <a shape="rect"></a>number 10 refers <a shape="rect"></a>to this many ducks is that this many ducks is the same as the number of fingers we have. If human beings had a different number of fingers, the way we counted would be different, and 10 would mean something else. That same number 10 could refer to this many ducks: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00074.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">or this many ducks:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00075.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">or even this many ducks:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00076.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">When we get to the point where 10 means just two ducks, we'll be ready to examine how switches, wires, lightbulbs, and relays (and by extension, computers) can represent numbers. </p>
+<p class="calibre_1">What if human beings had only four fingers on each hand, like cartoon characters? We probably never would have thought to develop a number system based on ten. Instead, we would have considered it normal and natural and sensible and inevitable and incontrovertible and undeniably proper to base our number system on eight. We wouldn't call this a <span><em class="italic">decimal</em></span> number system. We'd call it an <span><em class="italic">octal</em></span> number system, or <span><em class="italic">base eight</em></span>.<a shape="rect"></a></p>
+<p class="calibre_1">If our number system were organized around eight rather than ten, we wouldn't need the symbol that looks like this:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00077.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Show this symbol to any cartoon character and you'll get the response, "What's that? What's it for?" And if you think about it a moment, we also wouldn't need the symbol that looks like this: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00078.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">In the decimal number system, there's no special symbol for ten, so in the octal number system there's no special symbol for eight. </p>
+<p class="calibre_1">The way we count in the decimal number system is 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, and then 10. The way we count in the <a shape="rect"></a>octal number system is 0, 1, 2, 3, 4, 5, 6, 7, and then what? We've run out of symbols. The only thing that makes sense is 10, and that's correct. In octal, the next number after 7 is 10. But this 10 doesn't mean the number of fingers that humans have. In octal, 10 refers <a shape="rect"></a>to the number of fingers that cartoon characters have. </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00079.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">We can continue counting on our four-toed feet:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00080.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">When you're working with <a shape="rect"></a>number systems other than decimal, you can avoid some confusion if you pronounce a number like 10 as <span><em class="italic">one zero</em></span>. Similarly, 13 is pronounced <span><em class="italic">one three</em></span> and 20 is pronounced <span><em class="italic">two zero</em></span>. To <span><em class="italic">really</em></span> avoid confusion, we can say <span><em class="italic">two zero base eight</em></span> or <span><em class="italic">two zero octal</em></span>. </p>
+<p class="calibre_1">Even though we've run out of fingers and toes, we can still continue counting in octal. It's basically the same as counting in decimal except that we skip every number that has an 8 or a 9 in it. And of course, the actual numbers refer to different quantities: </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0, 1, 2, 3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 15, 16, 17, 20, 21, 22,</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">23, 24, 25, 26, 27, 30, 31, 32, 33, 34, 35, 36, 37, 40, 41, 42, 43,</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">44, 45, 46, 47, 50, 51, 52, 53, 54, 55, 56, 57, 60, 61, 62, 63, 64,</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">65, 66, 67, 70, 71, 72, 73, 74, 75, 76, 77, 100…</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">That last <a shape="rect"></a>number is pronounced <span><em class="italic">one zero zero</em></span>. It's the number of fingers that <a shape="rect"></a>cartoon characters have, multiplied by itself. </p>
+<p class="calibre_1">When writing decimal and <a shape="rect"></a>octal numbers, we can avoid confusion and denote which is which by using a subscript to indicate the numbering system. The subscript TEN means base ten or decimal, and EIGHT means base eight or octal. </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">Thus, the number of dwarfs that Snow White meets is 7<sub class="calibre28">TEN</sub> or 7<sub class="calibre28">EIGHT</sub></span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">The number of fingers that cartoon characters have is 8<sub class="calibre28">TEN</sub> or 10<sub class="calibre28">EIGHT</sub></span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">The number of symphonies that Beethoven wrote is 9<sub class="calibre28">TEN</sub> or 11<sub class="calibre28">EIGHT</sub></span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">The number of fingers that humans have is 10<sub class="calibre28">TEN</sub> or 12<sub class="calibre28">EIGHT</sub></span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">The number of months in a year is 12<sub class="calibre28">TEN</sub> or 14<sub class="calibre28">EIGHT</sub></span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">The number of days in a fortnight is 14<sub class="calibre28">TEN</sub> or 16<sub class="calibre28">EIGHT</sub></span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">The "sweet" birthday celebration is 16<sub class="calibre28">TEN</sub> or 20<sub class="calibre28">EIGHT</sub></span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">The number of hours in a day is 24<sub class="calibre28">TEN</sub> or 30<sub class="calibre28">EIGHT</sub></span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">The number of letters in the Latin alphabet is 26<sub class="calibre28">TEN</sub> or 32<sub class="calibre28">EIGHT</sub></span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">The number of fluid ounces in a quart is 32<sub class="calibre28">TEN</sub> or 40<sub class="calibre28">EIGHT</sub></span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">The number of cards in a deck is 52<sub class="calibre28">TEN</sub> or 64<sub class="calibre28">EIGHT</sub></span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">The number of squares on a chessboard is 64<sub class="calibre28">TEN</sub> or 100<sub class="calibre28">EIGHT</sub></span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">The most famous address on Sunset Strip is 77<sub class="calibre28">TEN</sub> or 115<sub class="calibre28">EIGHT</sub></span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">The number of yards in an American football field is 100<sub class="calibre28">TEN</sub> or 144<sub class="calibre28">EIGHT</sub></span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">The number of starting women singles players at Wimbledon is 128<sub class="calibre28">TEN</sub> or 200<sub class="calibre28">EIGHT</sub></span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">The number of square miles in Memphis is 256<sub class="calibre28">TEN</sub> or 400<sub class="calibre28">EIGHT</sub></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">Notice that there are a few nice round octal numbers in this list, such as 100<sub class="calibre25">EIGHT</sub> and 200<sub class="calibre25">EIGHT</sub> and 400<sub class="calibre25">EIGHT</sub>. By the term <span><em class="italic">nice round number</em></span> we usually mean a number that has some zeros at the end. Two zeros on the end of a decimal number means that the number is a multiple of 100<sub class="calibre25">TEN</sub>, which is 10<sub class="calibre25">TEN</sub> times 10<sub class="calibre25">TEN</sub>. With octal numbers, two zeros on the end means that the number is a multiple of 100<sub class="calibre25">EIGHT</sub>, which is 10<sub class="calibre25">EIGHT</sub> times 10<sub class="calibre25">EIGHT</sub> (or 8<sub class="calibre25">TEN</sub> times 8<sub class="calibre25">TEN</sub>, which is 64<sub class="calibre25">TEN</sub>). </p>
+<p class="calibre_1">You might also notice that these nice round octal numbers 100<sub class="calibre25">EIGHT</sub> and 200<sub class="calibre25">EIGHT</sub> and 400<sub class="calibre25">EIGHT</sub> have the decimal equivalents 64<sub class="calibre25">TEN</sub>, 128<sub class="calibre25">TEN</sub>, and 256<sub class="calibre25">TEN</sub>, all of which are powers of two. This makes sense. The number 400<sub class="calibre25">EIGHT</sub> (for example) is 4<sub class="calibre25">EIGHT</sub> times 10<sub class="calibre25">EIGHT</sub> times 10<sub class="calibre25">EIGHT</sub>, all of which are powers of two. And anytime we multiply a power of two by a power of two, we get another power of two. </p>
+<p class="calibre_1">The following table shows some powers of two with the decimal and <a shape="rect"></a>octal representations: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Power of</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Two Decimal</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Octal</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2<sup class="calibre22">0</sup></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2<sup class="calibre22">1</sup></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2<sup class="calibre22">2</sup></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2<sup class="calibre22">3</sup></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">8</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2<sup class="calibre22">4</sup></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">16</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">20</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2<sup class="calibre22">5</sup></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">32</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">40</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2<sup class="calibre22">6</sup></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">64</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">100</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2<sup class="calibre22">7</sup></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">128</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">200</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2<sup class="calibre22">8</sup></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">256</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">400</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2<sup class="calibre22">9</sup></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">512</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1000</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2<sup class="calibre22">10</sup></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1024</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2000</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2<sup class="calibre22">11</sup></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2048</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4000</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2<sup class="calibre22">12</sup></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4096</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10000</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">The nice round numbers in the rightmost column are a hint that <a shape="rect"></a>number systems other than decimal might help in working with binary codes. </p>
+<p class="calibre_1">The octal system isn't different from the decimal system in any structural way. It just differs in details. For example, each position in an octal number is a digit that's multiplied by a power of eight: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00081.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Thus, an octal number such as 3725<sub class="calibre25">EIGHT</sub> can be broken down like so: </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">3725<sub class="calibre28">EIGHT</sub> = 3000<sub class="calibre28">EIGHT</sub> + 700<sub class="calibre28">EIGHT</sub> + 20<sub class="calibre28">EIGHT</sub> + 5<sub class="calibre28">EIGHT</sub></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">This can be rewritten in any of several ways. Here's one way, using the powers of eight in their decimal forms:</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">3725<sub class="calibre28">EIGHT</sub> = 3 x 512<sub class="calibre28">TEN</sub> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">7 x 64<sub class="calibre28">TEN</sub> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">2 x 8<sub class="calibre28">TEN</sub> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">5 x 1</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">This is the same thing with the powers of eight shown in their <a shape="rect"></a>octal form: </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">3725<sub class="calibre28">EIGHT</sub> = 3 x 1000<sub class="calibre28">EIGHT</sub> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">7 x 100<sub class="calibre28">EIGHT</sub> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">2 x 10<sub class="calibre28">EIGHT</sub> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">5 x 1</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">Here's another way of doing it:</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">3725<sub class="calibre28">EIGHT</sub> = 3 x 8<sup class="calibre22">3</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">7 x 8<sup class="calibre22">2</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">2 x 8<sup class="calibre22">1</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">5 x 8<sup class="calibre22">0</sup></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">If you work out this calculation in decimal, you'll get 2005<sub class="calibre25">TEN</sub>. This is how you can convert octal <a shape="rect"></a>numbers <a shape="rect"></a>to decimal numbers. </p>
+<p class="calibre_1">We can add and multiply octal numbers the same way we add and multiply decimal numbers. The only real difference is that we use different tables for adding and multiplying the individual digits. Here's the addition table for octal numbers: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">+</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">0</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">1</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">2</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">3</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">4</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">5</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">6</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">7</strong></span></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">0</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">3</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">5</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">1</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">3</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">5</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">2</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">3</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">5</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">3</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">3</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">5</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">12</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">4</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">5</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">12</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">13</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">5</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">5</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">12</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">13</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">14</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">6</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">12</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">13</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">14</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">15</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">7</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">12</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">13</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">14</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">15</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">16</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">For example, 5<sub class="calibre25">EIGHT</sub> + 7<sub class="calibre25">EIGHT</sub> = 14<sub class="calibre25">EIGHT</sub>. So we can add two longer octal numbers the same way we add decimal numbers: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00082.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">To begin with the right column, 5 plus 3 equals 10. Put down the 0, carry the 1. One plus 3 plus 4 equals 10. Put down the 0, carry the 1. One plus 1 plus 6 equals 10. </p>
+<p class="calibre_1">Similarly, 2 times 2 is still 4 in octal. But 3 times 3 isn't 9. How could it be? Instead 3 times 3 is 11<sub class="calibre25">EIGHT</sub>, which is the same amount as 9<sub class="calibre25">TEN</sub>. You can see the entire octal multiplication table at the top of the following page. </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">x</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">0</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">1</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">2</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">3</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">4</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">5</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">6</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">7</strong></span></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">0</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">1</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">3</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">5</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">2</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">12</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">14</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">16</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">3</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">3</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">14</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">17</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">22</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">25</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">4</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">14</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">20</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">24</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">30</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">34</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">5</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">5</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">12</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">17</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">24</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">31</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">36</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">43</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">6</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">14</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">22</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">30</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">36</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">44</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">52</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">7</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">16</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">25</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">34</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">43</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">52</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">61</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">Here we have 4 x 6 equaling 30<sub class="calibre25">EIGHT</sub>, but 30<sub class="calibre25">EIGHT</sub> is the same as 24<sub class="calibre25">TEN</sub>, which is what 4 x 6 equals in decimal. </p>
+<p class="calibre_1"><a shape="rect"></a>Octal is as valid a <a shape="rect"></a>number system as decimal. But let's go further. Now that we've developed a numbering system for <a shape="rect"></a>cartoon characters, let's develop something that's appropriate for lobsters. Lobsters don't have fingers exactly, but they do have pincers at the ends of their two front legs. An appropriate number system for lobsters is the <span><em class="italic">quaternary</em></span> system, or base four: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00083.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Counting in quaternary goes like this: 0, 1, 2, 3, 10, 11, 12, 13, 20, 21, 22, 23, 30, 31, 32, 33, 100, 101, 102, 103, 110, and so forth. </p>
+<p class="calibre_1">I'm not going to spend much time with the quaternary system because we'll be moving on shortly to something much more important. But we can see how each position in a <a shape="rect"></a>quaternary number corresponds this time to a power of <span><em class="italic">four</em></span>: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00084.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The <a shape="rect"></a>quaternary <a shape="rect"></a>number 31232 can be written like this: </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">31232<sub class="calibre28">FOUR</sub> = 3 x 256<sub class="calibre28">TEN</sub> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 x 64<sub class="calibre28">TEN</sub> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">2 x 16<sub class="calibre28">TEN</sub> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">3 x 4<sub class="calibre28">TEN</sub> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">2 x 1<sub class="calibre28">TEN</sub></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">which is the same as</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">31232<sub class="calibre28">FOUR</sub> = 3 x 10000<sub class="calibre28">FOUR</sub> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 x 1000<sub class="calibre28">FOUR</sub> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">2 x 100<sub class="calibre28">FOUR</sub> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">3 x 10<sub class="calibre28">FOUR</sub> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">2 x 1<sub class="calibre28">FOUR</sub></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">And it's also the same as</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">31232<sub class="calibre28">FOUR</sub> = 3 x 4<sup class="calibre22">4</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 x 4<sup class="calibre22">3</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">2 x 4<sup class="calibre22">2</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">3 x 4<sup class="calibre22">1</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">2 x 4<sup class="calibre22">0</sup></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">If we do the calculations in decimal, we'll find that 31232<sub class="calibre25">FOUR</sub> equals 878<sub class="calibre25">TEN</sub>. </p>
+<p class="calibre_1">Now we're going <a shape="rect"></a>to make another leap, and this one is extreme. Suppose we were dolphins and must resort to using our two flippers for counting. This is the number system known as base two, or <span><em class="italic">binary</em></span> (from the Latin for <span><em class="italic">two by two</em></span>). It seems likely that we'd have only two digits, and these two digits would be 0 and 1.<a shape="rect"></a></p>
+<p class="calibre_1">Now, 0 and 1 isn't a whole lot to work with, and it takes some practice to get accustomed to binary numbers. The big problem is that you run out of digits very quickly. For example, here's how a dolphin counts using its flippers: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00085.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Yes, in <a shape="rect"></a>binary the next <a shape="rect"></a>number after 1 is 10. This is startling, but it shouldn't really be a surprise. No matter what number system we use, whenever we run out of single digits, the first two-digit number is always 10. In binary we count like this: </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0, 1, 10, 11, 100, 101, 110, 111, 1000, 1001, 1010, 1011, 1100,</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1101, 1110, 1111, 10000, 10001…</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">These numbers might look large, but they're really not. It's more accurate <a shape="rect"></a>to say that binary numbers get <span><em class="italic">long</em></span> very quickly rather than large: </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">The number of heads that humans have is 1<sub class="calibre28">TEN</sub> or 1<sub class="calibre28">TWO</sub></span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">The number of flippers that dolphins have is 2<sub class="calibre28">TEN</sub> or 10<sub class="calibre28">TWO</sub></span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">The number of teaspoons in a tablespoon is 3<sub class="calibre28">TEN</sub> or 11<sub class="calibre28">TWO</sub></span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">The number of sides to a square is 4<sub class="calibre28">TEN</sub> or 100<sub class="calibre28">TWO</sub></span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">The number of fingers on one human hand is 5<sub class="calibre28">TEN</sub> or 101<sub class="calibre28">TWO</sub></span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">The number of legs on an insect is 6<sub class="calibre28">TEN</sub> or 110<sub class="calibre28">TWO</sub></span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">The number of days in a week is 7<sub class="calibre28">TEN</sub> or 111<sub class="calibre28">TWO</sub></span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">The number of musicians in an octet is 8<sub class="calibre28">TEN</sub> or 1000<sub class="calibre28">TWO</sub></span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">The number of planets in our solar system (including Pluto) is 9<sub class="calibre28">TEN</sub> or 1001<sub class="calibre28">TWO</sub></span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">The number of gallons in a cowboy hat is 10<sub class="calibre28">TEN</sub> or 1010<sub class="calibre28">TWO</sub></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">and so forth.</p>
+<p class="calibre_1">In a multidigit binary number, the positions of the digits correspond to powers of two:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00086.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">So anytime we have a binary number composed of a 1 followed by all zeros, that number is a power of two. The power is the same as the number of zeros in the binary number. Here's our expanded table of the powers of two demonstrating this rule: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Power of Two</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Decimal</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+<a shape="rect"></a>Octal </span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+<a shape="rect"></a>Quaternary </span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+<a shape="rect"></a>Binary </span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2<sup class="calibre22">0</sup></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2<sup class="calibre22">1</sup></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2<sup class="calibre22">2</sup></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">100</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2<sup class="calibre22">3</sup></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">8</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">20</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1000</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2<sup class="calibre22">4</sup></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">16</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">20</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">100</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10000</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2<sup class="calibre22">5</sup></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">32</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">40</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">200</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">100000</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2<sup class="calibre22">6</sup></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">64</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">100</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1000</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1000000</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2<sup class="calibre22">7</sup></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">128</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">200</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2000</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10000000</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2<sup class="calibre22">8</sup></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">256</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">400</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10000</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">100000000</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2<sup class="calibre22">9</sup></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">512</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1000</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">20000</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1000000000</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2<sup class="calibre22">10</sup></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1024</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2000</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">100000</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10000000000</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2<sup class="calibre22">11</sup></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2048</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4000</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">200000</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">100000000000</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2<sup class="calibre22">12</sup></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4096</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10000</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1000000</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1000000000000</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">Let's say we have the binary <a shape="rect"></a>number 101101011010. This can be written as </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">101101011010<sub class="calibre28">TWO</sub> = 1 x 2048<sub class="calibre28">TEN</sub> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0 x 1024<sub class="calibre28">TEN</sub> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 x 512<sub class="calibre28">TEN</sub> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 x 256<sub class="calibre28">TEN</sub> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0 x 128<sub class="calibre28">TEN</sub> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 x 64<sub class="calibre28">TEN</sub> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0 x 32<sub class="calibre28">TEN</sub> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 x 16<sub class="calibre28">TEN</sub> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 x 8<sub class="calibre28">TEN</sub> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0 x 4<sub class="calibre28">TEN</sub> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 x 2<sub class="calibre28">TEN</sub> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0 x 1<sub class="calibre28">TEN</sub></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">The same number can be written this way:</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">101101011010<sub class="calibre28">TWO</sub> = 1 x 2<sup class="calibre22">11</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0 x 2<sup class="calibre22">10</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 x 2<sup class="calibre22">9</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 x 2<sup class="calibre22">8</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0 x 2<sup class="calibre22">7</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 x 2<sup class="calibre22">6</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0 x 2<sup class="calibre22">5</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 x 2<sup class="calibre22">4</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 x 2<sup class="calibre22">3</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0 x 2<sup class="calibre22">2</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 x 2<sup class="calibre22">1</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0 x 2<sup class="calibre22">0</sup></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">If we just add up the parts in decimal, we get 2048 + 512 + 256 + 64 + 16 + 8 + 2, which is 2,906<sub class="calibre25">TEN</sub>. </p>
+<p class="calibre_1"><a shape="rect"></a>To convert <a shape="rect"></a>binary <a shape="rect"></a>numbers to decimal more concisely, you might prefer a method that uses a template I've prepared: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00087.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">This template allows you to convert numbers up to eight binary digits in length, but it could easily be extended. To use it, put up to eight binary digits in the 8 boxes at the top, one digit to a box. Do the eight multiplications and put the products in the 8 lower boxes. Add these eight boxes for the final result. This example shows how to find the decimal equivalent of 10010110: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00088.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Converting from decimal to binary isn't quite as straightforward, but here's a template that let's you convert decimal numbers from 0 through 255 to binary: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00089.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The conversion is actually trickier than it appears, so follow the directions carefully. Put the entire decimal number (less than or equal to 255) in the box in the upper left corner. Divide that number (the dividend) by the first divisor (128), as indicated. Put the quotient in the box below (the box at the lower left corner), and the remainder in the box to the right (the second box on the top row). That first remainder is the dividend for the next calculation, which uses a divisor of 64. Continue in the same manner through the template. </p>
+<p class="calibre_1">Keep in mind that each quotient will be either 0 or 1. If the dividend is less than the divisor, the quotient is 0 and the remainder is simply the dividend. If the dividend is greater than or equal to the divisor, the quotient is 1 and the remainder is the dividend minus the divisor. Here's how it's done with 150: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00090.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">If you need <a shape="rect"></a>to add or multiply two <a shape="rect"></a>binary <a shape="rect"></a>numbers, it's probably easier to do the calculation in binary rather than convert to decimal. This is the part you're <span><em class="italic">really</em></span> going to like. Imagine how quickly you could have mastered addition if the only thing you had to memorize was this: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">+</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">0</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">1</strong></span></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">0</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">1</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">Let's use this table to add two binary numbers:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00091.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Starting at the right column: 1 plus 0 equals 1. Second column from right: 0 plus 1 equals 1. Third column: 1 plus 1 equals 0, carry the 1. Fourth column: 1 (carried) plus 0 plus 0 equals 1. Fifth column: 0 plus 1 equals 1. Sixth column: 1 plus 1 equals 0, carry the 1. Seventh column: 1 (carried) plus 1 plus 0 equals 10. </p>
+<p class="calibre_1">The multiplication table is even simpler than the addition table because it can be entirely derived by using two of the very basic rules of multiplication: Multiplying anything by 0 gets you 0, and multiplying any number by 1 has no effect on the number. </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">x</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">0</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">1</strong></span></p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">0</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">1</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">Here's a multiplication of 13<sub class="calibre25">TEN</sub> by 11<sub class="calibre25">TEN</sub> in binary: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00092.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The result is 143<sub class="calibre25">TEN</sub>. </p>
+<p class="calibre_1">People who work with <a shape="rect"></a>binary <a shape="rect"></a>numbers often write them with leading zeros (that is, zeros <a shape="rect"></a>to the left of the first 1)—for example, 0011 rather than just 11. This doesn't change the value of the number at all; it's just for cosmetic purposes. For example, here are the first sixteen binary numbers with their decimal equivalents: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Binary</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Decimal</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0000</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0001</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0010</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0011</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">3</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0100</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0101</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">5</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0110</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0111</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1000</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">8</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1001</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">9</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1010</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1011</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1100</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">12</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1101</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">13</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1110</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">14</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1111</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">15</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">Let's take a look at this list of binary numbers for a moment. Consider each of the four vertical columns of zeros and ones, and notice how the digits alternate going down the column: </p>
+<div class="calibre_">
+<ul class="calibre26">
+<li class="calibre27">The rightmost digit alternates between 0 and 1.</li>
+<li class="calibre27">The next digit from the right alternates between two 0s and two 1s.</li>
+<li class="calibre27">The next digit alternates between four 0s and four 1s.</li>
+<li class="calibre27">The next digit alternates between eight 0s and eight 1s.</li>
+</ul>
+</div>
+<p class="calibre_1">This is <span><em class="italic">very</em></span> methodical, wouldn't you say? Indeed, you can easily write the next sixteen binary numbers by just repeating the first sixteen and putting a 1 in front: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+<a shape="rect"></a>Binary </span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Decimal</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10000</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">16</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10001</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">17</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10010</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">18</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10011</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">19</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10100</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">20</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10101</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">21</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10110</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">22</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10111</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">23</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11000</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">24</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11001</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">25</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11010</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">26</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11011</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">27</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11100</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">28</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11101</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">29</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11110</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">30</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11111</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">31</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">Here's another way of looking at it: When you count in binary, the rightmost digit (also called the least significant digit), alternates between 0 and 1. Every time it changes from a 1 <a shape="rect"></a>to a 0, the digit second to right (that is, the next most significant digit) also changes, either from 0 to 1 or from 1 to 0. So every time a binary digit changes from a 1 to a 0, the next most significant digit also changes, either from a 0 to a 1 or from a 1 to a 0. </p>
+<p class="calibre_1">When we're writing large decimal <a shape="rect"></a>numbers, we use commas every three places so that we can more easily know what the number means at a glance. For example, if you see 12000000, you probably have to count digits, but if you see 12,000,000, you know that means twelve million. </p>
+<p class="calibre_1">Binary numbers can get very long very quickly. For example, twelve million in binary is 101101110001101100000000. To make this a <span><em class="italic">little</em></span> more readable, it's customary to separate every four binary digits with a dash, for example 1011-0111-0001-1011-0000-0000 or with spaces: 1011 0111 0001 1011 0000 0000. Later on in this book, we'll look at a more concise way of expressing binary numbers. </p>
+<p class="calibre_1">By reducing our number system to just the binary digits 0 and 1, we've gone as far as we can go. We can't get any simpler. Moreover, the binary number system bridges the gap between arithmetic and electricity. In previous chapters, we've been looking at switches and wires and lightbulbs and relays, and any <a shape="rect"></a>of these objects can represent the binary digits 0 and 1: </p>
+<p class="calibre_1"><span><em class="italic">A wire can be a binary digit</em></span>. If current is flowing through the wire, the binary digit is 1. If not, the binary digit is 0. </p>
+<p class="calibre_1"><span><em class="italic">A switch can be a binary digit</em></span>. If the switch is on, or closed, the binary digit is 1. If the switch is off, or open, the binary digit is 0. </p>
+<p class="calibre_1"><span><em class="italic">A lightbulb can be a binary digit</em></span>. If the lightbulb is lit, the binary digit is 1. If the lightbulb is not lit, the binary digit is 0. </p>
+<p class="calibre_1"><span><em class="italic">A telegraph relay can be a binary digit</em></span>. If the relay is closed, the binary digit is 1. If the relay is at rest, the binary digit is 0. </p>
+<p class="calibre_1">Binary numbers have a whole <span><em class="italic">lot</em></span> to do with computers. </p>
+<p class="calibre_1">Sometime around 1948, the American mathematician John Wilder Tukey (born 1915) realized that the words <span><em class="italic">binary digit</em></span> were likely to assume a much greater importance in the years ahead as computers became more prevalent. He decided to coin a new, shorter word to replace the unwieldy five syllables of <span><em class="italic">binary digit</em></span>. He considered <span><em class="italic">bigit</em></span> and <span><em class="italic">binit</em></span> but settled instead on the short, simple, elegant, and perfectly lovely word <span><em class="italic">bit</em></span>.<a shape="rect"></a></p>
+</div>  <div class="mbp_pagebreak" id="calibre_pb_32"></div>
+</body></html>

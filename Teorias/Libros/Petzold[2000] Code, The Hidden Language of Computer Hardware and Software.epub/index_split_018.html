@@ -1,0 +1,1636 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Code: The Hidden Language of Computer Hardware and Software</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+<div id="filepos783126" style="height:0pt"></div><div id="filepos783126" class="calibre_">
+<div class="calibre_">
+<div class="calibre_">
+<div class="calibre_">
+<h1 class="calibre1" id="calibre_pb_52"><span class="calibre2"><a shape="rect" class="calibre4"></a>Chapter 15. Bytes and Hex </span></h1>
+</div>
+</div>
+</div>
+<p class="calibre_1">The two improved adding machines <a shape="rect"></a>of the last chapter illustrate clearly the concept of <span><em class="italic">data paths</em></span>. Throughout the circuitry, 8-bit values move from one component to another. Eight-bit values are inputs to the adders, latches, and data selectors, and also outputs from these units. Eight-bit values are also defined by switches and displayed by lightbulbs. The data path in these circuits is thus said to be <span><em class="italic">8 bits wide</em></span>. But why <span><em class="italic">8</em></span> bits? Why not 6 or 7 or 9 or 10?<a shape="rect"></a></p>
+<p class="calibre_1">The simple answer is that these improved adding machines were based on the original adding machine in <a shape="rect" href="index_split_015.html#filepos561677">Chapter 12</a>, which worked with 8-bit values. But there's really no reason why it had to be built that way. Eight bits just seemed at the time to be a convenient amount—a nice <span><em class="italic">biteful</em></span> of bits, if you will. And perhaps I was being just a little bit sneaky, for I now confess that I knew all along (and perhaps you did as well) that 8 bits of data are known as a <span><em class="italic">byte</em></span>. </p>
+<p class="calibre_1">The word <span><em class="italic">byte</em></span> originated at IBM, probably around 1956. The word had its origins in the word <span><em class="italic">bite</em></span> but was spelled with a <span><em class="italic">y</em></span> so that nobody would mistake the word for <span><em class="italic">bit</em></span>. For a while, a byte meant simply the number of bits in a particular data path. But by the mid-1960s, in connection with the development of IBM's System/360 (their large complex of business computers), the word came to mean a group of 8 bits. </p>
+<p class="calibre_1">As an 8-bit quantity, a byte can take on values from 00000000 through 11111111. These values can represent positive integers from 0 through 255, or if two's complements are used to represent negative numbers, they can represent both positive and negative integers in the range –128 through 127. Or a particular byte can simply represent one of 2<sup class="calibre21">8</sup>, or 256, different things. </p>
+<p class="calibre_1">It turns out that 8 is, indeed, a nice bite size of bits. The byte is right, in more ways than one. One reason that IBM gravitated toward 8-bit bytes was the ease in storing numbers in a format known as BCD (which I'll describe in <a shape="rect" href="index_split_026.html#filepos1662576">Chapter 23</a>). But as we'll see in the chapters ahead, quite by coincidence a byte is ideal for storing text because most written <a shape="rect"></a>languages around the world (with the exception of the ideographs used in Chinese, Japanese, and Korean) can be represented with fewer than 256 characters. A byte is also ideal for representing gray shades in black-and-white photographs because the human eye can differentiate approximately 256 shades of gray. And where 1 byte is inadequate (for representing, for example, the aforementioned ideographs of Chinese, Japanese, and Korean), 2 <a shape="rect"></a>bytes—which allow the representation of 2<sup class="calibre21">16</sup>, or 65,536, things—usually works just fine. </p>
+<p class="calibre_1">Half a byte—that is, 4 bits—is sometimes referred to as a <span><em class="italic">nibble</em></span> (and is sometimes spelled <span><em class="italic">nybble</em></span>), but this word doesn't come up in conversation nearly as often as <span><em class="italic">byte</em></span>.<a shape="rect"></a></p>
+<p class="calibre_1">Because bytes show up a lot in the internals of computers, it's convenient to be able to refer to their values in as succinct a manner as possible. The eight binary digits 10110110, for example, are certainly explicit but hardly succinct. </p>
+<p class="calibre_1">We could always refer to bytes by their decimal equivalents, of course, but that requires converting from binary to decimal—not a particularly nasty calculation, but certainly a nuisance. I showed one approach in <a shape="rect" href="index_split_011.html#filepos208213">Chapter 8</a> that's fairly straightforward. Because each binary digit corresponds to a power of 2, we can simply write down the digits of the binary number and the powers of 2 underneath. Multiply each column and add up the products. Here's the conversion of 10110110: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00293.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Converting a decimal number to binary is a bit more awkward. You start with the decimal number and divide by decreasing powers of 2. For each division, the quotient is a binary digit and the remainder is divided by the next smallest power of 2. Here's the conversion of 182 back to binary: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00294.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1"><a shape="rect" href="index_split_011.html#filepos208213">Chapter 8</a> has a more extensive description of this technique. Regardless, converting between binary and decimal is usually not something that can be done without a paper and pencil or lots of practice. </p>
+<p class="calibre_1">In <a shape="rect" href="index_split_011.html#filepos208213">Chapter 8</a>, we also learned about the octal, or base-8, number system. Octal uses only the digits 0, 1, 2, 3, 4, 5, 6, and 7. Converting between octal and binary is a snap. All you need remember is the 3-bit equivalent of each octal digit, as shown in the table on the next page. </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+<a shape="rect"></a>Binary </span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Octal</span></p></div></th>
+</tr>
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+000</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+0</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">001</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">010</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">011</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">3</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">100</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">101</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">5</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">110</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">111</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">If you have a binary number (such as 10110110), start at the rightmost digits. Each group of 3 bits is an octal digit:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00295.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">So the byte 10110110 can be expressed as the octal digits 266. This is certainly more succinct, and octal is indeed one good method for representing bytes. But octal has a little problem. </p>
+<p class="calibre_1">The binary representations of bytes range from 00000000 through 11111111. The octal representations of bytes range from 000 through 377. As is clear in the preceding example, 3 bits correspond to the middle and rightmost octal digits, but only 2 bits correspond to the leftmost octal digit. This means that an octal representation of a 16-bit number </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00296.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">isn't the same as the octal representations of the 2 bytes that compose the 16-bit number</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00297.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">In order for the representations of multibyte values to be consistent with the representations of the individual bytes, we need to use a system in which each byte is divided into equal numbers of bits. That means that we need to divide each byte into four values of 2 bits each (that would be base 4) or two values of 4 bits each (base 16). </p>
+<p class="calibre_1"><span><em class="italic">Base 16</em></span>. Now that's something we haven't looked at yet, and for good reason. The base-16 number system is called <span><em class="italic">hexadecimal</em></span>, and even the word itself is a mess. Most words that begin with the <span><em class="italic">hexa</em></span>- prefix (such as hexagon or hexapod or hexameter) refer to six of something. Hexadecimal is supposed to mean <span><em class="italic">sixteen</em></span>. And even though <span><em class="italic">The Microsoft Manual of Style for Technical Publications</em></span> clearly states, "Do not abbreviate as <span><em class="italic">hex</em></span>, " everyone always does and I will too. </p>
+<p class="calibre_1">That's not the only peculiarity of hexadecimal. In decimal, we count like this:</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0 1 2 3 4 5 6 7 8 9 10 11 12…</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">In octal, you'll recall, we no longer need digits 8 and 9:</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0 1 2 3 4 5 6 7 10 11 12…</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">Similarly, the base-4 number system also doesn't need 4, 5, 6, or 7:</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0 1 2 3 10 11 12…</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">And binary, of course, needs only 0 and 1:</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0 1 10 11 100…</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">But hexadecimal is different because it requires <span><em class="italic">more</em></span> digits than decimal. Counting in hexadecimal goes something like this: </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0 1 2 3 4 5 6 7 8 9 ? ? ? ? ? ? 10 11 12…</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">where 10 (pronounced <span><em class="italic">one-zero</em></span>) is actually 16<sub class="calibre25">TEN</sub>. The question marks indicate that we need six more symbols to display hexadecimal numbers. What are these symbols? Where do they come from? Well, they weren't handed down to us in tradition like the rest of our number symbols, so the rational thing to do is make up six new symbols, for example: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00298.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Unlike the symbols used for most of our numbers, these have the benefit of being easy to remember and identify with the actual quantities they represent. There's a 10-gallon cowboy hat, a football (11 players on a team), a dozen donuts, a black cat (associated with unlucky 13), a full moon that occurs about a fortnight (14 days) after the new moon, and a knife that reminds us of the assassination of Julius Caesar on the ides (the 15th day) of March. </p>
+<p class="calibre_1">Each byte can be expressed as two hexadecimal digits. In other words, a hexadecimal digit is equivalent to 4 bits, or 1 nibble. The table on the next page shows how to convert between binary, hexadecimal, and decimal. </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Binary</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Hexadecimal</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Decimal</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Binary</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Hexadecimal</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Decimal</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0000</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1000</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">8</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">8</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0001</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1001</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">9</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">9</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0010</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1010</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><a shape="rect"></a><img alt="" src="images/00299.jpg" class="calibre10"/></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0011</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">3</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">3</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1011</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><a shape="rect"></a><img alt="" src="images/00300.jpg" class="calibre10"/></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0100</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1100</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><a shape="rect"></a><img alt="" src="images/00301.jpg" class="calibre10"/></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">12</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0101</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">5</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">5</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1101</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><a shape="rect"></a><img alt="" src="images/00302.jpg" class="calibre10"/></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">13</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0110</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1110</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><a shape="rect"></a><img alt="" src="images/00303.jpg" class="calibre10"/></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">14</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0111</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1111</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><a shape="rect"></a><img alt="" src="images/00304.jpg" class="calibre10"/></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">15</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">Here's how to represent the byte 10110110 in hexadecimal:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00305.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">And it doesn't matter if we're dealing with multibyte numbers:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00306.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">One byte is always represented by a pair of hexadecimal digits.</p>
+<p class="calibre_1">Unfortunately (or perhaps, much to your relief), we really aren't going to be using footballs and donuts to write hexadecimal numbers. It could have been done that way, but it wasn't. Instead, the hexadecimal system ensures that everybody gets really confused and stays that way. Those six missing hexadecimal digits are actually represented by the first six letters of the Latin alphabet, like this: </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0 1 2 3 4 5 6 7 8 9 A B C D E F 10 11 12…</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">The following table shows the <span><em class="italic">real</em></span> conversion between binary, hexadecimal, and decimal: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Binary</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Hexadecimal</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Decimal</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0000</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0001</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0010</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0011</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">3</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">3</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0100</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0101</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">5</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">5</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0110</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0111</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1000</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">8</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">8</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1001</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">9</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">9</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1010</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">A</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1011</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">B</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1100</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">C</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">12</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1101</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">D</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">13</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1110</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">E</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">14</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1111</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">F</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">15</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">The byte 10110110 can thus be represented by the hexadecimal number B6 without your drawing a football. As you'll recall from previous chapters, I've been indicating number bases by subscripts, such as </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">10110110<sub class="calibre28">TWO</sub></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">for binary, and</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">2312<sub class="calibre28">FOUR</sub></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">for quaternary, and</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">266<sub class="calibre28">EIGHT</sub></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">for octal, and</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">182<sub class="calibre28">TEN</sub></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">for decimal. To continue the same system, we can use</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">B6<sub class="calibre28">SIXTEEN</sub></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">for hexadecimal. But that's clearly excessive. Fortunately, several other, terser, methods of denoting hexadecimal numbers are common. You can indicate the numbers this way: </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">B6<sub class="calibre28">HEX</sub></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">In this book, I'll be using mostly a very common approach, which is a lowercase <span><em class="italic">h</em></span> following the number, like so: </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">B6h</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">In a hexadecimal number, the positions of each digit correspond to powers of 16:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00307.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The hexadecimal number 9A48Ch is</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">9A48Ch = 9 x 10000h +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">A x 1000h +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">4 x 100h +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">8 x 10h +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">C x 1h</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">This can be written using powers of 16:</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">9A48Ch = 9 x 16<sup class="calibre22">4</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">A x 16<sup class="calibre22">3</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">4 x 16<sup class="calibre22">2</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">8 x 16<sup class="calibre22">1</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">C x 16<sup class="calibre22">0</sup></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">Or using the decimal equivalents of those powers:</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">9A48Ch = 9 x 65,536 +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">A x 4096 +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">4 x 256 +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">8 x 16 +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">C x 1</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">Notice that there's no ambiguity in writing the single digits of the number (9, A, 4, 8, and C) without a subscript to indicate the number base. A 9 is a 9 whether it's decimal or hexadecimal. And an A is obviously hexadecimal—equivalent to 10 in decimal. </p>
+<p class="calibre_1">Converting all the digits to decimal lets us actually do the calculation:</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">9A48Ch = 9 x 65,536 +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">10 x 4096 +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">4 x 256 +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">8 x 16 +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">12 x 1</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">And the answer is 631,948. This is how hexadecimal numbers are converted to decimal.</p>
+<p class="calibre_1">Here's a template for converting any 4-digit hexadecimal number to decimal:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00308.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">For example, here's the conversion of 79ACh. Keep in mind that the hexadecimal digits A and C are decimal 10 and 12, respectively:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00309.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Converting decimal numbers to hexadecimal generally requires divisions. If the number is 255 or smaller, you know that it can be represented by 1 byte, which is two hexadecimal digits. To calculate those two digits, divide the number by 16 to get the quotient and the remainder. Let's use an earlier example—the decimal number 182. Divide 182 by 16 to get 11 (which is a B in hexadecimal) with a remainder of 6. The hexadecimal equivalent is B6h. </p>
+<p class="calibre_1">If the decimal number you want to convert is smaller than 65,536, the hexadecimal equivalent will have four digits or fewer. Here's a template for converting such a number to hexadecimal: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00310.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">You start by putting the entire decimal number in the box in the upper left corner. That's your first dividend. Divide by 4096, the first divisor. The quotient goes in the box below the dividend, and the remainder goes in the box to the right of the dividend. That remainder is the new dividend that you divide by 256. Here's the conversion of 31,148 back to hexadecimal: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00311.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Of course, decimal numbers 10 and 12 correspond to hexadecimal A and C. The result is 79ACh.</p>
+<p class="calibre_1">One problem with this technique is that you probably want to use a calculator for the divisions, but <a shape="rect"></a>calculators don't show remainders. If you divide 31,148 by 4096 on a calculator, you'll get 7.6044921875. To calculate the remainder, you need to multiply 4096 by 7 (to get 28,672) and subtract that from 31,148. Or multiply 4096 by 0.6044921875, the fractional part of the quotient. (On the other hand, some calculators can convert between decimal and hexadecimal.) </p>
+<p class="calibre_1">Another approach to converting decimal numbers through 65,535 to hex involves first separating the number into 2 bytes by dividing by 256. Then for each byte, divide by 16. Here's a template for doing it: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00312.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Start at the top. With each division, the quotient goes in the box to the left below the divisor, and the remainder goes in the box to the right. For example, here's the conversion of 51,966: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00313.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The hexadecimal digits are 12, 10, 15, and 14, or CAFE, which looks more like a word than a number! (And if you go there, you may want to order your coffee 56,495.) </p>
+<p class="calibre_1">As for every other number base, there's an addition table associated with hexadecimal:</p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
++</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+0</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+1</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+2</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+3</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+4</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+5</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+6</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+7</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+8</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+9</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+A</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+B</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+C</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+D</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+E</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+F</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">0</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">3</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">5</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">8</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">9</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">A</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">B</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">C</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">D</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">E</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">F</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">1</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">3</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">5</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">8</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">9</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">A</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">B</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">C</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">D</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">E</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">F</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">2</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">3</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">5</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">8</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">9</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">A</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">B</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">C</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">D</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">E</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">F</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">3</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">3</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">5</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">8</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">9</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">A</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">B</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">C</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">D</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">E</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">F</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">12</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">4</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">5</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">8</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">9</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">A</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">B</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">C</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">D</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">E</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">F</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">12</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">13</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">5</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">5</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">8</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">9</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">A</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">B</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">C</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">D</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">E</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">F</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">12</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">13</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">14</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">6</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">8</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">9</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">A</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">B</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">C</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">D</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">E</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">F</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">12</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">13</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">14</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">15</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">7</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">8</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">9</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">A</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">B</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">C</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">D</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">E</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">F</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">12</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">13</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">14</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">15</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">16</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">8</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">8</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">9</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">A</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">B</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">C</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">D</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">E</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">F</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">12</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">13</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">14</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">15</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">16</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">17</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">9</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">9</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">A</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">B</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">C</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">D</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">E</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">F</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">12</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">13</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">14</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">15</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">16</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">17</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">18</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">A</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">A</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">B</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">C</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">D</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">E</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">F</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">12</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">13</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">14</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">15</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">16</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">17</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">18</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">19</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">B</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">B</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">C</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">D</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">E</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">F</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">12</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">13</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">14</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">15</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">16</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">17</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">18</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">19</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1A</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">C</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">C</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">D</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">E</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">F</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">12</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">13</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">14</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">15</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">16</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">17</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">18</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">19</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1A</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1B</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">D</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">D</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">E</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">F</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">12</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">13</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">14</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">15</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">16</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">17</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">18</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">19</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1A</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1B</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1C</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">E</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">E</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">F</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">12</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">13</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">14</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">15</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">16</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">17</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">18</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">19</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1A</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1B</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1C</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1D</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1"><span><strong class="calibre9">F</strong></span></p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">F</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">10</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">11</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">12</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">13</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">14</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">15</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">16</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">17</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">18</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">19</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1A</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1B</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1C</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1D</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1E</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">You can use the table and normal carry rules to add hexadecimal numbers:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00314.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">You'll recall from <a shape="rect" href="index_split_016.html#filepos625949">Chapter 13</a> that you can use two's complements to represent negative numbers. If you're dealing with 8-bit signed values in binary, the negative numbers all begin with 1. In hexadecimal, 2-digit signed numbers are negative if they begin with 8, 9, A, B, C, D, E, or F because the binary representations of these hexadecimal digits all begin with 1. For example, 99h could represent either decimal 153 (if you know you're dealing with 1-byte unsigned numbers) or decimal –103 (if you're dealing with signed numbers). </p>
+<p class="calibre_1">Or the byte 99h could actually be the number 99 in decimal! This has a certain appeal to it, of course, but it seems to violate everything we've learned so far. I'll explain how it works in <a shape="rect" href="index_split_026.html#filepos1662576">Chapter 23</a>. But next I must talk about memory. </p>
+</div>  <div class="mbp_pagebreak" id="calibre_pb_53"></div>
+</body></html>

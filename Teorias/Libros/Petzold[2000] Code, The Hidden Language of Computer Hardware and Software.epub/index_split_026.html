@@ -1,0 +1,661 @@
+<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Code: The Hidden Language of Computer Hardware and Software</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="page_styles.css" rel="stylesheet" type="text/css"/>
+</head>
+  <body class="calibre">
+<div id="filepos1662576" style="height:0pt"></div><div id="filepos1662576" class="calibre_">
+<div class="calibre_">
+<div class="calibre_">
+<div class="calibre_">
+<h1 class="calibre1" id="calibre_pb_76"><span class="calibre2"><a shape="rect" class="calibre4"></a>Chapter 23. Fixed Point, Floating Point </span></h1>
+</div>
+</div>
+</div>
+<p class="calibre_1">Numbers are numbers, and in most of our daily lives we drift casually between whole numbers, fractions, and percentages. We buy half a carton of eggs and pay 8 ¼ percent sales tax with money earned getting time-and-a-half for working 2 ¾ hours overtime. Most people are fairly comfortable—if not necessarily proficient—with numbers such as these. We can even hear a statistic like "the average American house-hold has 2.6 people" without gasping in horror at the widespread mutilation that must have occurred to achieve this. </p>
+<p class="calibre_1">Yet this interchange between whole numbers and fractions isn't so casual when it comes to computer memory. Yes, everything is stored in computers in the form of bits, which means that everything is stored as binary numbers. But some kinds of numbers are definitely easier to express in terms of bits than others. </p>
+<p class="calibre_1">We began using bits to represent what mathematicians call the positive <span><em class="italic">whole numbers</em></span> and what computer programmers call the positive <span><em class="italic">integers</em></span>. We've also seen how two's complements allow us to represent <span><em class="italic">negative</em></span> integers in a way that eases the addition of positive and negative numbers. The table on the following page shows the range of positive integers and two's-complement integers for 8, 16, and 32 bits of storage. </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Number of Bits</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Range of Positive Integers</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Range of Two's-Complement Integers</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">8</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0 through 255</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">–128 through 127</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">16</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0 through 65,535</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">–32,768 through 32,767</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">32</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0 through 4,294,967,295</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">–2,147,483,648 through 2,147,483,647</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">But that's where we stopped. Beyond whole numbers, mathematicians also define <span><em class="italic">rational</em></span> numbers as those numbers that can be represented as a <span><em class="italic">ratio</em></span> of two whole numbers. This ratio is also referred to as a <span><em class="italic">fraction</em></span>. For example, ¾ is a rational number because it's the ratio of 3 and 4. We can also write this number in <span><em class="italic">decimal fraction</em></span>, or just <span><em class="italic">decimal</em></span>, form: 0.75. When we write it as a decimal, it really indicates a fraction, in this case <span><a shape="rect"></a><img alt="" src="images/00414.jpg" class="calibre10"/></span></p>
+<p class="calibre_1">You'll recall from <a shape="rect" href="index_split_010.html#filepos142085">Chapter 7</a> that in a decimal number system, digits to the left of the decimal point are multiples of integral powers of ten. Similarly, digits to the right of the decimal point are multiples of <span><em class="italic">negative</em></span> powers of ten. In <a shape="rect" href="index_split_010.html#filepos142085">Chapter 7</a>, I used the example 42,705.684, showing first that it's equal to </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">4 x 10,000 +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">2 x 1000 +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">7 x 100 +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0 x 10 +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">5 x 1 +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">6 ÷ 10 +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">8 ÷ 100 +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">4 ÷ 1000</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">Notice the division signs. Then I showed how you can write this sequence without any division:</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">4 x 10,000 +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">2 x 1000 +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">7 x 100 +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0 x 10 +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">5 x 1 +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">6 x 0.1 +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">8 x 0.01 +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">4 x 0.001</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">And finally here's the number using powers of ten:</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">4 x 10<sup class="calibre22">4</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">2 x 10<sup class="calibre22">3</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">7 x 10<sup class="calibre22">2</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0 x 10<sup class="calibre22">1</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">5 x 10<sup class="calibre22">0</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">6 x 10<sup class="calibre22">-1</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">8 x 10<sup class="calibre22">-2</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">4 x 10<sup class="calibre22">-3</sup></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">Some rational numbers aren't so easily represented as decimals, the most obvious being ⅓. If you divide 3 into 1, you'll find that ⅓ is equal to </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0.3333333333333333333333333333333333333333333333333333…</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">and on and on and on. It's common to write this more concisely with a little bar over the 3 to indicate that the digit repeats forever: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00415.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">Even though writing ⅓ as a decimal fraction is a bit awkward, it's still a rational number because it's the ratio of two integers. Similarly, <span><a shape="rect"></a><img alt="" src="images/00416.jpg" class="calibre10"/></span> is </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0.1428571428571428571428571428571428571428571428571428571…</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">or</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00417.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1"><span><em class="italic">Irrational numbers</em></span> are monsters such as the square root of 2. This number can't be expressed as the ratio of two integers, which means that the decimal fraction continues indefinitely without any repetition or pattern: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00418.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The square root of 2 is a solution of the following algebraic equation:</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">x<sup class="calibre22">2</sup> – 2 = 0 </span></td>
+</tr>
+</span></table>
+<p class="calibre_1">If a number is <span><em class="italic">not</em></span> a solution of any algebraic equation with whole number coefficients, it's called a <span><em class="italic">transcendental</em></span>. (All transcendental numbers are irrational, but not all irrational numbers are transcendental.) Transcendental numbers include π, which is the ratio of the circumference of a circle to its diameter and which is approximately </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">3.1415926535897932846264338327950288419716939937511…</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">Another transcendental number is <span><em class="italic">e</em></span>, which is the number that this expression approaches: </p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00419.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">as <span><em class="italic">n</em></span> gets very large, or approximately </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">2.71828182845904523536028747135266249775724709369996…</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">All the numbers we've been talking about so far—rational numbers and irrational numbers—are called <span><em class="italic">real</em></span> numbers. This designation distinguishes them from the <span><em class="italic">imaginary</em></span> numbers, which are square roots of negative numbers. <span><em class="italic">Complex</em></span> numbers are combinations of imaginary numbers and real numbers. Despite their name, imaginary numbers <span><em class="italic">do</em></span> show up in the real world and are used (for example) in solving some advanced problems in electronics. </p>
+<p class="calibre_1">We're accustomed to thinking of numbers as <span><em class="italic">continuous</em></span>. If you give me two rational numbers, I can give you a number between those two numbers. In practice, all I have to do is take an average. But digital computers can't deal with continuums. Bits are either 0 or 1, with nothing in between. So by their very nature, digital computers must deal with <span><em class="italic">discrete</em></span> values. The number of discrete values you can represent is directly related to the number of bits you have available. For example, if you choose to store positive integers using 32 bits, the values that you can store are the whole numbers from 0 through 4,294,967,295. If you need to store the value 4.5, you must rethink your approach and do something different. </p>
+<p class="calibre_1">Can fractional values be represented in binary? Yes they can. The easiest approach is probably binary-coded decimal (<a shape="rect"></a>BCD). As you might remember from <a shape="rect" href="index_split_022.html#filepos1154024">Chapter 19</a>, BCD is a binary coding of decimal numbers. Each decimal digit (0, 1, 2, 3, 4, 5, 6, 7, 8, and 9) requires 4 bits, as shown in the following table: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<thead class="calibre16">
+<tr class="calibre17">
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Decimal Digit</span></p></div></th>
+<th rowspan="1" colspan="1" class="calibre18"><div class="calibre12"><p class="calibre_1"><span class="calibre9">
+Binary Value</span></p></div></th>
+</tr>
+</thead>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0000</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0001</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">2</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0010</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">3</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0011</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">4</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0100</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">5</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0101</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">6</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0110</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">7</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">0111</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">8</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1000</p>
+</div></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">9</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">1001</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">BCD is particularly useful in computer programs that work with money amounts in dollars and cents. Banks and insurance companies are just two obvious industries that deal with money a lot; in computer programs used by these sorts of companies, many of the fractional numbers require just two decimal places. </p>
+<p class="calibre_1">It's common to store two BCD digits in 1 byte, a system that's sometimes called <span><em class="italic">packed BCD</em></span>. Two's complements aren't used with BCD. For this reason, packed BCD also usually requires an extra bit to indicate whether the number is positive or negative. This is called the <span><em class="italic">sign bit</em></span>. Because it's convenient to have a particular BCD number stored in a whole number of bytes, that one little sign bit usually involves sacrificing 4 bits or 8 bits of storage. </p>
+<p class="calibre_1">Let's look at an example. Suppose the amounts of money that your computer program needs to work with never get as high as $10 million in either the positive or negative direction. In other words, you only need to represent money values ranging from –9,999,999.99 through 9,999,999.99. You can do that by using 5 bytes for every dollar amount you need to store in memory. For example, the amount –4,325,120.25 is represented by the 5 bytes </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">00010100 00110010 01010001 00100000 00100101</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">or, in hexadecimal:</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">14h 32h 51h 20h 25h</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">Notice the nibble at the far left is 1 to indicate a negative value. That's the sign bit. It would be 0 if the number were positive. All the digits in the number require 4 bits each, and you can read them directly from the hexadecimal values. </p>
+<p class="calibre_1">If you needed instead to represent values from –99,999,999.99 through 99,999,999.99, you'd need 6 bytes—5 bytes for the 10 digits and a whole byte just for the sign bit. </p>
+<p class="calibre_1">This type of storage and notation is also called <span><em class="italic">fixed-point</em></span> format because the decimal point is always fixed at a particular number of places—in our example, at two decimal places. Notice that there's nothing actually stored along with the number that indicates the position of the decimal point. Programs that work with numbers in fixed-point format must know where the decimal point is. You can create fixed-point numbers with any number of decimal places, and you can mix and match these numbers in the same computer program. But any part of the program that does arithmetic on the numbers has to know where the decimal points are. </p>
+<p class="calibre_1">Fixed-point format works well only if you know that numbers aren't going to get too large for the memory location that you've mapped out and that you won't need more decimal places. Where fixed-point format utterly fails is in situations in which numbers can get very large or very small. Suppose you need to reserve an area of memory where you can store certain distances in units of feet. The problem is that these distances can range all over the place. The distance from the earth to the sun is 490,000,000,000 feet, and the radius of the hydrogen atom is 0.00000000026 feet. You'd need 12 bytes of fixed-point storage to accommodate values that can get as large and as small as these. </p>
+<p class="calibre_1">We can probably work out a better way of storing numbers such as these if we recall that scientists and engineers enjoy specifying numbers using a system called <span><em class="italic">scientific notation</em></span>. Scientific notation is particularly useful for representing very large and very small numbers because it incorporates a power of ten that allows us to avoid writing out long strings of zeros. In scientific notation, the number </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">490,000,000,000</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">is written</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">4.9 x 10<sup class="calibre22">11</sup></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">and the number</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0.00000000026</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">is written</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">2.6 x 10-<sup class="calibre22">10</sup></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">In these two examples, the numbers 4.9 and 2.6 are called the <span><em class="italic">fraction part</em></span>, or the <span><em class="italic">characteristic</em></span>, or sometimes (although this word is more properly used in conjunction with <a shape="rect"></a>logarithms) the <span><em class="italic">mantissa</em></span>. But to be more in tune with the terminology used with computers, I'm going to call this part of scientific notation the <span><em class="italic">significand</em></span>. </p>
+<p class="calibre_1">The <span><em class="italic">exponent</em></span> part is the power to which 10 is raised. In the first example, the exponent is 11; and in the second example, the exponent is –10. The exponent tells you how many places the decimal point has been moved in the significand. </p>
+<p class="calibre_1">By convention, the significand is always greater than or equal to 1 and less than 10. Although the following numbers are the same, </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">4.9 x 10<sup class="calibre22">11</sup> = 49 x 10<sup class="calibre22">10</sup> = 490 x 10<sup class="calibre22">9</sup> = 0.49 x 10<sup class="calibre22">12</sup> = 0.049 x 10<sup class="calibre22">13</sup></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">the first is preferred. That's sometimes called the <span><em class="italic">normalized</em></span> form of scientific notation. </p>
+<p class="calibre_1">Notice that the sign of the exponent indicates only the magnitude of the number and not whether the number itself is negative or positive. Here are two examples of negative numbers in scientific notation: </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">–5.8125 x 10<sup class="calibre22">7</sup></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">is equal to</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">–58,125,000</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">and</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">–5.8125 x 10<sup class="calibre22">-7</sup></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">is equal to</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">–0.00000058125</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">In computers, the alternative to fixed-point notation is called <span><em class="italic">floating-point</em></span> notation, and the floating-point format is ideal for storing small and large numbers because it's based on scientific notation. But the floating-point format as used in computers employs <span><em class="italic">binary</em></span> numbers written in scientific notation. The first thing we have to figure out is what fractional numbers look like in binary. </p>
+<p class="calibre_1">This is actually easier than it might first seem. In decimal notation, digits to the right of the decimal point represent negative powers of ten. In binary notation, digits to the right of the <span><em class="italic">binary point</em></span> (which is simply a period and looks just like a decimal point) represent negative powers of two. For example, this binary number </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">101.1101</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">can be converted to decimal using this formula:</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 x 4 +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0 x 2 +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 x 1 +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 ÷ 2 +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 ÷ 4 +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0 ÷ 8 +</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 ÷ 16</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">The division signs can be replaced with negative powers of two:</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 x 2<sup class="calibre22">2</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0 x 2<sup class="calibre22">1</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 x 2<sup class="calibre22">0</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 x 2<sup class="calibre22">-1</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 x 2<sup class="calibre22">-2</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0 x 2<sup class="calibre22">-3</sup> + </span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 x 2<sup class="calibre22">-4</sup></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">Or the negative powers of two can be calculated by starting at 1 and repeatedly dividing by 2:</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 x 4+</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0 x 2+</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 x 1+</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 x 0.5+</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 x 0.25+</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0 x 0.125+</span></td>
+</tr>
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1 x 0.0625</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">By this calculation, the decimal equivalent of 101.1101 is 5.8125.</p>
+<p class="calibre_1">In decimal scientific notation, the normalized significand should be greater than or equal to 1 but less than 10. Similarly, the normalized significand of <a shape="rect"></a>numbers in binary scientific notation is always greater than or equal to 1 but less than binary 10, which is 2 in decimal. So in binary scientific notation, the number </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">101.1101</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">is expressed as</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1.011101 x 2<sup class="calibre22">2</sup></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">One interesting implication of this rule is that a normalized binary floating-point number always has a 1 and nothing else at the left of the binary point. </p>
+<p class="calibre_1">Most contemporary computers and computer programs that deal with floating-point numbers use a standard established by the IEEE (the Institute of Electrical and Electronics Engineers) in 1985, a standard also recognized by ANSI (the American National Standards Institute). ANSI/IEEE Std 754-1985 is called the <span><em class="italic">IEEE Standard for Binary Floating-Point Arithmetic</em></span>. It's not very lengthy as standards go—just 18 pages—but gives the basics of encoding binary floating-point numbers in a convenient manner. </p>
+<p class="calibre_1">The IEEE floating-point standard defines two basic formats: single precision, which requires 4 bytes, and double precision, which requires 8 bytes. </p>
+<p class="calibre_1">Let's look at the single-precision format first. It has three parts: a 1-bit sign (0 for positive and 1 for negative), an 8-bit exponent, and a 23-bit significand fraction arranged like this, with the least-significant bits on the right: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">s = 1-Bit Sign</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">e = 8-Bit Exponent</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">f = 23-Bit Significand Fraction</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">That's a total of 32 bits, or 4 bytes. Because the significand of a normalized binary floating-point number always has a 1 to the left of the binary point, that bit is <span><em class="italic">not</em></span> included in the storage of floating-point numbers in the IEEE format. The 23-bit <span><em class="italic">fractional</em></span> part of the significand is the only part stored. So even though only 23 bits are used to store the significand, the <span><em class="italic">precision</em></span> is said to be 24 bits. We'll get a feel for what 24-bit precision means in a moment. </p>
+<p class="calibre_1">The 8-bit exponent part can range from 0 through 255. This is called a <span><em class="italic">biased</em></span> exponent, which means that you must subtract a number—called the <span><em class="italic">bias</em></span>—from the exponent in order to determine the signed exponent that actually applies. For single-precision floating-point numbers, this bias is 127. </p>
+<p class="calibre_1">The exponents 0 and 255 are used for special purposes that I'll describe shortly. If the exponent ranges from 1 through 254, the number represented by particular values of <span><em class="italic">s</em></span> (the sign bit), <span><em class="italic">e</em></span> (the exponent), and <span><em class="italic">f</em></span> (the significand fraction) is </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">(–1)<sup class="calibre22">s</sup> x 1.f x 2<sup class="calibre22">e-127</sup></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">That negative 1 to the <span><em class="italic">s</em></span> power is a mathematician's annoyingly clever way of saying, "If <span><em class="italic">s</em></span> is 0, the number is positive (because anything to the 0 power equals 1); and if <span><em class="italic">s</em></span> is 1, the number is negative (because –1 to the 1 power is –1)." </p>
+<p class="calibre_1">The next part of the expression is <span><em class="italic">1.f</em></span>, which means a 1 followed by a binary point, followed by the 23 bits of the significand fraction. This is multiplied by 2 to a power. The exponent is the 8-bit biased exponent stored in memory minus 127. </p>
+<p class="calibre_1">Notice that I haven't mentioned any way to express a very common number that we seem to have forgotten about, namely 0. That's one of the special cases, which are these: </p>
+<div class="calibre_">
+<ul class="calibre26">
+<li class="calibre27">If <span><em class="italic">e</em></span> equals 0, and <span><em class="italic">f</em></span> equals 0, the number is 0. Generally, all 32 bits are set to 0 to signify 0. But the sign bit can be 1, in which case the number is interpreted as a <span><em class="italic">negative 0</em></span>. A negative 0 can indicate a very small number that can't be represented with the available digits and exponents in single-precision format but which is still less than 0. </li>
+<li class="calibre27">If <span><em class="italic">e</em></span> equals 0 and <span><em class="italic">f</em></span> doesn't equal 0, the number is valid, but it's not normalized. The number equals <table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">(–1)<sup class="calibre22">s</sup> x 0.f x 2<sup class="calibre22">-127</sup></span></td>
+</tr>
+</span></table><br class="calibre30"/>Notice that the significand has a 0 to the left of the binary point. </li>
+<li class="calibre27">If <span><em class="italic">e</em></span> equals 255 and <span><em class="italic">f</em></span> equals 0, the number is positive or negative infinity, depending on the sign <span><em class="italic">s</em></span>. </li>
+<li class="calibre27">If <span><em class="italic">e</em></span> equals 255 and <span><em class="italic">f</em></span> doesn't equal 0, the value is considered to be <span><em class="italic">not a number</em></span>, which is abbreviated <span><em class="italic">NaN</em></span>. A NaN could indicate an unknown number or the result of an invalid operation. </li>
+</ul>
+</div>
+<p class="calibre_1">The smallest normalized positive or negative binary number that can be represented in single-precision floating-point format is </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1.00000000000000000000000<sub class="calibre28">TWO</sub> x 2<sup class="calibre22">-126</sup></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">That's 23 binary zeros following the binary point. The largest normalized positive or negative number is that can be represented in single-precision floating-point format is this: </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1.11111111111111111111111<sub class="calibre28">TWO</sub> x 2<sup class="calibre22">127</sup></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">In decimal, these two numbers are approximately 1.175494351 x 10<sup class="calibre21">-38</sup> and 3.402823466 x 10<sup class="calibre21">38</sup>. That's the effective range of single-precision floating-point notation. </p>
+<p class="calibre_1">You might recall that 10 binary digits are approximately the same as 3 decimal digits. By that I mean that 10 bits set to 1, which is 3FFh in hexadecimal and 1023 in decimal, is approximately equal to 3 decimal digits set to 9, or 999. Or </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">2<sup class="calibre22">10</sup> ≈ 10<sup class="calibre22">3</sup></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">This relationship implies that the 24-bit binary number stored in single-precision floating-point format is roughly the equivalent of 7 decimal digits. For this reason, it's said that the single-precision floating-point format offers a <span><em class="italic">precision</em></span> of 24 bits, or about 7 decimal digits. What does this mean? </p>
+<p class="calibre_1">When we were looking at fixed-point numbers, it was obvious how accurate the numbers were. For amounts of money, for example, a fixed-point number with two decimal places is obviously accurate to the nearest penny. But with floating-point numbers, we can't say something like that. Depending on the value of the exponent, sometimes a floating-point number can be accurate to a tiny fraction of a penny, and sometimes it's not even accurate to the nearest dollar. </p>
+<p class="calibre_1">It's more appropriate to say that a single-precision floating-point number is accurate to 1 part in 2<sup class="calibre21">24</sup>, or 1 part in 16,777,216, or about 6 parts in a million. But what does this <span><em class="italic">really</em></span> mean? </p>
+<p class="calibre_1">For one thing, it means that if you try to represent both 16,777,216 and 16,777,217 as single-precision floating-point numbers, they'll end up being identical! Moreover, any number between those two (such as 16,777,216.5) is also considered to be identical. All three of these decimal numbers are stored as the 32-bit single-precision floating-point value </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">4B800000h</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">which, divided into the sign, exponent, and significand bits, looks like this:</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">0 10010111 00000000000000000000000</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">which is the number</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1.00000000000000000000000<sub class="calibre28">TWO</sub> x 2<sup class="calibre22">24</sup>. </span></td>
+</tr>
+</span></table>
+<p class="calibre_1">The next-highest significand is the binary floating-point number that represents 16,777,218 or</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1.00000000000000000000001<sub class="calibre28">TWO</sub> x 2<sup class="calibre22">24</sup></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">It might or might not be a problem that two different decimal numbers end up being stored as identical floating-point values.</p>
+<p class="calibre_1">But if you were writing a program for a bank, and you were using single-precision floating-point arithmetic to store dollars and cents, you probably would be deeply disturbed to discover that $262,144.00 is the same as $262,144.01. Both these numbers are </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1.00000000000000000000000<sub class="calibre28">TWO</sub> x 2<sup class="calibre22">18</sup>. </span></td>
+</tr>
+</span></table>
+<p class="calibre_1">That's one reason why fixed-point is preferred when dealing with dollars and cents. When you work with floating-point numbers, you could also discover other little quirks that can drive you mad. Your program will do a calculation that should yield the result 3.50 and instead you get 3.499999999999. This type of thing tends to happen in floating-point calculations, and there isn't a whole lot you can do about it. </p>
+<p class="calibre_1">If floating-point notation is what you want to use but single-precision doesn't quite hack it, you'll probably want to use <span><em class="italic">double-precision</em></span> floating-point format. These numbers require 8 bytes of storage, arranged like this: </p>
+<div class="calibre_">
+<table border="1" class="calibre13"><div class="calibre11">
+<colgroup span="1" class="calibre14">
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+<col span="1" class="calibre15"/>
+</colgroup>
+<tbody class="calibre19">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">s = 1-Bit Sign</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">e = 11-Bit Exponent</p>
+</div></td>
+<td rowspan="1" colspan="1" border="1" class="calibre20"><div class="calibre12">
+<p class="calibre_1">f = 52-Bit Significand Fraction</p>
+</div></td>
+</tr>
+</tbody>
+</div></table>
+</div>
+<p class="calibre_1">The exponent bias is 1023, or 3FFh, so the number stored in such a format is</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">(–1)<sup class="calibre22">s</sup> x 1.f x 2<sup class="calibre22">e-1023</sup></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">Similar rules as those we encountered with single-precision format apply for 0, infinity, and NaN.</p>
+<p class="calibre_1">The smallest positive or negative double-precision floating-point number is</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1.0000000000000000000000000000000000000000000000000000<sub class="calibre28">TWO</sub> x 2<sup class="calibre22">-1022</sup></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">That's 52 zeros following the binary point. The largest is</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1.1111111111111111111111111111111111111111111111111111<sub class="calibre28">TWO</sub> x 2<sup class="calibre22">1023</sup></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">The range is decimal in approximately 2.2250738585072014 x 10<sup class="calibre21">-308</sup> to 1.7976931348623158 x 10<sup class="calibre21">308</sup>. Ten to the 308th power is a very big number. It's 1 followed by 308 decimal zeros. </p>
+<p class="calibre_1">The 53 bits of the significand (including the 1 bit that's not included) is a resolution approximately equivalent to 16 decimal digits. This is much better than single-precision floating-point format, but it still means that eventually some number will equal some other number. For example, 140,737,488,355,328.00 is the same as 140,737,488,355,328.01. These two numbers are both stored as the 64-bit double-precision floating-point value </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">42E0000000000000h</span></td>
+</tr>
+</span></table>
+<p class="calibre_1">which decodes as</p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1.0000000000000000000000000000000000000000000000000000<sub class="calibre28">TWO</sub> x 2<sup class="calibre22">47</sup></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">Of course, developing a format for storing floating-point numbers in memory is only a small part of actually using these numbers in your assembly-language programs. If you were indeed developing a desert-island computer, you would now be faced with the job of writing a collection of functions that add, subtract, multiply, and divide floating-point numbers. Fortunately, these jobs can be broken down into smaller jobs that involve adding, subtracting, multiplying, and dividing <span><em class="italic">integers</em></span>, which you already know how to do. </p>
+<p class="calibre_1">For example, floating-point addition basically requires that you add two significands; the tricky part is using the two exponents to figure out how the two significands mesh. Suppose you needed to perform the following addition: </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">(1.1101 x 2<sup class="calibre22">5</sup>) + (1.0010 x 2<sup class="calibre22">2</sup>) </span></td>
+</tr>
+</span></table>
+<p class="calibre_1">You need to add 11101 and 10010, but not exactly like that. The difference in exponents indicates that the second number must be offset from the first. The integer addition really requires that you use 11101000 and 10010. The final sum is </p>
+<table border="0" summary="Simple list" class="calibre13"><span class="calibre23">
+<tr class="calibre17">
+<td rowspan="1" colspan="1" border="1" class="calibre20"><span class="calibre24">1.1111010 x 2<sup class="calibre22">5</sup></span></td>
+</tr>
+</span></table>
+<p class="calibre_1">Sometimes the exponents will be so far apart that one of the two numbers won't even affect the sum. This would be the case if you were adding the distance to the sun and the radius of the hydrogen atom. </p>
+<p class="calibre_1">Multiplying two floating-point numbers means multiplying the two significands as if they were integers and adding the two integer exponents. Normalizing the significand could result in your decrementing the new exponent once or twice. </p>
+<p class="calibre_1">Another layer of complexity in floating-point arithmetic involves the calculation of fun stuff such as roots and exponents and logarithms and trigonometric functions. But all of these jobs can be done with the four basic floating-point operations: addition, subtraction, multiplication, and division. </p>
+<p class="calibre_1">For example, the sine function in trigonometry can be calculated with a series expansion, like this:</p>
+<div class="calibre_">
+<div class="calibre_"><a shape="rect"></a><img alt="image with no caption" src="images/00420.jpg" class="calibre10"/></div>
+</div>
+<p class="calibre_1">The <span><em class="italic">x</em></span> argument must be in <span><em class="italic">radians</em></span>. There are 2π radians in 360 degrees. The exclamation point is a <span><em class="italic">factorial</em></span> sign. It means to multiply together all the integers from 1 through the indicated number. For example, 5! equals 1 x 2 x 3 x 4 x 5. That's just a multiplication. The exponent in each term is also a multiplication. The rest is just division, addition, and subtraction. The only really scary part is the ellipsis at the end, which means to continue the calculations <span><em class="italic">forever</em></span>. In reality, however, if you restrict yourself to the range 0 through π/2 (from which all other sine values can be derived), you don't have to go anywhere close to forever. After about a dozen terms, you're accurate to the 53-bit resolution of double-precision numbers. </p>
+<p class="calibre_1">Of course, computers are supposed to make things easy for people, so the chore of writing a bunch of routines to do floating-point arithmetic seems at odds with the goal. That's the beauty of software, though. Once somebody writes the floating-point routines for a particular machine, other people can use them. Floating-point arithmetic is so important to scientific and engineering applications that it's traditionally been given a very high priority. In the early days of computers, writing floating-point routines was always one of the first software jobs when a new type of computer was built. </p>
+<p class="calibre_1">In fact, it even makes sense to implement computer machine-code instructions that perform floating-point arithmetic directly! Obviously, that's easier to say than to do. But that's how important floating-point calculations are. If you can implement floating-point arithmetic in hardware—similar to the multiply and divide instructions in 16-bit microprocessors—all floating-point calculations done on the machine will be faster. </p>
+<p class="calibre_1">The first commercial computer that included floating-point hardware as an option was the IBM 704 in 1954. The 704 stored all numbers as 36-bit values. For floating-point numbers, that broke down to a 27-bit significand, an 8-bit exponent, and a sign bit. The floating-point hardware could do addition, subtraction, multiplication, and division. Other floating-point functions had to be implemented in software. </p>
+<p class="calibre_1">Hardware floating-point arithmetic came to the desktop in 1980, when Intel released the 8087 Numeric Data Coprocessor chip, a type of integrated circuit usually referred to these days as a <span><em class="italic">math coprocessor</em></span> or a <span><em class="italic">floating-point unit</em></span> (FPU). The 8087 is called a <span><em class="italic">co</em></span>processor because it couldn't be used by itself. It could be used only in conjunction with the 8086 and 8088, Intel's first 16-bit microprocessors. </p>
+<p class="calibre_1">The 8087 is a 40-pin chip that uses many of the same signals as the 8086 and 8088 chips. The microprocessor and the math coprocessor are connected by means of these signals. When the CPU reads a special instruction—called <span><em class="italic">ESC</em></span> for <span><em class="italic">Escape</em></span>—the coprocessor takes over and executes the next machine code, which indicates one of 68 instructions that include trigonometry, exponents, and logarithms. Data types are based on the IEEE standard. At the time, the 8087 was considered to be the most sophisticated integrated circuit ever made. </p>
+<p class="calibre_1">You can think of the coprocessor as a little self-contained computer. In response to a particular floating-point machine code instruction (for example, <span><em class="italic">FSQRT</em></span> to calculate a square root), the coprocessor internally executes its own series of instructions coded in ROM. These internal instructions are called <span><em class="italic">microcode</em></span>. The instructions generally loop, so the result of the calculation isn't immediately available. Still, however, the math coprocessor is usually at least 10 times faster than the equivalent routines done in software. </p>
+<p class="calibre_1">The motherboard of the original IBM PC had a 40-pin socket for an 8087 chip right next to the 8088 chip. Unfortunately, this socket was empty. Users who needed the extra floating-point speed had to buy an 8087 separately and install it themselves. Even after installation of the math coprocessor, not all applications could be expected to run faster. Some applications—such as word processors—have very little need for floating-point arithmetic. Others, such as spreadsheet programs, can use floating-point calculation much more, and these programs should run faster, but not all of them did. </p>
+<p class="calibre_1">You see, programmers had to write specific code for the coprocessor that used the coprocessor's machine-code instructions. Because a math coprocessor wasn't a standard piece of hardware, many programmers didn't bother to do so. After all, they had to write their own floating-point subroutines anyway (because most people didn't have a math coprocessor installed), so it became extra work—not less work—to support the 8087 chip. Eventually, programmers learned to write their applications to use the math coprocessor if it was present on the machine their programs were running on and to emulate it if it wasn't there. </p>
+<p class="calibre_1">Over the years, Intel also released a 287 math coprocessor for the 286 chip, and a 387 for the 386. But with the release of the Intel 486DX in 1989, the FPU was built right into the CPU itself. No longer was it an option! Unfortunately, in 1991 Intel released a lower-cost 486SX that did <span><em class="italic">not</em></span> have the built-in FPU and instead offered a 487SX math coprocessor as an option. With the 1993 release of the Pentium, however, the built-in FPU became standard again, perhaps for all time. Motorola integrated an FPU with its 68040 microprocessor, which was released in 1990. Previously Motorola sold 68881 and 68882 math coprocessors to support the earlier microprocessors in the 68000 family. The PowerPC chips also have built-in floating-point hardware. </p>
+<p class="calibre_1">Although hardware for floating-point arithmetic is a nice gift for the beleaguered assembly-language programmer, it's a rather minor historical advance when compared with some other work that began in the early 1950s. Our next stop: computer languages. </p>
+</div>  <div class="mbp_pagebreak" id="calibre_pb_77"></div>
+</body></html>
