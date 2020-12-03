@@ -16,12 +16,14 @@ Loopear:
         movr ACC BCC; muevo 1000 al ACC del BCC
         add sum ; sumo 1010 en ACC
         write ; debe escribir por pantalla 1010 (decimal)
-	stop  		; stop
+	movm INDIRECTO ACC dir1
+        stop  		; stop
 
 cero:	.data 4 0 ; 4-byte con el valor 0
 sum:	.data 4 5 ; 4-byte con el valor 5
 count:	.data 4 5 ; 4-byte con el valor 5
 dir:    .data 4 72; 4-byte con el valor(dir donde esta valdir)
+dir1:   .data 4 60
 valdir: .data 4 1000; 4-byte con el valor 
 
 
